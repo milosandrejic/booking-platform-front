@@ -5,6 +5,7 @@
 export { default as Container } from "./src/Container/index.js";
 export { default as Button } from "./src/Button/index.js";
 export { default as Typography } from "./src/Typography/index.js";
+export { default as Grid } from "./src/Grid/index.js";
 
 // CSS utilities
 export { generateCSSVariables, injectCSSVariables } from "./src/utils/cssVariables.js";
