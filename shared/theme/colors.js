@@ -1,12 +1,11 @@
 export const colors = {
-  // Primary - Modern booking blue
   primary: {
     50: "#e3f2fd",
     100: "#bbdefb",
     200: "#90caf9",
     300: "#64b5f6",
     400: "#42a5f5",
-    500: "#003580", // Main booking blue
+    500: "#003580",
     600: "#002f72",
     700: "#002863",
     800: "#002155",
@@ -17,7 +16,6 @@ export const colors = {
     contrastText: "#ffffff"
   },
 
-  // Secondary - Complementary orange/amber
   secondary: {
     50: "#fff8e1",
     100: "#ffecb3",
@@ -35,7 +33,6 @@ export const colors = {
     contrastText: "#000000"
   },
 
-  // Status colors
   success: {
     main: "#4caf50",
     light: "#81c784",
@@ -64,7 +61,6 @@ export const colors = {
     contrastText: "#ffffff"
   },
 
-  // Neutral colors
   grey: {
     50: "#fafafa",
     100: "#f5f5f5",
@@ -78,7 +74,6 @@ export const colors = {
     900: "#212121"
   },
 
-  // Background colors
   background: {
     default: "#ffffff",
     paper: "#ffffff",
@@ -86,7 +81,6 @@ export const colors = {
     hover: "#f5f5f5"
   },
 
-  // Text colors
   text: {
     primary: "#212121",
     secondary: "#757575",
@@ -94,7 +88,6 @@ export const colors = {
     hint: "#9e9e9e"
   },
 
-  // Border colors
   divider: "#e0e0e0",
   border: {
     light: "#e0e0e0",

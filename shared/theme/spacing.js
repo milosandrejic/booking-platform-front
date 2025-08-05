@@ -1,4 +1,3 @@
-// Consistent spacing scale
 export const spacing = {
   0: "0",
   1: "0.25rem",  // 4px
@@ -20,7 +19,6 @@ export const spacing = {
   64: "16rem"    // 256px
 };
 
-// Border radius scale
 export const borderRadius = {
   none: "0",
   sm: "0.125rem",   // 2px
@@ -33,7 +31,6 @@ export const borderRadius = {
   full: "9999px"
 };
 
-// Shadow system
 export const shadows = {
   none: "none",
   sm: "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
@@ -45,7 +42,6 @@ export const shadows = {
   inner: "inset 0 2px 4px 0 rgba(0, 0, 0, 0.06)"
 };
 
-// Breakpoints for responsive design
 export const breakpoints = {
   xs: "0px",
   sm: "640px",
