@@ -4,11 +4,38 @@
   "private": true,
   "description": "Shared UI components for the booking platform",
   "main": "index.js",
+  "exports": {
+    ".": {
+      "import": "./index.js",
+      "require": "./index.js"
+    },
+    "./button": {
+      "import": "./src/Button/index.js",
+      "require": "./src/Button/index.js"
+    },
+    "./container": {
+      "import": "./src/Container/index.js",
+      "require": "./src/Container/index.js"
+    },
+    "./grid": {
+      "import": "./src/Grid/index.js",
+      "require": "./src/Grid/index.js"
+    },
+    "./typography": {
+      "import": "./src/Typography/index.js",
+      "require": "./src/Typography/index.js"
+    },
+    "./textfield": {
+      "import": "./src/TextField/index.js",
+      "require": "./src/TextField/index.js"
+    },
+    "./utils/*": "./src/utils/*"
+  },
   "scripts": {
     "build": "sass src:dist --no-source-map",
     "build:watch": "sass src:dist --watch --no-source-map",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
+    "lint": "eslint . && stylelint \"src/**/*.scss\"",
+    "lint:fix": "eslint . --fix && stylelint \"src/**/*.scss\" --fix",
     "clean": "rm -rf dist node_modules package-lock.json yarn.lock pnpm-lock.yaml",
     "storybook": "storybook dev -p 6006",
     "dev": "storybook dev -p 6006",
@@ -24,12 +51,16 @@
   },
   "devDependencies": {
     "eslint": "^9",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-react": "^7.35.0",
     "@storybook/react": "^8.4.7",
     "@storybook/react-vite": "^8.4.7",
     "@storybook/blocks": "^8.4.7",
     "@storybook/addon-essentials": "^8.4.7",
     "@storybook/addon-links": "^8.4.7",
     "storybook": "^8.4.7",
-    "vite": "^6.0.7"
+    "vite": "^6.0.7",
+    "stylelint": "^16.10.0",
+    "stylelint-config-standard-scss": "^14.0.0"
   }
 }

@@ -1,6 +1,6 @@
 import "./Typography.scss";
 
-const Typography = ({ 
+export const Typography = ({ 
   children, 
   variant = "bodyLarge",
   color = "onSurface",
@@ -52,4 +52,4 @@ const getDefaultComponent = (variant) => {
   }
 };
 
-export default Typography;
+// no default export; use named export

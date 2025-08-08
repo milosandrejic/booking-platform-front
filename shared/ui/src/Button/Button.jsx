@@ -3,7 +3,7 @@
 import "./Button.scss";
 import { useRef } from "react";
 
-const Button = ({ 
+export const Button = ({ 
   children, 
   variant = "filled", // Material Design 3 default
   size = "medium", 
@@ -54,5 +54,3 @@ const Button = ({
     </button>
   );
 };
-
-export default Button;

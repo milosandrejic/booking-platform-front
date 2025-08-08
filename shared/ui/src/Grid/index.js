@@ -1,1 +1,1 @@
-export { default } from "./Grid";
+export { Grid as default, Grid } from "./Grid.jsx";

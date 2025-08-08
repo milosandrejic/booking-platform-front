@@ -1,6 +1,6 @@
 import "./TextField.scss";
 
-const TextField = ({
+export const TextField = ({
   label,
   placeholder,
   value,
@@ -67,5 +67,3 @@ const TextField = ({
     </div>
   );
 };
-
-export default TextField;

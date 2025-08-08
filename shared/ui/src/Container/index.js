@@ -1,3 +1,1 @@
-import Container from "./Container.jsx";
-
-export default Container;
+export { Container as default, Container } from "./Container.jsx";

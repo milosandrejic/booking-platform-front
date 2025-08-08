@@ -1,6 +1,6 @@
 import "./Container.scss";
 
-const Container = ({ 
+export const Container = ({ 
   children, 
   maxWidth = "xl", 
   className = "",
@@ -25,5 +25,3 @@ const Container = ({
     </div>
   );
 };
-
-export default Container;

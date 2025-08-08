@@ -1,6 +1,6 @@
 import "./Grid.scss";
 
-const Grid = ({
+export const Grid = ({
   children,
   container = false,
   item = false,
@@ -37,5 +37,3 @@ const Grid = ({
     </div>
   );
 };
-
-export default Grid;

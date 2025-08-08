@@ -1,12 +1,12 @@
 // Shared UI Components
 // This package contains reusable components across all applications
 
-// Component exports
-export { default as Container } from "./src/Container/index.js";
-export { default as Button } from "./src/Button/index.js";
-export { default as Typography } from "./src/Typography/index.js";
-export { default as Grid } from "./src/Grid/index.js";
-export { default as TextField } from "./src/TextField/index.js";
+// Component exports (named exports from component files)
+export * from "./src/Container/Container.jsx";
+export * from "./src/Button/Button.jsx";
+export * from "./src/Typography/Typography.jsx";
+export * from "./src/Grid/Grid.jsx";
+export * from "./src/TextField/TextField.jsx";
 
 // CSS utilities
 export { generateCSSVariables, injectCSSVariables } from "./src/utils/cssVariables.js";
