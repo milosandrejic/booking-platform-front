@@ -1,5 +1,18 @@
 import "./Container.scss";
 
+/**
+ * Responsive layout container that constrains content width and manages horizontal gutters.
+ *
+ * @param {object} props
+ * @param {React.ReactNode} props.children - Content inside the container.
+ * @param {('xs'|'sm'|'md'|'lg'|'xl'|'2xl')} [props.maxWidth='xl'] - Max width breakpoint.
+ * @param {boolean} [props.fixed=false] - Use fixed max-widths instead of fluid.
+ * @param {boolean} [props.disableGutters=false] - Remove horizontal padding.
+ * @param {('compact'|'default'|'comfortable')} [props.spacing='default'] - Vertical spacing preset.
+ * @param {string} [props.className] - Additional class names.
+ * @param {React.CSSProperties} [props.style] - Inline styles.
+ * @returns {JSX.Element}
+ */
 export const Container = ({ 
   children, 
   maxWidth = "xl", 

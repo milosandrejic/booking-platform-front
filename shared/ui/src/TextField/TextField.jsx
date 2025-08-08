@@ -1,5 +1,28 @@
 import "./TextField.scss";
 
+/**
+ * Text input field with variants and sizes. Supports multiline via textarea.
+ *
+ * @param {object} props
+ * @param {string} [props.label] - Label text.
+ * @param {string} [props.placeholder] - Placeholder text.
+ * @param {string|number} [props.value] - Controlled value.
+ * @param {(e: React.ChangeEvent<HTMLInputElement|HTMLTextAreaElement>) => void} [props.onChange] - Change handler.
+ * @param {(e: React.FocusEvent<HTMLInputElement|HTMLTextAreaElement>) => void} [props.onBlur] - Blur handler.
+ * @param {(e: React.FocusEvent<HTMLInputElement|HTMLTextAreaElement>) => void} [props.onFocus] - Focus handler.
+ * @param {('text'|'email'|'password'|'number'|'tel'|'url'|'search'|'date')} [props.type='text'] - Input type (ignored when multiline).
+ * @param {('outlined'|'filled')} [props.variant='outlined'] - Visual style.
+ * @param {('small'|'medium'|'large')} [props.size='medium'] - Size variant.
+ * @param {boolean} [props.error=false] - Error state styling.
+ * @param {React.ReactNode} [props.helperText] - Helper or error text below the field.
+ * @param {boolean} [props.disabled=false] - Disable input.
+ * @param {boolean} [props.required=false] - Mark as required.
+ * @param {boolean} [props.fullWidth=false] - Stretch to container width.
+ * @param {boolean} [props.multiline=false] - Render as textarea.
+ * @param {number} [props.rows=4] - Rows for textarea.
+ * @param {string} [props.className] - Additional class names.
+ * @returns {JSX.Element}
+ */
 export const TextField = ({
   label,
   placeholder,

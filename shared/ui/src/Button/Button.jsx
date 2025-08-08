@@ -3,6 +3,23 @@
 import "./Button.scss";
 import { useRef } from "react";
 
+/**
+ * Theme-aware button for primary and secondary actions.
+ *
+ * @param {object} props
+ * @param {React.ReactNode} props.children - Button label/content.
+ * @param {('filled'|'outlined'|'text')} [props.variant='filled'] - Visual style.
+ * @param {('small'|'medium'|'large')} [props.size='medium'] - Size variant.
+ * @param {boolean} [props.disabled=false] - Disable interactions.
+ * @param {('button'|'submit'|'reset')} [props.type='button'] - Native button type.
+ * @param {(e: React.MouseEvent<HTMLButtonElement>) => void} [props.onClick] - Click handler.
+ * @param {boolean} [props.fullWidth=false] - Stretch to container width.
+ * @param {React.ReactNode} [props.startIcon] - Optional leading icon.
+ * @param {React.ReactNode} [props.endIcon] - Optional trailing icon.
+ * @param {string} [props.className] - Additional class names.
+ * @param {React.CSSProperties} [props.style] - Inline styles.
+ * @returns {JSX.Element}
+ */
 export const Button = ({ 
   children, 
   variant = "filled", // Material Design 3 default

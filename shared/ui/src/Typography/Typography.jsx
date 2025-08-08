@@ -1,5 +1,20 @@
 import "./Typography.scss";
 
+/**
+ * Typography component to render text with design-system variants.
+ *
+ * @param {object} props
+ * @param {React.ReactNode} props.children - Text content.
+ * @param {string} [props.variant='bodyLarge'] - Variant token (e.g., 'displayMedium', 'headlineMedium', 'titleLarge', 'bodyMedium', 'labelLarge').
+ * @param {string} [props.color='onSurface'] - Color token.
+ * @param {keyof JSX.IntrinsicElements} [props.component] - Override rendered element (e.g., 'p', 'h1', 'span').
+ * @param {('left'|'center'|'right'|'justify')} [props.align] - Text alignment.
+ * @param {boolean} [props.gutterBottom=false] - Adds bottom margin.
+ * @param {boolean} [props.noWrap=false] - Prevents wrapping.
+ * @param {string} [props.className] - Additional class names.
+ * @param {React.CSSProperties} [props.style] - Inline styles.
+ * @returns {JSX.Element}
+ */
 export const Typography = ({ 
   children, 
   variant = "bodyLarge",
