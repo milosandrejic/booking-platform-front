@@ -33,7 +33,11 @@ export const Container = ({
   ].filter(Boolean).join(" ");
 
   return (
-    <div className={classes} style={style} {...props}>
+    <div
+      className={classes}
+      style={style}
+      {...props}
+    >
       {children}
     </div>
   );

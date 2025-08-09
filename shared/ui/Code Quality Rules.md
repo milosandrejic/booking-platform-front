@@ -1,6 +1,6 @@
 # shared/ui — Code Quality Rules (React + Sass)
 
-*A short, enforceable checklist for the `shared/ui` design system.*
+*A short, enforceable checklist for the **`shared/ui`** design system.*
 
 ---
 
@@ -28,58 +28,133 @@ shared/ui/
 
 ## 3) React Coding Style
 
-* **Ternary operator for rendering in returned JSX** is generally not allowed — use early returns or guard rendering with `&&`.
-  **Exception:** Allowed if the component has **no props** or **only one prop**.
+* **Ternary operator for rendering in returned JSX** is generally not allowed — use early returns or guard rendering with `&&`. **Exception:** Allowed if the component has **no props** or **only one prop**.
+* **Conditional rendering formatting:**
+
+  ```jsx
+  {
+    condition &&
+    <Component
+      propA="value"
+      propB="value"
+    />
+  }
+  ```
+
+  * Opening brace on a new line.
+  * Condition on its own line.
+  * `&&` followed by a new line with the component.
+  * Closing brace on its own line.
+  * This rule applies to **all conditional rendering** — including inside loops, fragments, and wrappers.
 * **Multiline JSX formatting** when there are 2+ props or children.
-* **Rendering in loops** must follow the same multiline rule, with braces and JSX kept in-line.
+* **Rendering in loops** must follow the same formatting rules above.
+* Braces for JSX blocks must always open and close **in-line** with the surrounding code.
 * Prefer **early returns** over nested conditionals.
 * Keep components **pure** (no side effects in render). Effects only inside hooks.
 * Keep components simple — no unnecessary complexity unless explicitly requested.
 * Document props and usage with JSDoc comments above the component.
 
-  * ✅ Allowed (guard):
+### Examples
 
-    ```jsx
-    if (!isReady) return null;
+* ✅ Allowed (guard):
 
-    return (
-      <div>
-        {
-            condition &&
-            <Component />
-        }
-      </div>
-    );
-    ```
-  * ✅ Allowed (simple ternary with no/one prop):
+```jsx
+if (!isReady) return null;
+return (
+  <div>
+    {
+      condition &&
+      <Component />
+    }
+  </div>
+);
+```
 
-    ```jsx
-    return (
-      <div>
-        {
-            isReady ? <Spinner /> : <EmptyState />
-        }
-      </div>
-    );
+* ✅ Allowed (simple ternary with no/one prop):
 
-    return (
-      <div>
-        {
-            isOpen ? <Modal title="My Modal" /> : null
-        }
-      </div>
-    );
-    ```
-  * ❌ Not allowed (multiple props in JSX without multiline):
+```jsx
+return (
+  <div>
+    {
+      isReady ? <Spinner /> : <EmptyState />
+    }
+  </div>
+);
 
-    ```jsx
-    return <Component propA={a} propB={b} />;
-    ```
+return (
+  <div>
+    {
+      isOpen ? <Modal title="My Modal" /> : null
+    }
+  </div>
+);
+```
 
-* **Multiline JSX formatting** when there are 2+ props or children:
+* ❌ Not allowed (multiple props in JSX without multiline):
+
+```jsx
+return <Component propA={a} propB={b} />;
+```
+
+**Multiline JSX formatting** examples:
+
+```jsx
+<div
+  className="someClass"
+  style={{
+    ...props
+  }}
+>
+  text
+</div>
+```
+
+```jsx
+<Button
+  size="md"
+  variant="primary"
+  onClick={handleClick}
+/>
+```
+
+**Loop rendering format:**
+
+```jsx
+{
+  items.map(item =>
+    <Component
+      key={item.id}
+      propA={item.a}
+      propB={item.b}
+    />
+  )
+}
+```
+
+### Conditional Rendering Spacing Rule
+
+- **Opening curly brace** `{` is always on its own line.  
+- **Condition** on its own line, followed by `&&` on the same line.  
+- **Component** on the next line.  
+- **Closing curly brace** `}` on its own line.  
+- **Empty line outside braces** if the block is **not** the first or last child inside its parent.  
+- **No empty line outside braces** if it’s the first or last child.  
+
+✅ **Example — first child (no empty line above, but empty line below because we have tag)**  
+```jsx
+<div>
+  {
+    condition &&
+    <Component />
+  }
+
+  <div>Some text</div>
+</div>
+```
+
 ---
 
-## 4) Component Guidelines
+## 4) Comp
 
 * Each component must:
 
@@ -95,15 +170,6 @@ shared/ui/
 * Example JSDoc:
 
   ```jsx
-  {
-    items.map(item =>
-      <Component
-        key={item.id}
-        propA={item.a}
-        propB={item.b}
-      />
-    )
-  }
   /**
    * Primary button for form submission.
    * @param {object} props
@@ -116,7 +182,18 @@ shared/ui/
 
 ---
 
-## 5) Sass Rules
+## 5) Comments in Code
+
+* Write comments only when necessary to explain **why**, not **what**.
+* Use **inline comments** sparingly for complex logic.
+* Use **block comments** above significant code sections or functions.
+* Keep comments **up to date**; outdated comments must be removed.
+* Use JSDoc for components, functions, and complex methods.
+* Avoid redundant comments for self-explanatory JSX or Sass.
+
+---
+
+## 6) Sass Rules
 
 * **BEM** naming: `.btn`, `.btn__icon`, `.btn--primary`.
 * **Max nesting:** 2 levels.
@@ -126,7 +203,7 @@ shared/ui/
 
 ---
 
-## 6) Storybook Stories — Good Practices
+## 7) Storybook Stories — Good Practices
 
 * Each component must have a `.stories.jsx` file in the same folder.
 * **Use named exports** for stories; the default export defines metadata.
@@ -145,7 +222,7 @@ shared/ui/
 
 ---
 
-## 7) Linting & Formatting
+## 8) Linting & Formatting
 
 * **Follow the shared `eslint.config.js` rules strictly**.
 * **Prettier** for consistent formatting.
@@ -153,7 +230,7 @@ shared/ui/
 
 ---
 
-## 8) Example: Button (minimal)
+## 9) Example: Button (minimal)
 
 ```jsx
 // Button.jsx

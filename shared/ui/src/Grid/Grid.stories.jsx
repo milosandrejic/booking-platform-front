@@ -3,6 +3,9 @@ import { Grid } from "./Grid";
 export default {
   title: "Layout/Grid",
   component: Grid,
+  argTypes: {
+    spacing: { control: { type: "number", min: 0, max: 6 } },
+  },
 };
 
 export const Default = {

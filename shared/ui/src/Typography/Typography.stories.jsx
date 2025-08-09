@@ -3,6 +3,28 @@ import { Typography } from "./Typography";
 export default {
   title: "UI Components/Typography",
   component: Typography,
+  argTypes: {
+    variant: {
+      control: { type: "select" },
+      options: [
+        "displayLarge",
+        "displayMedium",
+        "displaySmall",
+        "headlineLarge",
+        "headlineMedium",
+        "headlineSmall",
+        "titleLarge",
+        "titleMedium",
+        "titleSmall",
+        "bodyLarge",
+        "bodyMedium",
+        "bodySmall",
+        "labelLarge",
+        "labelMedium",
+        "labelSmall",
+      ],
+    },
+  },
 };
 
 export const Default = {

@@ -65,9 +65,20 @@ export const Button = ({
       type={type}
       {...props}
     >
-      {startIcon && <span className="button__startIcon">{startIcon}</span>}
+      {
+        startIcon &&
+        <span className="button__startIcon">
+          {startIcon}
+        </span>
+      }
+
       {children}
-      {endIcon && <span className="button__endIcon">{endIcon}</span>}
+      {
+        endIcon &&
+        <span className="button__endIcon">
+          {endIcon}
+        </span>
+      }
     </button>
   );
 };

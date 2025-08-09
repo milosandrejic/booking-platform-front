@@ -3,12 +3,22 @@ import { TextField } from "./TextField";
 export default {
   title: "UI Components/TextField",
   component: TextField,
+  argTypes: {
+    variant: { control: { type: "select" }, options: ["outlined", "filled"] },
+    size: { control: { type: "select" }, options: ["small", "medium", "large"] },
+    type: { control: { type: "select" }, options: ["text", "password"] },
+    disabled: { control: "boolean" },
+    error: { control: "boolean" },
+    required: { control: "boolean" },
+    fullWidth: { control: "boolean" },
+  },
 };
 
 export const Default = {
   args: {
     label: "Default TextField",
     placeholder: "Enter text here",
+    fullWidth: false
   },
 };
 
@@ -33,14 +43,6 @@ export const Password = {
     type: "password",
     label: "Password",
     placeholder: "Enter password",
-  },
-};
-
-export const Email = {
-  args: {
-    type: "email",
-    label: "Email",
-    placeholder: "Enter email address",
   },
 };
 

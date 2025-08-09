@@ -40,7 +40,11 @@ export const Typography = ({
   ].filter(Boolean).join(" ");
   
   return (
-    <Component className={classes} style={style} {...props}>
+    <Component
+      className={classes}
+      style={style}
+      {...props}
+    >
       {children}
     </Component>
   );

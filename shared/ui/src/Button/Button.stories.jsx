@@ -3,31 +3,26 @@ import { Button } from "./Button";
 export default {
   title: "UI Components/Button",
   component: Button,
+  argTypes: {
+    variant: { control: { type: "select" }, options: ["filled", "outlined", "text"] },
+    size: { control: { type: "select" }, options: ["small", "medium", "large"] },
+    disabled: { control: "boolean" },
+    fullWidth: { control: "boolean" },
+  },
 };
 
 export const Default = {
-  args: {
-    children: "Button",
-  },
-};
-
-export const Filled = {
-  args: {
-    variant: "filled",
-    children: "Filled Button",
-  },
+  args: { children: "Button", variant: "filled" },
 };
 
 export const Outlined = {
-  args: {
-    variant: "outlined",
-    children: "Outlined Button",
-  },
+  args: { children: "Outlined Button", variant: "outlined" },
 };
 
 export const Text = {
-  args: {
-    variant: "text",
-    children: "Text Button",
-  },
+  args: { children: "Text Button", variant: "text" },
+};
+
+export const Disabled = {
+  args: { children: "Disabled", variant: "filled", disabled: true },
 };

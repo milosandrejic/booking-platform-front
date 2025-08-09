@@ -10,7 +10,7 @@ import "./TextField.scss";
  * @param {(e: React.ChangeEvent<HTMLInputElement|HTMLTextAreaElement>) => void} [props.onChange] - Change handler.
  * @param {(e: React.FocusEvent<HTMLInputElement|HTMLTextAreaElement>) => void} [props.onBlur] - Blur handler.
  * @param {(e: React.FocusEvent<HTMLInputElement|HTMLTextAreaElement>) => void} [props.onFocus] - Focus handler.
- * @param {('text'|'email'|'password'|'number'|'tel'|'url'|'search'|'date')} [props.type='text'] - Input type (ignored when multiline).
+ * @param {('text'|'password')} [props.type='text'] - Input type (ignored when multiline).
  * @param {('outlined'|'filled')} [props.variant='outlined'] - Visual style.
  * @param {('small'|'medium'|'large')} [props.size='medium'] - Size variant.
  * @param {boolean} [props.error=false] - Error state styling.
@@ -53,20 +53,24 @@ export const TextField = ({
     className
   ].filter(Boolean).join(" ");
 
-  const inputClasses = [
-    "textfield__input", multiline && "textfield__input--multiline"
-  ].filter(Boolean).join(" ");
+  const inputClasses = ["textfield__input", multiline && "textfield__input--multiline"].filter(Boolean).join(" ");
 
   const InputComponent = multiline ? "textarea" : "input";
 
   return (
     <div className={classes}>
-      {label && (
+      {
+        label &&
         <label className="textfield__label">
           {label}
-          {required && <span className="textfield__required">*</span>}
+
+          {
+            required &&
+            <span className="textfield__required">*</span>
+          }
         </label>
-      )}
+      }
+
       <div className="textfield__input-container">
         <InputComponent
           className={inputClasses}
@@ -82,11 +86,12 @@ export const TextField = ({
           {...props}
         />
       </div>
-      {helperText && (
+      {
+        helperText &&
         <div className="textfield__helper-text">
           {helperText}
         </div>
-      )}
+      }
     </div>
   );
 };
