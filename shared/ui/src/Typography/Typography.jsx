@@ -1,3 +1,4 @@
+import React from "react";
 import "./Typography.scss";
 
 /**
@@ -43,6 +44,9 @@ export const Typography = ({
     <Component
       className={classes}
       style={style}
+      aria-label={props["aria-label"]}
+      title={props.title}
+      aria-hidden={props["aria-hidden"]}
       {...props}
     >
       {children}

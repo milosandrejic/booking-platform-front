@@ -37,8 +37,8 @@ export const Button = ({
   const buttonRef = useRef(null);
 
   const handleClick = (event) => {
-    // Remove focus after click to prevent persistent hover state
-    if (buttonRef.current) {
+    // Keep keyboard focus; blur only on pointer (mouse) clicks
+    if (buttonRef.current && event.detail !== 0) {
       buttonRef.current.blur();
     }
     
@@ -51,7 +51,7 @@ export const Button = ({
     "button",
     `button--variant-${variant}`,
     `button--size-${size}`,
-    fullWidth && "button--fullWidth",
+    fullWidth && "button--full-width",
     className
   ].filter(Boolean).join(" ");
 
@@ -67,7 +67,7 @@ export const Button = ({
     >
       {
         startIcon &&
-        <span className="button__startIcon">
+        <span className="button__startIcon" aria-hidden="true">
           {startIcon}
         </span>
       }
@@ -75,7 +75,7 @@ export const Button = ({
       {children}
       {
         endIcon &&
-        <span className="button__endIcon">
+        <span className="button__endIcon" aria-hidden="true">
           {endIcon}
         </span>
       }

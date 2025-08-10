@@ -17,7 +17,6 @@ const preview = {
     },
   },
   decorators: [
-    // eslint-disable-next-line no-unused-vars
     Story => (
       <ThemeProvider>
         <div style={{ padding: "20px" }}>

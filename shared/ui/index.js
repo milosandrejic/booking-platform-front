@@ -7,6 +7,7 @@ export * from "./src/Button/Button.jsx";
 export * from "./src/Typography/Typography.jsx";
 export * from "./src/Grid/Grid.jsx";
 export * from "./src/TextField/TextField.jsx";
+export * from "./src/Select/Select.jsx";
 
 // CSS utilities
 export { generateCSSVariables, injectCSSVariables } from "./src/utils/cssVariables.js";

@@ -1,106 +1,105 @@
-@use '../styles/variables' as *;
-@use 'sass:color';
+/* uses CSS variables injected by shared/theme/ThemeProvider */
 
 .button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: $border-radius-xl;
+  border-radius: var(--border-radius-3xl);
   cursor: pointer;
   user-select: none;
   text-decoration: none;
   outline: none;
-  
+
   &--size-small {
-    padding: $spacing-2 $spacing-3;
+    padding: var(--spacing-2) var(--spacing-3);
     min-height: 32px;
-    font-family: 'Roboto', sans-serif;
+    font-family: Roboto, sans-serif;
     font-size: 0.75rem;
     line-height: 1rem;
     font-weight: 500;
     letter-spacing: 0.5px;
   }
-  
+
   &--size-medium {
-    padding: $spacing-2 $spacing-6;
+    padding: var(--spacing-2) var(--spacing-6);
     min-height: 40px;
-    font-family: 'Roboto', sans-serif;
+    font-family: Roboto, sans-serif;
     font-size: 0.875rem;
     line-height: 1.25rem;
     font-weight: 500;
     letter-spacing: 0.1px;
   }
-  
+
   &--size-large {
-    padding: $spacing-3 $spacing-8;
+    padding: var(--spacing-3) var(--spacing-8);
     min-height: 48px;
-    font-family: 'Roboto', sans-serif;
+    font-family: Roboto, sans-serif;
     font-size: 0.950rem;
     line-height: 1.25rem;
     font-weight: 500;
     letter-spacing: 0.1px;
   }
-  
+
   &--variant-filled {
-    background-color: $primary;
-    color: $on-primary;
+    background-color: var(--primary);
+    color: var(--on-primary);
     border: none;
-    
+
     &:hover:not(:disabled) {
-      background-color: color.adjust($primary, $lightness: -5%);
+      background-color: var(--color-primary-dark);
     }
-    
+
     &:disabled {
-      background-color: rgba($on-surface, 0.12);
-      color: rgba($on-surface, 0.38);
+      background-color: var(--color-grey-200);
+      color: var(--color-text-disabled);
       cursor: not-allowed;
     }
   }
-  
+
   &--variant-outlined {
     background-color: transparent;
-    color: $primary;
-    border: 1px solid $outline;
-    
+    color: var(--primary);
+    border: 1px solid var(--outline);
+
     &:hover:not(:disabled) {
-      background-color: rgba($primary, 0.08);
+      background-color: var(--color-primary-50);
     }
-    
+
     &:disabled {
-      color: rgba($on-surface, 0.38);
-      border-color: rgba($on-surface, 0.12);
+      color: var(--color-text-disabled);
+      border-color: var(--color-grey-300);
       cursor: not-allowed;
     }
   }
-  
+
   &--variant-text {
     background-color: transparent;
-    color: $primary;
+    color: var(--primary);
     border: none;
-    
+
     &:hover:not(:disabled) {
-      background-color: rgba($primary, 0.08);
+      background-color: var(--color-primary-50);
     }
-    
+
     &:disabled {
-      color: rgba($on-surface, 0.38);
+      color: var(--color-text-disabled);
       cursor: not-allowed;
     }
   }
-  
-  &--fullWidth {
+
+  &--full-width {
     width: 100%;
   }
-  
+
   &__startIcon {
-    margin-right: $spacing-2;
+    margin-right: var(--spacing-2);
     display: flex;
     align-items: center;
     font-size: 1.125rem;
   }
-  
+
   &__endIcon {
-    margin-left: $spacing-2;
+    margin-left: var(--spacing-2);
     display: flex;
     align-items: center;
     font-size: 1.125rem;

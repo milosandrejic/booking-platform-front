@@ -22,8 +22,12 @@ export default [
     // Components-specific overrides can be added here
     rules: {
       ...reactConfig.rules,
-      // Prefer named exports for components (allow default export only in index files via override below)
-      "import/no-default-export": "error",
+      // Allow default exports at package level; we will be rational with exports in code reviews
+      "import/no-default-export": "off",
+
+      // Ensure variables used in JSX aren't flagged as unused (e.g., Story in decorators)
+      "react/jsx-uses-vars": "error",
+      "react/jsx-uses-react": "off",
 
       // Keep JSX props multiline when there are 2+ props
       "react/jsx-max-props-per-line": ["error", { maximum: 1, when: "multiline" }],
@@ -35,32 +39,5 @@ export default [
       "no-unneeded-ternary": "warn",
     },
   },
-  // Allow default exports in index files used for re-export/barrel patterns
-  {
-    files: ["**/index.js", "**/index.jsx"],
-    rules: {
-      "import/no-default-export": "off",
-    },
-  },
-  // Allow default exports in configuration files
-  {
-    files: ["**/*.config.js", "**/*.config.mjs", "**/*.config.cjs"],
-    rules: {
-      "import/no-default-export": "off",
-    },
-  },
-  // Allow default exports in Storybook stories (CSF default export is required)
-  {
-    files: ["**/*.stories.@(js|jsx)"],
-    rules: {
-      "import/no-default-export": "off",
-    },
-  },
-  // Allow default exports under utils
-  {
-    files: ["src/utils/**/*.{js,jsx}"],
-    rules: {
-      "import/no-default-export": "off",
-    },
-  },
+  // Per-file overrides no longer needed since the rule is globally disabled
 ];

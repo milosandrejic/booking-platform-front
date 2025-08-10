@@ -1,159 +1,159 @@
-@use '../styles/variables' as *;
+/* uses CSS variables injected by shared/theme/ThemeProvider */
 
 .typography {
   margin: 0;
-  color: $on-surface;
-  font-family: 'Roboto', sans-serif;
-  
+  color: var(--text-primary);
+  font-family: Roboto, sans-serif;
+
   &--variant-displayLarge {
     font-size: 3.5625rem;
     line-height: 4rem;
     font-weight: 400;
     letter-spacing: -0.25px;
   }
-  
+
   &--variant-displayMedium {
     font-size: 2.8125rem;
     line-height: 3.25rem;
     font-weight: 400;
-    letter-spacing: 0px;
+    letter-spacing: 0;
   }
-  
+
   &--variant-displaySmall {
     font-size: 2.25rem;
     line-height: 2.75rem;
     font-weight: 400;
-    letter-spacing: 0px;
+    letter-spacing: 0;
   }
-  
+
   &--variant-headlineLarge {
     font-size: 2rem;
     line-height: 2.5rem;
     font-weight: 400;
-    letter-spacing: 0px;
+    letter-spacing: 0;
   }
-  
+
   &--variant-headlineMedium {
     font-size: 1.75rem;
     line-height: 2.25rem;
     font-weight: 400;
-    letter-spacing: 0px;
+    letter-spacing: 0;
   }
-  
+
   &--variant-headlineSmall {
     font-size: 1.5rem;
     line-height: 2rem;
     font-weight: 400;
-    letter-spacing: 0px;
+    letter-spacing: 0;
   }
-  
+
   &--variant-titleLarge {
     font-size: 1.375rem;
     line-height: 1.75rem;
     font-weight: 400;
-    letter-spacing: 0px;
+    letter-spacing: 0;
   }
-  
+
   &--variant-titleMedium {
     font-size: 1rem;
     line-height: 1.5rem;
     font-weight: 500;
     letter-spacing: 0.15px;
   }
-  
+
   &--variant-titleSmall {
     font-size: 0.875rem;
     line-height: 1.25rem;
     font-weight: 500;
     letter-spacing: 0.1px;
   }
-  
+
   &--variant-bodyLarge {
     font-size: 1rem;
     line-height: 1.5rem;
     font-weight: 400;
     letter-spacing: 0.5px;
   }
-  
+
   &--variant-bodyMedium {
     font-size: 0.875rem;
     line-height: 1.25rem;
     font-weight: 400;
     letter-spacing: 0.25px;
   }
-  
+
   &--variant-bodySmall {
     font-size: 0.75rem;
     line-height: 1rem;
     font-weight: 400;
     letter-spacing: 0.4px;
   }
-  
+
   &--variant-labelLarge {
     font-size: 0.875rem;
     line-height: 1.25rem;
     font-weight: 500;
     letter-spacing: 0.1px;
   }
-  
+
   &--variant-labelMedium {
     font-size: 0.75rem;
     line-height: 1rem;
     font-weight: 500;
     letter-spacing: 0.5px;
   }
-  
+
   &--variant-labelSmall {
     font-size: 0.6875rem;
     line-height: 1rem;
     font-weight: 500;
     letter-spacing: 0.5px;
   }
-  
+
   &--color-primary {
-    color: $primary;
+    color: var(--primary);
   }
-  
+
   &--color-secondary {
-    color: $secondary;
+    color: var(--secondary);
   }
-  
+
   &--color-error {
-    color: $error;
+    color: var(--color-error-main);
   }
-  
+
   &--color-onSurface {
-    color: $on-surface;
+    color: var(--text-primary);
   }
-  
+
   &--color-onSurfaceVariant {
-    color: $on-surface-variant;
+    color: var(--text-secondary);
   }
-  
+
   &--color-outline {
-    color: $outline;
+    color: var(--outline);
   }
-  
+
   &--align-left {
     text-align: left;
   }
-  
+
   &--align-center {
     text-align: center;
   }
-  
+
   &--align-right {
     text-align: right;
   }
-  
+
   &--align-justify {
     text-align: justify;
   }
-  
+
   &--gutterBottom {
-    margin-bottom: $spacing-4;
+    margin-bottom: var(--spacing-4);
   }
-  
+
   &--noWrap {
     overflow: hidden;
     text-overflow: ellipsis;

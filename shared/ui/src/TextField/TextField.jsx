@@ -1,3 +1,4 @@
+import React, { forwardRef, useId } from "react";
 import "./TextField.scss";
 
 /**
@@ -23,10 +24,11 @@ import "./TextField.scss";
  * @param {string} [props.className] - Additional class names.
  * @returns {JSX.Element}
  */
-export const TextField = ({
+export const TextField = forwardRef(function TextField({
   label,
   placeholder,
   value,
+  defaultValue,
   onChange,
   onBlur,
   onFocus,
@@ -40,9 +42,12 @@ export const TextField = ({
   fullWidth = false,
   multiline = false,
   rows = 4,
+  id,
+  name,
+  autoComplete,
   className = "",
   ...props
-}) => {
+}, ref) {
   const classes = [
     "textfield",
     `textfield--${variant}`,
@@ -56,17 +61,20 @@ export const TextField = ({
   const inputClasses = ["textfield__input", multiline && "textfield__input--multiline"].filter(Boolean).join(" ");
 
   const InputComponent = multiline ? "textarea" : "input";
+  const reactId = useId();
+  const inputId = id || `textfield-${reactId}`;
+  const helperId = helperText ? `${inputId}-helper-text` : undefined;
 
   return (
     <div className={classes}>
       {
         label &&
-        <label className="textfield__label">
+        <label className="textfield__label" htmlFor={inputId}>
           {label}
 
           {
             required &&
-            <span className="textfield__required">*</span>
+            <span className="textfield__required" aria-hidden> *</span>
           }
         </label>
       }
@@ -77,21 +85,31 @@ export const TextField = ({
           type={multiline ? undefined : type}
           placeholder={placeholder}
           value={value}
+          defaultValue={defaultValue}
           onChange={onChange}
           onBlur={onBlur}
           onFocus={onFocus}
+          id={inputId}
+          name={name}
           disabled={disabled}
           required={required}
+          autoComplete={autoComplete}
+          aria-invalid={error || undefined}
+          aria-describedby={helperId}
+          aria-required={required || undefined}
+          ref={ref}
           rows={multiline ? rows : undefined}
           {...props}
         />
       </div>
       {
         helperText &&
-        <div className="textfield__helper-text">
+        <div className="textfield__helper-text" id={helperId}>
           {helperText}
         </div>
       }
     </div>
   );
-};
+});
+
+TextField.displayName = "TextField";
