@@ -152,9 +152,76 @@ return <Component propA={a} propB={b} />;
 </div>
 ```
 
+#### Other spacing rules
+- empty line above return unles function is not a 
+* ✅ Allowed:
+```
+    const func = (params) => {
+        -- other code
+
+        return someValue;
+    }
+```
+
+❌ Not allowed
+```
+    const func = (params) => {
+        -- other code
+        return someValue;
+    }
+```
+
+- if condition spacing
+
+* ✅ Allowed:
+```
+  const selectedLabels = useMemo(() => {
+    const getLabelByValue = (val) => {
+      const opt = normalizedOptions.find(o => o.value === val);
+      return opt ? opt.label : "";
+    };
+
+    if (multiple) {
+      const arr = Array.isArray(selectedValue) ? selectedValue : [];
+
+      return arr.map(getLabelByValue).filter(Boolean);
+    }
+
+    return selectedValue != null ? getLabelByValue(selectedValue) : "";
+  }, [multiple, selectedValue, normalizedOptions]);
+```
+
+* ✅ Allowed:
+when function is staring with if condition no empty line is required above if
+```
+  const selectedLabels = useMemo(() => {
+    if (multiple) {
+      const arr = Array.isArray(selectedValue) ? selectedValue : [];
+      
+      return arr.map(getLabelByValue).filter(Boolean);
+    }
+
+    return selectedValue != null ? getLabelByValue(selectedValue) : "";
+  }, [multiple, selectedValue, normalizedOptions]);
+```
+
+❌ Not allowed
+```
+  const selectedLabels = useMemo(() => {
+    const getLabelByValue = (val) => {
+      const opt = normalizedOptions.find(o => o.value === val);
+      return opt ? opt.label : "";
+    };
+    if (multiple) {
+      const arr = Array.isArray(selectedValue) ? selectedValue : [];
+      return arr.map(getLabelByValue).filter(Boolean);
+    }
+    return selectedValue != null ? getLabelByValue(selectedValue) : "";
+  }, [multiple, selectedValue, normalizedOptions]);```
+```
 ---
 
-## 4) Comp
+## 4) Components
 
 * Each component must:
 
@@ -197,6 +264,7 @@ return <Component propA={a} propB={b} />;
 
 * **BEM** naming: `.btn`, `.btn__icon`, `.btn--primary`.
 * **Max nesting:** 2 levels.
+* **Hex colors:** always 6-digit and lowercase (e.g., `#ffffff`, not `#fff`).
 * Use **CSS variables / tokens** where available; avoid hardcoded colors/spacing.
 * No `@extend` across components; prefer mixins or utilities.
 * Component SCSS ≤ \~150 lines (justify if larger).

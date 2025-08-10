@@ -1,0 +1,95 @@
+@use "../styles/variables" as *;
+
+.select {
+  position: relative;
+  display: inline-flex;
+  width: auto;
+
+  &--full-width { width: 100%; }
+  &--disabled { pointer-events: none; }
+
+  &__trigger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: $spacing-3 $spacing-4; // match TextField medium
+    border: 1px solid $outline;
+    border-radius: $border-radius-small;
+    background: $surface;
+    color: $on-surface;
+    font-size: 1rem;
+    box-sizing: border-box;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+
+    &:hover:not(:disabled) {
+      border-color: $on-surface;
+    }
+
+    &:focus {
+      outline: none;
+      border-color: $primary;
+      box-shadow: 0 0 0 1px $primary;
+    }
+
+    &:disabled,
+    .select--disabled & {
+      background-color: #f5f5f5;
+      color: $on-surface-variant;
+      cursor: not-allowed;
+      border-color: #e0e0e0;
+    }
+  }
+
+  &__value { display: inline-flex; gap: $spacing-2; }
+  &__placeholder { color: $on-surface-variant; }
+  &__icon { margin-left: $spacing-2; }
+
+  &__popover {
+    position: absolute;
+    z-index: 10;
+    top: calc(100% + $spacing-1);
+    left: 0;
+    min-width: 100%;
+    max-height: 16rem;
+    overflow: auto;
+    background: $surface;
+    border: 1px solid $outline;
+    border-radius: $border-radius-small;
+    box-shadow: 0 6px 18px rgba(0,0,0,.12);
+  }
+
+  &__list { list-style: none; padding: $spacing-1 0; margin: 0; }
+
+  &__option {
+    padding: $spacing-3 $spacing-4;
+    cursor: pointer;
+
+    &--disabled { color: $on-surface-variant; cursor: default; }
+    &--selected { background: #e8f0fe; }
+    &--highlighted { background: #f5f5f5; }
+  }
+
+  // Sizes (match TextField)
+  &--small {
+    .select__trigger {
+      padding: $spacing-2 $spacing-3;
+      font-size: 0.875rem;
+    }
+  }
+
+  &--medium {
+    .select__trigger {
+      padding: $spacing-3 $spacing-4;
+      font-size: 1rem;
+    }
+  }
+
+  &--large {
+    .select__trigger {
+      padding: $spacing-4 $spacing-5;
+      font-size: 1.125rem;
+    }
+  }
+}
