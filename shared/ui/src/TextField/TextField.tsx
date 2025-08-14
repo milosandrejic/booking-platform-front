@@ -70,7 +70,7 @@ export const TextField = forwardRef<
     error && "textfield--error",
     disabled && "textfield--disabled",
     fullWidth && "textfield--full-width",
-    className
+    className?.trim() || null
   ].filter(Boolean).join(" ");
 
   const inputClasses = ["textfield__input", multiline && "textfield__input--multiline"].filter(Boolean).join(" ");

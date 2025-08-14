@@ -46,7 +46,7 @@ export const Typography = ({
     align && `typography--align-${align}`,
     gutterBottom && "typography--gutterBottom",
     noWrap && "typography--noWrap",
-    className
+    className?.trim() || null
   ].filter(Boolean).join(" ");
   
   return (
@@ -80,5 +80,3 @@ const getDefaultComponent = (variant: TypographyVariant) => {
     default: return "p";
   }
 };
-
-// no default export; use named export

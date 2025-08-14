@@ -27,8 +27,8 @@ export const Container = ({
     `container--maxWidth-${maxWidth}`,
     fixed && "container--fixed",
     disableGutters && "container--disableGutters",
-    spacing !== "default" && `container--spacing-${spacing}`,
-    className
+    !disableGutters && spacing !== "default" && `container--spacing-${spacing}`,
+    className?.trim() || null
   ].filter(Boolean).join(" ");
 
   return (

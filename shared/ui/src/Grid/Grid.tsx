@@ -37,7 +37,7 @@ export const Grid = ({
     item && md && `grid--md-${md}`,
     item && lg && `grid--lg-${lg}`,
     item && xl && `grid--xl-${xl}`,
-    className
+    className?.trim() || null
   ].filter(Boolean).join(" ");
 
   return (

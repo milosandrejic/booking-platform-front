@@ -6,7 +6,7 @@ import tsparser from "@typescript-eslint/parser";
 
 export default [
   {
-    ignores: ["dist", "build", "node_modules", "coverage"],
+    ignores: ["dist", "build", "node_modules", "coverage", "storybook-static"],
   },
   {
     ...reactConfig,
