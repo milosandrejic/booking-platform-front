@@ -4,43 +4,43 @@
   "private": true,
   "description": "Shared UI components for the booking platform",
   "type": "module",
-  "main": "index.js",
+  "main": "index.ts",
   "exports": {
     ".": {
-      "import": "./index.js",
-      "require": "./index.js"
+      "import": "./index.ts",
+      "require": "./index.ts"
     },
     "./button": {
-      "import": "./src/Button/index.js",
-      "require": "./src/Button/index.js"
+      "import": "./src/Button/index.ts",
+      "require": "./src/Button/index.ts"
     },
     "./container": {
-      "import": "./src/Container/index.js",
-      "require": "./src/Container/index.js"
+      "import": "./src/Container/index.ts",
+      "require": "./src/Container/index.ts"
     },
     "./grid": {
-      "import": "./src/Grid/index.js",
-      "require": "./src/Grid/index.js"
+      "import": "./src/Grid/index.ts",
+      "require": "./src/Grid/index.ts"
     },
     "./typography": {
-      "import": "./src/Typography/index.js",
-      "require": "./src/Typography/index.js"
+      "import": "./src/Typography/index.ts",
+      "require": "./src/Typography/index.ts"
     },
     "./textfield": {
-      "import": "./src/TextField/index.js",
-      "require": "./src/TextField/index.js"
+      "import": "./src/TextField/index.ts",
+      "require": "./src/TextField/index.ts"
     },
     "./select": {
-      "import": "./src/Select/index.js",
-      "require": "./src/Select/index.js"
-    },
-    "./utils/*": "./src/utils/*"
+      "import": "./src/Select/index.ts",
+      "require": "./src/Select/index.ts"
+    }
   },
   "scripts": {
     "build": "sass src:dist --no-source-map",
     "build:watch": "sass src:dist --watch --no-source-map",
     "lint": "eslint . && pnpm exec stylelint \"src/**/*.scss\"",
     "lint:fix": "eslint . --fix && pnpm exec stylelint \"src/**/*.scss\" --fix",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
     "clean": "rm -rf dist node_modules package-lock.json yarn.lock pnpm-lock.yaml",
     "storybook": "storybook dev -p 6006",
     "dev": "storybook dev -p 6006",
@@ -58,6 +58,11 @@
     "eslint": "^9",
     "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-react": "^7.35.0",
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.0.0",
+    "typescript": "^5.5.0",
+    "@types/react": "^18.2.67",
+    "@types/react-dom": "^18.2.22",
     "@storybook/react": "^8.4.7",
     "@storybook/react-vite": "^8.4.7",
     "@storybook/blocks": "^8.4.7",

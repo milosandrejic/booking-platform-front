@@ -1,21 +1,30 @@
 import React from "react";
 import "./Typography.scss";
 
-/**
- * Typography component to render text with design-system variants.
- *
- * @param {object} props
- * @param {React.ReactNode} props.children - Text content.
- * @param {string} [props.variant='bodyLarge'] - Variant token (e.g., 'displayMedium', 'headlineMedium', 'titleLarge', 'bodyMedium', 'labelLarge').
- * @param {string} [props.color='onSurface'] - Color token.
- * @param {keyof JSX.IntrinsicElements} [props.component] - Override rendered element (e.g., 'p', 'h1', 'span').
- * @param {('left'|'center'|'right'|'justify')} [props.align] - Text alignment.
- * @param {boolean} [props.gutterBottom=false] - Adds bottom margin.
- * @param {boolean} [props.noWrap=false] - Prevents wrapping.
- * @param {string} [props.className] - Additional class names.
- * @param {React.CSSProperties} [props.style] - Inline styles.
- * @returns {JSX.Element}
- */
+export type TypographyVariant =
+  | "displayLarge" | "displayMedium" | "displaySmall"
+  | "headlineLarge" | "headlineMedium" | "headlineSmall"
+  | "titleLarge" | "titleMedium" | "titleSmall"
+  | "bodyLarge" | "bodyMedium" | "bodySmall"
+  | "labelLarge" | "labelMedium" | "labelSmall";
+
+export type TypographyColor = "onSurface" | string;
+export type TypographyAlign = "left" | "center" | "right" | "justify";
+
+export interface TypographyProps {
+  children?: React.ReactNode;
+  variant?: TypographyVariant;
+  color?: TypographyColor;
+  component?: React.ElementType;
+  align?: TypographyAlign;
+  gutterBottom?: boolean;
+  noWrap?: boolean;
+  className?: string;
+  style?: React.CSSProperties;
+  title?: string;
+  [key: string]: any;
+}
+
 export const Typography = ({ 
   children, 
   variant = "bodyLarge",
@@ -27,8 +36,8 @@ export const Typography = ({
   noWrap = false,
   style = {},
   ...props 
-}) => {
-  const Component = component || getDefaultComponent(variant);
+}: TypographyProps) => {
+  const Component = (component || getDefaultComponent(variant)) as React.ElementType;
   
   const classes = [
     "typography",
@@ -44,9 +53,6 @@ export const Typography = ({
     <Component
       className={classes}
       style={style}
-      aria-label={props["aria-label"]}
-      title={props.title}
-      aria-hidden={props["aria-hidden"]}
       {...props}
     >
       {children}
@@ -54,7 +60,7 @@ export const Typography = ({
   );
 };
 
-const getDefaultComponent = (variant) => {
+const getDefaultComponent = (variant: TypographyVariant) => {
   switch (variant) {
     case "displayLarge": return "h1";
     case "displayMedium": return "h1";

@@ -1,7 +1,9 @@
+import type { Preview } from "@storybook/react";
 import { ThemeProvider } from "@booking-platform-shared/theme";
+import { theme } from "@booking-platform-shared/theme";
+import React from "react";
 
-/** @type { import('@storybook/react').Preview } */
-const preview = {
+const preview: Preview = {
   parameters: {
     actions: { argTypesRegex: "^on[A-Z].*" },
     controls: {
@@ -17,13 +19,15 @@ const preview = {
     },
   },
   decorators: [
-    Story => (
-      <ThemeProvider>
-        <div style={{ padding: "20px" }}>
-          <Story />
-        </div>
-      </ThemeProvider>
-    ),
+    (Story) => {
+      return (
+        <ThemeProvider customTheme={theme} includeGlobalStyles injectCSSVars>
+          <div style={{ padding: "20px" }}>
+            <Story />
+          </div>
+        </ThemeProvider>
+      );
+    },
   ],
 };
 

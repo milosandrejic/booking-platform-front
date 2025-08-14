@@ -1,15 +1,12 @@
 import { reactConfig } from "../../eslint.config.js";
 import react from "eslint-plugin-react";
 import eslintPluginImport from "eslint-plugin-import";
+import tseslint from "@typescript-eslint/eslint-plugin";
+import tsparser from "@typescript-eslint/parser";
 
 export default [
   {
-    ignores: [
-      "dist", 
-      "build",
-      "node_modules",
-      "coverage",
-    ],
+    ignores: ["dist", "build", "node_modules", "coverage"],
   },
   {
     ...reactConfig,
@@ -18,7 +15,7 @@ export default [
       react,
       import: eslintPluginImport,
     },
-    files: ["**/*.{js,jsx}"],
+    files: ["**/*.{js,jsx,ts,tsx}"],
     // Components-specific overrides can be added here
     rules: {
       ...reactConfig.rules,
@@ -37,6 +34,19 @@ export default [
       // Discourage complex ternaries; nested ternaries are not allowed
       "no-nested-ternary": "error",
       "no-unneeded-ternary": "warn",
+    },
+  },
+  {
+    files: ["**/*.{ts,tsx}"],
+    languageOptions: {
+      parser: tsparser,
+      parserOptions: { ecmaVersion: "latest", sourceType: "module" },
+    },
+    plugins: { "@typescript-eslint": tseslint },
+    rules: {
+      "no-unused-vars": "off",
+      "@typescript-eslint/consistent-type-imports": ["warn", { prefer: "type-imports" }],
+      "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_", varsIgnorePattern: "^_" }],
     },
   },
   // Per-file overrides no longer needed since the rule is globally disabled

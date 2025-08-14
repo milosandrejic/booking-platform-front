@@ -1,6 +1,7 @@
+import type { Meta, StoryObj } from "@storybook/react";
 import { Typography } from "./Typography";
 
-export default {
+const meta = {
   title: "UI Components/Typography",
   component: Typography,
   argTypes: {
@@ -25,43 +26,46 @@ export default {
       ],
     },
   },
-};
+} satisfies Meta<typeof Typography>;
 
-export const Default = {
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {
   args: {
     children: "Default Typography",
   },
 };
 
-export const DisplayLarge = {
+export const DisplayLarge: Story = {
   args: {
     variant: "displayLarge",
     children: "Display Large",
   },
 };
 
-export const HeadlineLarge = {
+export const HeadlineLarge: Story = {
   args: {
     variant: "headlineLarge",
     children: "Headline Large",
   },
 };
 
-export const TitleLarge = {
+export const TitleLarge: Story = {
   args: {
     variant: "titleLarge",
     children: "Title Large",
   },
 };
 
-export const BodyLarge = {
+export const BodyLarge: Story = {
   args: {
     variant: "bodyLarge",
     children: "Body Large",
   },
 };
 
-export const LabelLarge = {
+export const LabelLarge: Story = {
   args: {
     variant: "labelLarge",
     children: "Label Large",

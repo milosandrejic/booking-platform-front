@@ -1,14 +1,18 @@
+import type { Meta, StoryObj } from "@storybook/react";
 import { Grid } from "./Grid";
 
-export default {
+const meta = {
   title: "Layout/Grid",
   component: Grid,
   argTypes: {
     spacing: { control: { type: "number", min: 0, max: 6 } },
   },
-};
+} satisfies Meta<typeof Grid>;
 
-export const Default = {
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {
   args: {
     container: true,
     spacing: 2,
@@ -34,7 +38,7 @@ export const Default = {
   },
 };
 
-export const TwoColumns = {
+export const TwoColumns: Story = {
   args: {
     container: true,
     spacing: 3,
@@ -55,7 +59,7 @@ export const TwoColumns = {
   },
 };
 
-export const ThreeColumns = {
+export const ThreeColumns: Story = {
   args: {
     container: true,
     spacing: 2,
@@ -81,7 +85,7 @@ export const ThreeColumns = {
   },
 };
 
-export const FourColumns = {
+export const FourColumns: Story = {
   args: {
     container: true,
     spacing: 2,

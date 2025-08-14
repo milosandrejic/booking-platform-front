@@ -1,6 +1,7 @@
+import type { Meta, StoryObj } from "@storybook/react";
 import { Button } from "./Button";
 
-export default {
+const meta = {
   title: "UI Components/Button",
   component: Button,
   argTypes: {
@@ -9,20 +10,23 @@ export default {
     disabled: { control: "boolean" },
     fullWidth: { control: "boolean" },
   },
-};
+} satisfies Meta<typeof Button>;
 
-export const Default = {
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {
   args: { children: "Button", variant: "filled" },
 };
 
-export const Outlined = {
+export const Outlined: Story = {
   args: { children: "Outlined Button", variant: "outlined" },
 };
 
-export const Text = {
+export const Text: Story = {
   args: { children: "Text Button", variant: "text" },
 };
 
-export const Disabled = {
+export const Disabled: Story = {
   args: { children: "Disabled", variant: "filled", disabled: true },
 };

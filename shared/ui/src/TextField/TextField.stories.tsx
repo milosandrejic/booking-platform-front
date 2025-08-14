@@ -1,6 +1,7 @@
+import type { Meta, StoryObj } from "@storybook/react";
 import { TextField } from "./TextField";
 
-export default {
+const meta = {
   title: "UI Components/TextField",
   component: TextField,
   argTypes: {
@@ -12,17 +13,20 @@ export default {
     required: { control: "boolean" },
     fullWidth: { control: "boolean" },
   },
-};
+} satisfies Meta<typeof TextField>;
 
-export const Default = {
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {
   args: {
     label: "Default TextField",
     placeholder: "Enter text here",
-    fullWidth: false
+    fullWidth: false,
   },
 };
 
-export const Filled = {
+export const Filled: Story = {
   args: {
     variant: "filled",
     label: "Filled TextField",
@@ -30,7 +34,7 @@ export const Filled = {
   },
 };
 
-export const Outlined = {
+export const Outlined: Story = {
   args: {
     variant: "outlined",
     label: "Outlined TextField",
@@ -38,7 +42,7 @@ export const Outlined = {
   },
 };
 
-export const Password = {
+export const Password: Story = {
   args: {
     type: "password",
     label: "Password",
@@ -46,7 +50,7 @@ export const Password = {
   },
 };
 
-export const WithError = {
+export const WithError: Story = {
   args: {
     label: "TextField with Error",
     placeholder: "Enter text here",

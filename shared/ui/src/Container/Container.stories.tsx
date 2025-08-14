@@ -1,6 +1,7 @@
+import type { Meta, StoryObj } from "@storybook/react";
 import { Container } from "./Container";
 
-export default {
+const meta = {
   title: "Layout/Container",
   component: Container,
   argTypes: {
@@ -12,16 +13,22 @@ export default {
         "md",
         "lg",
         "xl",
-        "2xl",
+        "2xl"
       ],
     },
     fixed: { control: "boolean" },
     disableGutters: { control: "boolean" },
-    spacing: { control: { type: "select" }, options: ["compact", "default", "comfortable"] },
+    spacing: {
+      control: { type: "select" },
+      options: ["compact", "default", "comfortable"],
+    },
   },
-};
+} satisfies Meta<typeof Container>;
 
-export const Default = {
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {
   args: { maxWidth: "md", spacing: "default" },
   render: args => (
     <Container {...args}>

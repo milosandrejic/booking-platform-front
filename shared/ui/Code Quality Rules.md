@@ -1,4 +1,4 @@
-# shared/ui — Code Quality Rules (React + Sass)
+# shared/ui — Code Quality Rules (React + Typescript + Sass)
 
 *A short, enforceable checklist for the **`shared/ui`** design system.*
 
@@ -16,9 +16,9 @@
 ```
 shared/ui/
   button/
-    Button.jsx
+    Button.tsx
     _button.scss
-    Button.stories.jsx
+    Button.stories.tsx
 ```
 
 * One React file + one SCSS file and Storybook story per component (split only if clearly needed).

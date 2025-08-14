@@ -1,30 +1,45 @@
 import React, { forwardRef, useId } from "react";
 import "./TextField.scss";
 
-/**
- * Text input field with variants and sizes. Supports multiline via textarea.
- *
- * @param {object} props
- * @param {string} [props.label] - Label text.
- * @param {string} [props.placeholder] - Placeholder text.
- * @param {string|number} [props.value] - Controlled value.
- * @param {(e: React.ChangeEvent<HTMLInputElement|HTMLTextAreaElement>) => void} [props.onChange] - Change handler.
- * @param {(e: React.FocusEvent<HTMLInputElement|HTMLTextAreaElement>) => void} [props.onBlur] - Blur handler.
- * @param {(e: React.FocusEvent<HTMLInputElement|HTMLTextAreaElement>) => void} [props.onFocus] - Focus handler.
- * @param {('text'|'password')} [props.type='text'] - Input type (ignored when multiline).
- * @param {('outlined'|'filled')} [props.variant='outlined'] - Visual style.
- * @param {('small'|'medium'|'large')} [props.size='medium'] - Size variant.
- * @param {boolean} [props.error=false] - Error state styling.
- * @param {React.ReactNode} [props.helperText] - Helper or error text below the field.
- * @param {boolean} [props.disabled=false] - Disable input.
- * @param {boolean} [props.required=false] - Mark as required.
- * @param {boolean} [props.fullWidth=false] - Stretch to container width.
- * @param {boolean} [props.multiline=false] - Render as textarea.
- * @param {number} [props.rows=4] - Rows for textarea.
- * @param {string} [props.className] - Additional class names.
- * @returns {JSX.Element}
- */
-export const TextField = forwardRef(function TextField({
+export type TextFieldType = "text" | "password";
+export type TextFieldVariant = "outlined" | "filled";
+export type TextFieldSize = "small" | "medium" | "large";
+
+type BaseProps = {
+  label?: string;
+  value?: string | number;
+  defaultValue?: string | number;
+  onChange?: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
+  onBlur?: React.FocusEventHandler<HTMLInputElement | HTMLTextAreaElement>;
+  onFocus?: React.FocusEventHandler<HTMLInputElement | HTMLTextAreaElement>;
+  type?: TextFieldType;
+  variant?: TextFieldVariant;
+  size?: TextFieldSize;
+  error?: boolean;
+  helperText?: React.ReactNode;
+  disabled?: boolean;
+  required?: boolean;
+  fullWidth?: boolean;
+  multiline?: boolean;
+  rows?: number;
+  name?: string;
+  autoComplete?: string;
+  className?: string;
+  style?: React.CSSProperties;
+};
+
+type InputOnly = Omit<
+  React.InputHTMLAttributes<HTMLInputElement>,
+  "size" | "type" | "value" | "defaultValue" | "onChange" | "onBlur" | "onFocus"
+> & { multiline?: false };
+type TextareaOnly = Omit<React.TextareaHTMLAttributes<HTMLTextAreaElement>, "value" | "defaultValue" | "onChange" | "onBlur" | "onFocus"> & { multiline: true };
+
+export type TextFieldProps = BaseProps & (InputOnly | TextareaOnly);
+
+export const TextField = forwardRef<
+  HTMLInputElement | HTMLTextAreaElement,
+  TextFieldProps
+>(function TextField({
   label,
   placeholder,
   value,
@@ -60,7 +75,7 @@ export const TextField = forwardRef(function TextField({
 
   const inputClasses = ["textfield__input", multiline && "textfield__input--multiline"].filter(Boolean).join(" ");
 
-  const InputComponent = multiline ? "textarea" : "input";
+  const InputComponent = (multiline ? "textarea" : "input") as any;
   const reactId = useId();
   const inputId = id || `textfield-${reactId}`;
   const helperId = helperText ? `${inputId}-helper-text` : undefined;
@@ -84,11 +99,11 @@ export const TextField = forwardRef(function TextField({
           className={inputClasses}
           type={multiline ? undefined : type}
           placeholder={placeholder}
-          value={value}
-          defaultValue={defaultValue}
-          onChange={onChange}
-          onBlur={onBlur}
-          onFocus={onFocus}
+          value={value as any}
+          defaultValue={defaultValue as any}
+          onChange={onChange as any}
+          onBlur={onBlur as any}
+          onFocus={onFocus as any}
           id={inputId}
           name={name}
           disabled={disabled}
@@ -97,9 +112,9 @@ export const TextField = forwardRef(function TextField({
           aria-invalid={error || undefined}
           aria-describedby={helperId}
           aria-required={required || undefined}
-          ref={ref}
+          ref={ref as any}
           rows={multiline ? rows : undefined}
-          {...props}
+          {...props as any}
         />
       </div>
       {

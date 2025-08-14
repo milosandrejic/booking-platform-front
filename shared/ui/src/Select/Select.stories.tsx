@@ -1,6 +1,7 @@
-import { Select } from "./Select.jsx";
+import type { Meta, StoryObj } from "@storybook/react";
+import { Select } from "./Select";
 
-export default {
+const meta = {
   title: "UI Components/Select",
   component: Select,
   args: {
@@ -19,9 +20,12 @@ export default {
     loading: { control: "boolean" },
     fullWidth: { control: "boolean" },
   },
-};
+} satisfies Meta<typeof Select>;
 
-export const Default = {
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {
   render: args => (
     <div style={{ width: 320 }}>
       <Select {...args} />
@@ -29,10 +33,8 @@ export const Default = {
   ),
 };
 
-export const Multiple = {
-  args: {
-    multiple: true,
-  },
+export const Multiple: Story = {
+  args: { multiple: true },
   render: args => (
     <div style={{ width: 320 }}>
       <Select {...args} />
@@ -40,7 +42,7 @@ export const Multiple = {
   ),
 };
 
-export const SizeVariants = {
+export const SizeVariants: Story = {
   render: args => (
     <div style={{ display: "grid", gap: 12, width: 320 }}>
       <Select {...args} size="small" placeholder="Small" />
