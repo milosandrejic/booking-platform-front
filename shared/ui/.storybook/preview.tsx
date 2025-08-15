@@ -1,7 +1,6 @@
 import type { Preview } from "@storybook/react";
 import { ThemeProvider } from "@booking-platform-shared/theme";
 import { theme } from "@booking-platform-shared/theme";
-import React from "react";
 
 const preview: Preview = {
   parameters: {
@@ -21,7 +20,7 @@ const preview: Preview = {
   decorators: [
     (Story) => {
       return (
-        <ThemeProvider customTheme={theme} includeGlobalStyles injectCSSVars>
+        <ThemeProvider customTheme={theme} applyCssReset injectCSSVars>
           <div style={{ padding: "20px" }}>
             <Story />
           </div>

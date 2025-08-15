@@ -1,4 +1,6 @@
-export const colors = {
+import type { Colors } from "./types";
+
+export const colors: Colors = {
   primary: {
     50: "#e3f2fd",
     100: "#bbdefb",

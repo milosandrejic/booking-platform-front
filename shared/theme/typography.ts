@@ -1,9 +1,11 @@
+import type { Typography, FontWeights, FontSizes, LineHeights, LetterSpacing } from "./types";
+
 // Typography scale and font definitions
 export const fontFamily = "Roboto, sans-serif";
 
-export const fontWeights = {
+export const fontWeights: FontWeights = {
   thin: 100,
-  extralight: 200, 
+  extralight: 200,
   light: 300,
   normal: 400,
   medium: 500,
@@ -13,7 +15,7 @@ export const fontWeights = {
   black: 900
 };
 
-export const fontSizes = {
+export const fontSizes: FontSizes = {
   xs: "0.75rem",    // 12px
   sm: "0.875rem",   // 14px
   base: "1rem",     // 16px
@@ -27,7 +29,7 @@ export const fontSizes = {
   "7xl": "4.5rem"   // 72px
 };
 
-export const lineHeights = {
+export const lineHeights: LineHeights = {
   none: 1,
   tight: 1.25,
   snug: 1.375,
@@ -36,21 +38,30 @@ export const lineHeights = {
   loose: 2
 };
 
+export const letterSpacing: LetterSpacing = {
+  tighter: "-0.05em",
+  tight: "-0.025em",
+  normal: "0em",
+  wide: "0.025em",
+  wider: "0.05em",
+  widest: "0.1em"
+};
+
 // Typography variants for consistent text styling
-export const typography = {
+export const typography: Typography = {
   h1: {
     fontFamily,
     fontSize: fontSizes["5xl"],
     fontWeight: fontWeights.bold,
     lineHeight: lineHeights.tight,
-    letterSpacing: "-0.025em"
+    letterSpacing: letterSpacing.tight
   },
   h2: {
     fontFamily,
     fontSize: fontSizes["4xl"],
     fontWeight: fontWeights.bold,
     lineHeight: lineHeights.tight,
-    letterSpacing: "-0.025em"
+    letterSpacing: letterSpacing.tight
   },
   h3: {
     fontFamily,
@@ -112,7 +123,7 @@ export const typography = {
     fontWeight: fontWeights.semibold,
     lineHeight: lineHeights.normal,
     textTransform: "uppercase",
-    letterSpacing: "0.1em"
+    letterSpacing: letterSpacing.widest
   },
   button: {
     fontFamily,

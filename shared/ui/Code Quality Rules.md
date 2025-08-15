@@ -288,7 +288,6 @@ when function is staring with if condition no empty line is required above if
 
 ```jsx
 // Button.jsx
-import React from 'react';
 import './_button.scss';
 
 /**

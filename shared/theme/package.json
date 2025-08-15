@@ -3,12 +3,26 @@
   "version": "0.1.0",
   "private": true,
   "description": "Shared Material-UI theme and styling system",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist/",
+    "fonts/"
+  ],
   "scripts": {
-    "build": "echo 'Building theme package'",
+    "build": "tsc --build",
+    "dev": "tsc --watch",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "clean": "rm -rf dist node_modules package-lock.json yarn.lock pnpm-lock.yaml"
+    "clean": "rm -rf dist node_modules package-lock.json yarn.lock pnpm-lock.yaml",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {},
   "peerDependencies": {
@@ -16,6 +30,9 @@
     "react-dom": "19.1.0"
   },
   "devDependencies": {
-    "eslint": "^9"
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "eslint": "^9",
+    "typescript": "^5.0.0"
   }
 }

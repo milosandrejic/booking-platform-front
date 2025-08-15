@@ -1,4 +1,3 @@
-import React from "react";
 import "./Typography.scss";
 
 export type TypographyVariant =

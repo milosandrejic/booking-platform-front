@@ -1,14 +1,15 @@
 "use client";
 
-import { createContext, useContext, useEffect } from "react";
-import { theme } from "./theme.js";
-import GlobalStyle from "./GlobalStyle.jsx";
+import { createContext, useContext, useEffect, type ReactNode } from "react";
+import type { Theme } from "./types";
+import { theme } from "./theme";
+import { CssBaseline } from "./CssBaseline";
 
 // Create theme context
-const ThemeContext = createContext(theme);
+const ThemeContext = createContext<Theme>(theme);
 
 // Hook to use theme in components
-export const useTheme = () => {
+export const useTheme = (): Theme => {
   const context = useContext(ThemeContext);
   if (!context) {
     throw new Error("useTheme must be used within a ThemeProvider");
@@ -17,18 +18,20 @@ export const useTheme = () => {
 };
 
 // Helper function to inject CSS variables
-const injectCSSVariables = (themeObject) => {
+const injectCSSVariables = (themeObject: Theme): void => {
   if (typeof document === "undefined") {
     return; // SSR check
   }
   
-  const cssVariables = {};
+  const cssVariables: Record<string, string | number> = {};
   
   // Colors
   Object.entries(themeObject.colors).forEach(([colorGroup, colors]) => {
     if (typeof colors === "object" && colors !== null) {
       Object.entries(colors).forEach(([colorName, colorValue]) => {
-        cssVariables[`--color-${colorGroup}-${colorName}`] = colorValue;
+        if (typeof colorValue === "string") {
+          cssVariables[`--color-${colorGroup}-${colorName}`] = colorValue;
+        }
       });
     }
   });
@@ -49,7 +52,9 @@ const injectCSSVariables = (themeObject) => {
   Object.entries(themeObject.typography).forEach(([variant, styles]) => {
     if (typeof styles === "object" && styles !== null) {
       Object.entries(styles).forEach(([property, value]) => {
-        cssVariables[`--typography-${variant}-${property}`] = value;
+        if (typeof value === "string" || typeof value === "number") {
+          cssVariables[`--typography-${variant}-${property}`] = value;
+        }
       });
     }
   });
@@ -90,8 +95,20 @@ const injectCSSVariables = (themeObject) => {
   styleElement.textContent = styleText;
 };
 
+export interface ThemeProviderProps {
+  children: ReactNode;
+  customTheme?: Theme;
+  applyCssReset?: boolean;
+  injectCSSVars?: boolean;
+}
+
 // React Context theme provider
-export const ThemeProvider = ({ children, customTheme, includeGlobalStyles = true, injectCSSVars = true }) => {
+export const ThemeProvider = ({ 
+  children, 
+  customTheme, 
+  applyCssReset = true, 
+  injectCSSVars = true 
+}: ThemeProviderProps) => {
   const themeValue = customTheme || theme;
   
   useEffect(() => {
@@ -102,7 +119,7 @@ export const ThemeProvider = ({ children, customTheme, includeGlobalStyles = tru
   
   return (
     <ThemeContext.Provider value={themeValue}>
-      {includeGlobalStyles && <GlobalStyle />}
+      {applyCssReset && <CssBaseline />}
       {children}
     </ThemeContext.Provider>
   );

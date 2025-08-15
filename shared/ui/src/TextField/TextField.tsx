@@ -1,4 +1,4 @@
-import React, { forwardRef, useId } from "react";
+import { forwardRef, useId } from "react";
 import "./TextField.scss";
 
 export type TextFieldType = "text" | "password";

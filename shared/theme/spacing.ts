@@ -1,4 +1,6 @@
-export const spacing = {
+import type { Spacing, BorderRadius, Shadows, Breakpoints } from "./types";
+
+export const spacing: Spacing = {
   0: "0",
   1: "0.25rem",  // 4px
   2: "0.5rem",   // 8px
@@ -19,7 +21,7 @@ export const spacing = {
   64: "16rem"    // 256px
 };
 
-export const borderRadius = {
+export const borderRadius: BorderRadius = {
   none: "0",
   sm: "0.125rem",   // 2px
   base: "0.25rem",  // 4px
@@ -31,7 +33,7 @@ export const borderRadius = {
   full: "9999px"
 };
 
-export const shadows = {
+export const shadows: Shadows = {
   none: "none",
   sm: "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
   base: "0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)",
@@ -42,7 +44,7 @@ export const shadows = {
   inner: "inset 0 2px 4px 0 rgba(0, 0, 0, 0.06)"
 };
 
-export const breakpoints = {
+export const breakpoints: Breakpoints = {
   xs: "0px",
   sm: "640px",
   md: "768px",
