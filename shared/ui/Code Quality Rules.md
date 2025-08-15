@@ -228,25 +228,11 @@ when function is staring with if condition no empty line is required above if
   * Have a **clear purpose** (avoid multi-responsibility components).
   * Provide **basic variants** (similar to Material UI: size, variant, state).
   * Include **default props** for predictable behavior.
-  * Use **JSDoc** for all props, events, and slot content.
   * Keep **logic and presentation separate** (hooks vs. UI).
 * Props:
 
   * Boolean props should start with `is` or `has`.
   * Enum-like props should be restricted to known values.
-* Example JSDoc:
-
-  ```jsx
-  /**
-   * Primary button for form submission.
-   * @param {object} props
-   * @param {React.ReactNode} props.children - Button label.
-   * @param {('primary'|'secondary'|'text')} [props.variant='primary'] - Visual style.
-   * @param {boolean} [props.disabled=false] - Disable button.
-   * @param {() => void} [props.onClick] - Click handler.
-   */
-  ```
-
 ---
 
 ## 5) Comments in Code
