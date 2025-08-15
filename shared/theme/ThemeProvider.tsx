@@ -81,7 +81,55 @@ const injectCSSVariables = (themeObject: Theme): void => {
     .map(([property, value]) => `${property}: ${value};`)
     .join("\n  ");
   
-  const styleText = `:root {\n  ${cssText}\n}`;
+  // Font face declarations for local Roboto fonts
+  const fontFaces = `
+    @font-face {
+      font-family: 'Roboto';
+      font-style: normal;
+      font-weight: 100;
+      src: url('./fonts/Roboto-Thin.ttf') format('truetype');
+    }
+    @font-face {
+      font-family: 'Roboto';
+      font-style: normal;
+      font-weight: 300;
+      src: url('./fonts/Roboto-Light.ttf') format('truetype');
+    }
+    @font-face {
+      font-family: 'Roboto';
+      font-style: normal;
+      font-weight: 400;
+      src: url('./fonts/Roboto-Regular.ttf') format('truetype');
+    }
+    @font-face {
+      font-family: 'Roboto';
+      font-style: normal;
+      font-weight: 500;
+      src: url('./fonts/Roboto-Medium.ttf') format('truetype');
+    }
+    @font-face {
+      font-family: 'Roboto';
+      font-style: normal;
+      font-weight: 700;
+      src: url('./fonts/Roboto-Bold.ttf') format('truetype');
+    }
+    @font-face {
+      font-family: 'Roboto';
+      font-style: normal;
+      font-weight: 900;
+      src: url('./fonts/Roboto-Black.ttf') format('truetype');
+    }
+  `;
+  
+  const styleText = `${fontFaces}
+  
+  :root {
+    ${cssText}
+  }
+  
+  body {
+    font-family: var(--font-family);
+  }`;
   
   // Check if style element already exists
   let styleElement = document.getElementById("theme-css-variables");

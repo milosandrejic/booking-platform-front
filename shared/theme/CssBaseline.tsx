@@ -1,6 +1,3 @@
-import React from 'react';
-
-// CSS Baseline component - Standard CSS reset only
 export const CssBaseline = () => {
   const baselineStyles = `
     /* CSS Reset - Modern Normalize */

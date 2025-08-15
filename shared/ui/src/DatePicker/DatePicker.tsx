@@ -42,13 +42,13 @@ const MONTHS = [
 ];
 
 const DAYS = [
-  "Sun", 
-  "Mon", 
-  "Tue", 
-  "Wed", 
-  "Thu", 
-  "Fri", 
-  "Sat"
+  "M", 
+  "T", 
+  "W", 
+  "T", 
+  "F", 
+  "S",
+  "S"
 ];
 
 const toDayjs = (date: Date | Dayjs | null): Dayjs | null => {
