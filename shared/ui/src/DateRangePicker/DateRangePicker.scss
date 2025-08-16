@@ -1,7 +1,7 @@
 .daterangepicker {
   position: relative;
   display: inline-block;
-  font-family: var(--font-family, Roboto, sans-serif);
+  font-family: var(--font-family-primary);
 
   &--full-width {
     width: 100%;
@@ -13,16 +13,16 @@
 
   &__label {
     display: block;
-    margin-bottom: var(--spacing-1, 4px);
-    font-size: var(--typography-body2-font-size, 14px);
-    font-weight: var(--font-weight-medium, 500);
-    color: var(--on-surface, #1a1a1a);
+    margin-bottom: var(--spacing-1);
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    color: var(--color-text-primary);
     line-height: 1.4;
   }
 
   &__required {
-    color: var(--error, #d32f2f);
-    margin-left: 2px;
+    color: var(--color-error-main);
+    margin-left: var(--spacing-1);
   }
 
   &__input-wrapper {
@@ -33,58 +33,58 @@
 
   &__input {
     width: 100%;
-    padding: var(--spacing-3, 12px) var(--spacing-10, 40px) var(--spacing-3, 12px) var(--spacing-3, 12px);
-    border: 1px solid var(--outline, #e0e0e0);
-    border-radius: var(--border-radius-sm, 4px);
-    font-size: var(--typography-body1-font-size, 16px);
+    padding: var(--spacing-3) var(--spacing-10) var(--spacing-3) var(--spacing-3);
+    border: 1px solid var(--color-border-main);
+    border-radius: var(--border-radius-sm);
+    font-size: var(--font-size-md);
     line-height: 1.5;
-    background-color: var(--surface, #ffffff);
-    color: var(--on-surface, #1a1a1a);
+    background-color: var(--color-background-default);
+    color: var(--color-text-primary);
     transition: border-color 0.15s ease, box-shadow 0.15s ease;
     cursor: pointer;
 
     &:focus {
       outline: none;
-      border-color: var(--primary, #1976d2);
-      box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.2);
+      border-color: var(--color-primary-main);
+      box-shadow: 0 0 0 1px var(--color-primary-main);
     }
 
     &::placeholder {
-      color: var(--outline-variant, #9e9e9e);
+      color: var(--color-text-secondary);
     }
   }
 
   &--disabled &__input {
-    background-color: var(--surface-disabled, #f5f5f5);
-    color: var(--on-surface-disabled, rgba(26, 26, 26, 0.38));
+    background-color: var(--color-background-hover);
+    color: var(--color-text-disabled);
     cursor: not-allowed;
   }
 
   &--error &__input {
-    border-color: var(--error, #d32f2f);
+    border-color: var(--color-error-main);
   }
 
   &--error &__input:focus {
-    border-color: var(--error, #d32f2f);
-    box-shadow: 0 0 0 2px rgba(211, 47, 47, 0.2);
+    border-color: var(--color-error-main);
+    box-shadow: 0 0 0 1px var(--color-error-main);
   }
 
   &__input-wrapper svg {
     position: absolute;
-    right: var(--spacing-3, 12px);
-    color: var(--outline-variant, #9e9e9e);
+    right: var(--spacing-3);
+    color: var(--color-text-secondary);
     pointer-events: none;
   }
 
   &__helper-text {
-    margin-top: var(--spacing-1, 4px);
-    font-size: var(--typography-caption-font-size, 12px);
-    color: var(--outline-variant, #9e9e9e);
+    margin-top: var(--spacing-1);
+    font-size: var(--font-size-xs);
+    color: var(--color-text-secondary);
     line-height: 1.4;
   }
 
   &--error &__helper-text {
-    color: var(--error, #d32f2f);
+    color: var(--color-error-main);
   }
 
   &__popup {
@@ -92,36 +92,36 @@
     top: 100%;
     left: 0;
     z-index: 1300;
-    margin-top: var(--spacing-1, 4px);
-    padding: var(--spacing-4, 16px);
-    background-color: var(--surface-elevated, #ffffff);
-    border: 1px solid var(--outline-variant, #e0e0e0);
-    border-radius: var(--border-radius-md, 8px);
-    box-shadow: var(--elevation-8, 0 8px 24px rgba(0, 0, 0, 0.15));
+    margin-top: var(--spacing-1);
+    padding: var(--spacing-4);
+    background-color: var(--color-background-default);
+    border: 1px solid var(--color-border-main);
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadows-lg);
   }
 
   &__months {
     display: flex;
-    gap: var(--spacing-6, 24px);
+    gap: var(--spacing-6);
   }
 
   &__month {
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-2, 8px);
+    gap: var(--spacing-2);
   }
 
   &__header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: var(--spacing-2, 8px) 0;
+    padding: var(--spacing-2) 0;
   }
 
   &__month-year {
-    font-size: var(--typography-h6-font-size, 18px);
-    font-weight: var(--font-weight-medium, 500);
-    color: var(--on-surface, #1a1a1a);
+    font-size: var(--font-size-lg);
+    font-weight: 500;
+    color: var(--color-text-primary);
   }
 
   &__nav-button {
@@ -131,18 +131,18 @@
     width: 32px;
     height: 32px;
     border: none;
-    border-radius: var(--border-radius-full, 50%);
+    border-radius: var(--border-radius-full);
     background-color: transparent;
-    color: var(--on-surface-variant, #666666);
+    color: var(--color-text-secondary);
     cursor: pointer;
     transition: background-color 0.15s ease;
 
     &:hover {
-      background-color: var(--state-hover, rgba(0, 0, 0, 0.04));
+      background-color: var(--color-grey-100);
     }
 
     &:disabled {
-      color: var(--on-surface-disabled, rgba(26, 26, 26, 0.38));
+      color: var(--color-text-disabled);
       cursor: not-allowed;
     }
 
@@ -155,7 +155,7 @@
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     gap: 1px;
-    margin-bottom: var(--spacing-1, 4px);
+    margin-bottom: var(--spacing-1);
   }
 
   &__day-header {
@@ -164,9 +164,9 @@
     justify-content: center;
     width: 36px;
     height: 24px;
-    font-size: var(--typography-caption-font-size, 12px);
-    font-weight: var(--font-weight-medium, 500);
-    color: var(--on-surface-variant, #666666);
+    font-size: var(--font-size-xs);
+    font-weight: 500;
+    color: var(--color-text-secondary);
   }
 
   &__days {
@@ -182,46 +182,46 @@
     width: 36px;
     height: 36px;
     border: none;
-    border-radius: var(--border-radius-sm, 4px);
+    border-radius: var(--border-radius-sm);
     background-color: transparent;
-    font-size: var(--typography-body2-font-size, 14px);
-    color: var(--on-surface, #1a1a1a);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-primary);
     cursor: pointer;
     transition: background-color 0.15s ease;
 
     &--other-month {
-      color: var(--on-surface-variant, #666666);
+      color: var(--color-text-secondary);
     }
 
     &--today {
-      color: var(--on-primary-container, #0d47a1);
-      font-weight: var(--font-weight-bold, 500);
+      color: var(--color-primary-main);
+      font-weight: 500;
     }
 
     &--start {
-      background-color: var(--primary, #1976d2);
-      color: var(--on-primary, #ffffff);
-      border-radius: var(--border-radius-sm, 4px) 0 0 var(--border-radius-sm, 4px);
+      background-color: var(--color-primary-main);
+      color: var(--color-primary-contrast-text);
+      border-radius: var(--border-radius-sm) 0 0 var(--border-radius-sm);
     }
 
     &--end {
-      background-color: var(--primary, #1976d2);
-      color: var(--on-primary, #ffffff);
-      border-radius: 0 var(--border-radius-sm, 4px) var(--border-radius-sm, 4px) 0;
+      background-color: var(--color-primary-main);
+      color: var(--color-primary-contrast-text);
+      border-radius: 0 var(--border-radius-sm) var(--border-radius-sm) 0;
     }
 
     &--start.daterangepicker__day--end {
-      border-radius: var(--border-radius-sm, 4px);
+      border-radius: var(--border-radius-sm);
     }
 
     &--in-range {
-      background-color: var(--primary-container, #e3f2fd);
-      color: var(--on-primary-container, #0d47a1);
+      background-color: var(--color-primary-100);
+      color: var(--color-primary-main);
       border-radius: 0;
     }
 
     &--disabled {
-      color: var(--on-surface-disabled, rgba(26, 26, 26, 0.38));
+      color: var(--color-text-disabled);
       cursor: not-allowed;
     }
   }
@@ -229,12 +229,12 @@
   // Size variants
   &--small {
     .daterangepicker__input {
-      padding: var(--spacing-2, 8px) var(--spacing-8, 32px) var(--spacing-2, 8px) var(--spacing-2, 8px);
-      font-size: var(--typography-body2-font-size, 14px);
+      padding: var(--spacing-2) var(--spacing-8) var(--spacing-2) var(--spacing-2);
+      font-size: var(--font-size-sm);
     }
 
     .daterangepicker__input-wrapper svg {
-      right: var(--spacing-2, 8px);
+      right: var(--spacing-2);
       width: 16px;
       height: 16px;
     }
@@ -242,12 +242,12 @@
 
   &--large {
     .daterangepicker__input {
-      padding: var(--spacing-4, 16px) var(--spacing-12, 48px) var(--spacing-4, 16px) var(--spacing-4, 16px);
-      font-size: var(--typography-h6-font-size, 18px);
+      padding: var(--spacing-4) var(--spacing-12) var(--spacing-4) var(--spacing-4);
+      font-size: var(--font-size-lg);
     }
 
     .daterangepicker__input-wrapper svg {
-      right: var(--spacing-4, 16px);
+      right: var(--spacing-4);
       width: 24px;
       height: 24px;
     }
@@ -256,17 +256,17 @@
   // Filled variant
   &--filled {
     .daterangepicker__input {
-      background-color: var(--surface-variant, #f5f5f5);
+      background-color: var(--color-background-hover);
       border: 1px solid transparent;
     }
 
     .daterangepicker__input:focus {
-      background-color: var(--surface, #ffffff);
-      border-color: var(--primary, #1976d2);
+      background-color: var(--color-background-default);
+      border-color: var(--color-primary-main);
     }
 
     &.daterangepicker--error .daterangepicker__input {
-      border-color: var(--error, #d32f2f);
+      border-color: var(--color-error-main);
     }
   }
 }

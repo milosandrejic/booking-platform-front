@@ -17,19 +17,14 @@ export {
 
 // Type exports for consumers
 export type {
-  Colors,
+  Color,
   ColorScale,
   ColorVariant,
-  Typography,
-  TypographyVariant,
-  FontWeights,
-  FontSizes,
-  LineHeights,
-  LetterSpacing,
+  FontSize,
   Spacing,
   BorderRadius,
-  Shadows,
-  Breakpoints
+  Shadow,
+  Breakpoint
 } from "./types";
 
 // Helper functions for common usage patterns

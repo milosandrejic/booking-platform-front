@@ -86,8 +86,8 @@
     grid-column: span 12 / span 12;
   }
 
-  // Small breakpoint (600px+)
-  @media (width >=640px) {
+  // Small breakpoint
+  @media (width >=var(--breakpoints-sm)) {
     &--sm-1 {
       grid-column: span 1 / span 1;
     }
@@ -137,8 +137,8 @@
     }
   }
 
-  // Medium breakpoint (905px+)
-  @media (width >=768px) {
+  // Medium breakpoint
+  @media (width >=var(--breakpoints-md)) {
     &--md-1 {
       grid-column: span 1 / span 1;
     }
@@ -188,8 +188,8 @@
     }
   }
 
-  // Large breakpoint (1240px+)
-  @media (width >=1024px) {
+  // Large breakpoint
+  @media (width >=var(--breakpoints-lg)) {
     &--lg-1 {
       grid-column: span 1 / span 1;
     }
@@ -239,8 +239,8 @@
     }
   }
 
-  // Extra large breakpoint (1440px+)
-  @media (width >=1280px) {
+  // Extra large breakpoint
+  @media (width >=var(--breakpoints-xl)) {
     &--xl-1 {
       grid-column: span 1 / span 1;
     }

@@ -145,11 +145,11 @@
   // Disabled state
   &--disabled {
     .textfield__label {
-      color: var(--text-secondary);
+      color: var(--color-text-secondary);
     }
 
     .textfield__input {
-      border-color: #e0e0e0;
+      border-color: var(--color-border-light);
     }
   }
 }

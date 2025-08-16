@@ -63,14 +63,14 @@
     border: none;
     padding: var(--spacing-1);
     cursor: pointer;
-    color: var(--text-secondary);
+    color: var(--color-text-secondary);
     transition: color 0.2s ease;
     display: flex;
     align-items: center;
     justify-content: center;
 
     &:hover:not(:disabled) {
-      color: var(--text-primary);
+      color: var(--color-text-primary);
     }
 
     &:disabled {
@@ -82,7 +82,7 @@
   &__helper-text {
     font-size: 0.75rem;
     margin-top: var(--spacing-1);
-    color: var(--text-secondary);
+    color: var(--color-text-secondary);
   }
 
   &__popup {
@@ -91,9 +91,9 @@
     left: 0;
     right: 0;
     z-index: 1000;
-    background: var(--background);
-    border: 1px solid var(--outline);
-    border-radius: var(--border-radius-lg, 12px);
+    background: var(--color-background-default);
+    border: 1px solid var(--color-border-main);
+    border-radius: var(--border-radius-lg);
     box-shadow:
       0 4px 6px -1px rgba(0, 0, 0, 0.1),
       0 2px 4px -1px rgba(0, 0, 0, 0.06),
@@ -129,7 +129,7 @@
     border: none;
     padding: var(--spacing-1);
     cursor: pointer;
-    color: var(--text-secondary);
+    color: var(--color-text-secondary);
     transition: color 0.2s ease, background-color 0.2s ease;
     border-radius: var(--border-radius-base);
     display: flex;
@@ -137,7 +137,7 @@
     justify-content: center;
 
     &:hover {
-      color: var(--text-primary);
+      color: var(--color-text-primary);
       background-color: var(--color-grey-100);
     }
   }
@@ -160,7 +160,7 @@
     text-align: center;
     font-size: 0.75rem;
     font-weight: 600;
-    color: var(--text-secondary);
+    color: var(--color-text-secondary);
     padding: var(--spacing-1);
     text-transform: uppercase;
   }
@@ -176,7 +176,7 @@
     border: none;
     padding: var(--spacing-2);
     cursor: pointer;
-    color: var(--text-primary);
+    color: var(--color-text-primary);
     transition: all 0.2s ease;
     border-radius: 50%;
     font-size: 0.875rem;
@@ -192,7 +192,7 @@
     }
 
     &--other-month {
-      color: var(--text-secondary);
+      color: var(--color-text-secondary);
       opacity: 0.4;
     }
 
@@ -219,37 +219,37 @@
   // Variants
   &--outlined {
     .datepicker__input {
-      border: 1px solid var(--outline);
-      background-color: var(--background);
+      border: 1px solid var(--color-border-main);
+      background-color: var(--color-background-default);
     }
 
     .datepicker__input:hover:not(:disabled) {
-      border-color: var(--text-primary);
+      border-color: var(--color-text-primary);
     }
 
     .datepicker__input:focus {
-      border-color: var(--primary);
-      box-shadow: 0 0 0 1px var(--primary);
+      border-color: var(--color-primary-main);
+      box-shadow: 0 0 0 1px var(--color-primary-main);
     }
   }
 
   &--filled {
     .datepicker__input {
       border: none;
-      border-bottom: 1px solid var(--outline);
+      border-bottom: 1px solid var(--color-border-main);
       border-radius: var(--border-radius-base) var(--border-radius-base) 0 0;
-      background-color: #f5f5f5;
+      background-color: var(--color-background-hover);
     }
 
     .datepicker__input:hover:not(:disabled) {
-      background-color: #eeeeee;
-      border-bottom-color: var(--text-primary);
+      background-color: var(--color-grey-200);
+      border-bottom-color: var(--color-text-primary);
     }
 
     .datepicker__input:focus {
-      border-bottom-color: var(--primary);
-      box-shadow: 0 1px 0 0 var(--primary);
-      background-color: #eeeeee;
+      border-bottom-color: var(--color-primary-main);
+      box-shadow: 0 1px 0 0 var(--color-primary-main);
+      background-color: var(--color-grey-200);
     }
   }
 
@@ -309,11 +309,11 @@
   // Disabled state
   &--disabled {
     .datepicker__label {
-      color: var(--text-secondary);
+      color: var(--color-text-secondary);
     }
 
     .datepicker__input {
-      border-color: #e0e0e0;
+      border-color: var(--color-border-light);
     }
   }
 

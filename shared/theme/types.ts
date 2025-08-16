@@ -37,27 +37,27 @@ export interface GreyScale {
   900: string;
 }
 
-export interface BackgroundColors {
+export interface BackgroundColor {
   default: string;
   paper: string;
   subtle: string;
   hover: string;
 }
 
-export interface TextColors {
+export interface TextColor {
   primary: string;
   secondary: string;
   disabled: string;
   hint: string;
 }
 
-export interface BorderColors {
+export interface BorderColor {
   light: string;
   main: string;
   dark: string;
 }
 
-export interface Colors {
+export interface Color {
   primary: ColorScale;
   secondary: ColorScale;
   success: ColorVariant;
@@ -65,28 +65,16 @@ export interface Colors {
   error: ColorVariant;
   info: ColorVariant;
   grey: GreyScale;
-  background: BackgroundColors;
-  text: TextColors;
+  background: BackgroundColor;
+  text: TextColor;
   divider: string;
-  border: BorderColors;
+  border: BorderColor;
 }
 
-export interface FontWeights {
-  thin: number;
-  extralight: number;
-  light: number;
-  normal: number;
-  medium: number;
-  semibold: number;
-  bold: number;
-  extrabold: number;
-  black: number;
-}
-
-export interface FontSizes {
+export interface FontSize {
   xs: string;
   sm: string;
-  base: string;
+  md: string;
   lg: string;
   xl: string;
   "2xl": string;
@@ -95,49 +83,8 @@ export interface FontSizes {
   "5xl": string;
   "6xl": string;
   "7xl": string;
-}
-
-export interface LineHeights {
-  none: number;
-  tight: number;
-  snug: number;
-  normal: number;
-  relaxed: number;
-  loose: number;
-}
-
-export interface LetterSpacing {
-  tighter: string;
-  tight: string;
-  normal: string;
-  wide: string;
-  wider: string;
-  widest: string;
-}
-
-export interface TypographyVariant {
-  fontFamily: string;
-  fontWeight: number;
-  fontSize: string;
-  lineHeight: number | string;
-  letterSpacing?: string;
-  textTransform?: string;
-}
-
-export interface Typography {
-  h1: TypographyVariant;
-  h2: TypographyVariant;
-  h3: TypographyVariant;
-  h4: TypographyVariant;
-  h5: TypographyVariant;
-  h6: TypographyVariant;
-  subtitle1: TypographyVariant;
-  subtitle2: TypographyVariant;
-  body1: TypographyVariant;
-  body2: TypographyVariant;
-  button: TypographyVariant;
-  caption: TypographyVariant;
-  overline: TypographyVariant;
+  "8xl": string;
+  "9xl": string;
 }
 
 export interface Spacing {
@@ -173,7 +120,7 @@ export interface BorderRadius {
   full: string;
 }
 
-export interface Shadows {
+export interface Shadow {
   none: string;
   sm: string;
   base: string;
@@ -184,7 +131,7 @@ export interface Shadows {
   inner: string;
 }
 
-export interface Breakpoints {
+export interface Breakpoint {
   xs: string;
   sm: string;
   md: string;
@@ -194,12 +141,11 @@ export interface Breakpoints {
 }
 
 export interface Theme {
-  color: Colors;
-  typography: Typography;
+  color: Color;
   fontFamily: string;
-  fontWeights: FontWeights;
+  fontSize: FontSize;
   spacing: Spacing;
   borderRadius: BorderRadius;
-  shadows: Shadows;
-  breakpoints: Breakpoints;
+  shadows: Shadow;
+  breakpoints: Breakpoint;
 }

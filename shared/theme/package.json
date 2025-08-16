@@ -21,7 +21,8 @@
   "scripts": {
     "build": "tsc --build",
     "postbuild": "tsx build-css.ts",
-    "dev": "tsc --watch & nodemon --watch tokens.json --watch theme.ts --exec \"tsx build-css.ts\"",
+    "dev": "tsx build-css.ts && tsc --watch",
+    "dev:css": "tsx build-css.ts",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "clean": "rm -rf dist node_modules package-lock.json yarn.lock pnpm-lock.yaml",
