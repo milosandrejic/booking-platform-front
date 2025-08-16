@@ -1,6 +1,6 @@
 .typography {
   margin: 0;
-  color: var(--text-primary);
+  color: var(--color-text-primary);
   font-family: Roboto, sans-serif;
 
   &--variant-displayLarge {
@@ -109,11 +109,11 @@
   }
 
   &--color-primary {
-    color: var(--primary);
+    color: var(--color-primary-main);
   }
 
   &--color-secondary {
-    color: var(--secondary);
+    color: var(--color-secondary-main);
   }
 
   &--color-error {
@@ -121,15 +121,15 @@
   }
 
   &--color-onSurface {
-    color: var(--text-primary);
+    color: var(--color-text-primary);
   }
 
   &--color-onSurfaceVariant {
-    color: var(--text-secondary);
+    color: var(--color-text-secondary);
   }
 
   &--color-outline {
-    color: var(--outline);
+    color: var(--color-border-main);
   }
 
   &--align-left {
