@@ -52,7 +52,6 @@ shared/ui/
 * Prefer **early returns** over nested conditionals.
 * Keep components **pure** (no side effects in render). Effects only inside hooks.
 * Keep components simple — no unnecessary complexity unless explicitly requested.
-* Document props and usage with JSDoc comments above the component.
 
 ### Examples
 
@@ -241,7 +240,6 @@ when function is staring with if condition no empty line is required above if
 * Use **inline comments** sparingly for complex logic.
 * Use **block comments** above significant code sections or functions.
 * Keep comments **up to date**; outdated comments must be removed.
-* Use JSDoc for components, functions, and complex methods.
 * Avoid redundant comments for self-explanatory JSX or Sass.
 
 ---
