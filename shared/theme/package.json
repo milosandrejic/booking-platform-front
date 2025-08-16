@@ -1,8 +1,9 @@
 {
   "name": "@booking-platform-shared/theme",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
-  "description": "Shared Material-UI theme and styling system",
+  "type": "module",
+  "description": "Shared design system with TypeScript theme objects and automated CSS variables generation",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
@@ -10,7 +11,8 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
       "require": "./dist/index.js"
-    }
+    },
+    "./dist/variables.css": "./dist/variables.css"
   },
   "files": [
     "dist/",
@@ -18,13 +20,13 @@
   ],
   "scripts": {
     "build": "tsc --build",
-    "dev": "tsc --watch",
+    "postbuild": "tsx build-css.ts",
+    "dev": "tsc --watch & nodemon --watch tokens.json --watch theme.ts --exec \"tsx build-css.ts\"",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "clean": "rm -rf dist node_modules package-lock.json yarn.lock pnpm-lock.yaml",
     "typecheck": "tsc --noEmit"
   },
-  "dependencies": {},
   "peerDependencies": {
     "react": "19.1.0",
     "react-dom": "19.1.0"

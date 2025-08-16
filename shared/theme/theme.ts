@@ -1,18 +1,16 @@
 import type { Theme } from "./types";
-import { colors } from "./colors";
-import { typography, fontFamily, fontWeights } from "./typography";
-import { spacing, borderRadius, shadows, breakpoints } from "./spacing";
+import tokens from "./tokens.json";
 
-// Main theme object - simple and focused
+// Main theme object - directly from tokens
 export const theme: Theme = {
-  colors,
-  typography,
-  fontFamily,
-  fontWeights,
-  spacing,
-  borderRadius,
-  shadows,
-  breakpoints
+  color: tokens.color,
+  typography: tokens.typography,
+  fontFamily: tokens.fontFamily.primary,
+  fontWeights: tokens.fontWeight,
+  spacing: tokens.spacing,
+  borderRadius: tokens.borderRadius,
+  shadows: tokens.shadow,
+  breakpoints: tokens.breakpoint
 };
 
 export default theme;

@@ -1,23 +1,19 @@
-// Main theme export
+// Main theme exports
 export { default as theme } from "./theme";
+export { default as tokens } from "./tokens.json";
 export type { Theme } from "./types";
-
-// Individual system exports  
-export { colors } from "./colors";
-export {
-  typography,
-  fontFamily,
-  fontWeights,
-  fontSizes,
-  lineHeights,
-  letterSpacing
-} from "./typography";
-export { spacing, borderRadius, shadows, breakpoints } from "./spacing";
 
 // React Context providers and hooks
 export { default as ThemeProvider, useTheme } from "./ThemeProvider";
 export type { ThemeProviderProps } from "./ThemeProvider";
 export { CssBaseline } from "./CssBaseline";
+
+// CSS Variables utilities
+export {
+  flattenTheme,
+  generateCSSVariables,
+  generateCompleteCSS
+} from "./cssVariables";
 
 // Type exports for consumers
 export type {
@@ -35,3 +31,8 @@ export type {
   Shadows,
   Breakpoints
 } from "./types";
+
+// Helper functions for common usage patterns
+export const getSpacing = (multiplier: number): string => {
+  return `${multiplier * 0.5}rem`; // 8px base unit (MUI standard)
+};

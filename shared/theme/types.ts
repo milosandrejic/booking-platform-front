@@ -194,7 +194,7 @@ export interface Breakpoints {
 }
 
 export interface Theme {
-  colors: Colors;
+  color: Colors;
   typography: Typography;
   fontFamily: string;
   fontWeights: FontWeights;

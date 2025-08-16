@@ -34,6 +34,7 @@
     "node_modules",
     "dist",
     "**/*.js",
-    "**/*.jsx"
+    "**/*.jsx",
+    "build-css.ts"
   ]
 }
