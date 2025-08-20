@@ -67,13 +67,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
     const checkboxId = id || `checkbox-${reactId}`;
 
     const isControlled = checked !== undefined;
-    
-    let isChecked;
-    if (isControlled) {
-      isChecked = checked;
-    } else {
-      isChecked = internalChecked;
-    }
+    const isChecked = isControlled ? checked : internalChecked;
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       const newChecked = event.target.checked;
@@ -98,18 +92,10 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
 
     const renderIcon = () => {
       if (isChecked) {
-        if (checkedIcon) {
-          return checkedIcon;
-        }
-
-        return <CheckIcon />;
+        return checkedIcon || <CheckIcon />;
       }
 
-      if (icon) {
-        return icon;
-      }
-
-      return null;
+      return icon || null;
     };
 
     return (
@@ -132,19 +118,17 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
         />
         
         {
-          hasCustomIcons &&
-          <span className="checkbox__custom-icon">
-            {renderIcon()}
-          </span>
-        }
-
-        {
-          !hasCustomIcons &&
-          <span className="checkbox__box">
-            <span className="checkbox__icon">
+          hasCustomIcons ? (
+            <span className="checkbox__custom-icon">
               {renderIcon()}
             </span>
-          </span>
+          ) : (
+            <span className="checkbox__box">
+              <span className="checkbox__icon">
+                {renderIcon()}
+              </span>
+            </span>
+          )
         }
         
         {

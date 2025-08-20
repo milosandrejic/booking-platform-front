@@ -1,0 +1,17 @@
+.radio-group {
+  display: flex;
+
+  &--vertical {
+    flex-direction: column;
+    gap: var(--spacing-3);
+  }
+
+  &--horizontal {
+    flex-direction: row;
+    gap: var(--spacing-4);
+  }
+
+  &--disabled {
+    opacity: 0.6;
+  }
+}

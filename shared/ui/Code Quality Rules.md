@@ -228,10 +228,111 @@ when function is staring with if condition no empty line is required above if
   * Provide **basic variants** (similar to Material UI: size, variant, state).
   * Include **default props** for predictable behavior.
   * Keep **logic and presentation separate** (hooks vs. UI).
+  * **Support SSR by default** — components should render on the server without client-side dependencies.
 * Props:
 
   * Boolean props should start with `is` or `has`.
   * Enum-like props should be restricted to known values.
+
+### SSR Compatibility Rules
+
+* Components should **support Server-Side Rendering (SSR)** by default.
+* Add the **`"use client"` directive** only when the component uses features that require client-side JavaScript execution:
+  * React hooks (`useState`, `useEffect`, `useRef`, `useContext`, custom hooks, etc.)
+  * Browser APIs (`window`, `document`, `localStorage`, `navigator`, etc.)
+  * Third-party libraries that depend on the browser environment
+  * Event handlers that manage internal component state or trigger side effects
+* **Components that DON'T need `"use client"`:**
+  * Pure components that only render JSX based on props
+  * Components that accept event handler props but don't use them internally (just pass them to DOM elements)
+  * Components using only CSS for styling and animations
+
+**Examples:**
+
+✅ **SSR-compatible (no directive needed):**
+```jsx
+export function Button({ children, onClick, variant = 'primary', disabled }) {
+  return (
+    <button 
+      className={`btn btn--${variant}`}
+      onClick={onClick}
+      disabled={disabled}
+    >
+      {children}
+    </button>
+  );
+}
+```
+
+✅ **Client component with hooks (directive required):**
+```jsx
+"use client";
+
+import { useState } from 'react';
+
+export function InteractiveButton({ children, onSubmit }) {
+  const [loading, setLoading] = useState(false);
+
+  const handleClick = () => {
+    setLoading(true);
+    onSubmit?.();
+  };
+
+  return (
+    <button onClick={handleClick} disabled={loading}>
+      {loading ? 'Loading...' : children}
+    </button>
+  );
+}
+```
+
+✅ **Client component with browser APIs (directive required):**
+```jsx
+"use client";
+
+export function ThemeToggle() {
+  const handleToggle = () => {
+    const isDark = document.body.classList.contains('dark');
+    document.body.classList.toggle('dark', !isDark);
+    localStorage.setItem('theme', isDark ? 'light' : 'dark');
+  };
+
+  return (
+    <button onClick={handleToggle}>
+      Toggle Theme
+    </button>
+  );
+}
+```
+
+✅ **Client component with useEffect (directive required):**
+```jsx
+"use client";
+
+import { useEffect, useState } from 'react';
+
+export function AutoSaveInput({ onSave, ...props }) {
+  const [value, setValue] = useState('');
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (value.trim()) {
+        onSave?.(value);
+      }
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, [value, onSave]);
+
+  return (
+    <input 
+      {...props}
+      value={value}
+      onChange={(e) => setValue(e.target.value)}
+    />
+  );
+}
+```
 ---
 
 ## 5) Comments in Code
