@@ -5,24 +5,25 @@ import "./DatePicker.scss";
 export type DatePickerVariant = "outlined" | "filled";
 export type DatePickerSize = "small" | "medium" | "large";
 
-export interface DatePickerProps {
-  label?: string;
-  value?: Date | Dayjs | null;
-  defaultValue?: Date | Dayjs | null;
-  onChange?: (date: Dayjs | null) => void;
-  onBlur?: React.FocusEventHandler<HTMLInputElement>;
-  onFocus?: React.FocusEventHandler<HTMLInputElement>;
-  variant?: DatePickerVariant;
-  size?: DatePickerSize;
-  error?: boolean;
-  helperText?: React.ReactNode;
-  disabled?: boolean;
-  required?: boolean;
-  fullWidth?: boolean;
-  name?: string;
-  className?: string;
-  style?: React.CSSProperties;
+interface DatePickerProps {
+  value?: Date;
+  onChange?: (date: Date | null) => void;
   placeholder?: string;
+  label?: string;
+  required?: boolean;
+  error?: string | boolean;
+  disabled?: boolean;
+  variant?: "outlined" | "filled";
+  size?: "small" | "medium" | "large";
+  fullWidth?: boolean;
+  minDate?: Date;
+  maxDate?: Date;
+  className?: string;
+  defaultValue?: Date;
+  onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
+  onFocus?: (event: React.FocusEvent<HTMLInputElement>) => void;
+  helperText?: string;
+  name?: string;
   dateFormat?: string;
 }
 
@@ -164,7 +165,7 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
       if (parsedDate) {
         setSelectedDate(parsedDate);
         setCurrentMonth(parsedDate.startOf("month"));
-        onChange?.(parsedDate);
+        onChange?.(parsedDate.toDate());
       } else if (newValue === "") {
         setSelectedDate(null);
         onChange?.(null);
@@ -180,7 +181,7 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
     const handleDateSelect = (date: Dayjs) => {
       setSelectedDate(date);
       setInputValue(formatDate(date, dateFormat));
-      onChange?.(date);
+      onChange?.(date.toDate());
       setIsOpen(false);
       inputRef.current?.focus();
     };
@@ -224,7 +225,7 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
           inputValue={inputValue}
           disabled={disabled}
           required={required}
-          error={error}
+          error={Boolean(error)}
           helperId={helperId}
           isOpen={isOpen}
           onInputChange={handleInputChange}

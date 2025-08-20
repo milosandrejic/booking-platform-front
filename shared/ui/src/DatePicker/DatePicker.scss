@@ -30,14 +30,14 @@
   &__input {
     width: 100%;
     border: 1px solid var(--color-border-main);
-    border-radius: var(--border-radius-base);
+    border-radius: var(--border-radius-sm);
     padding: var(--spacing-3) var(--spacing-4);
     padding-right: var(--spacing-10); // Space for calendar icon
     font-size: 1rem;
     color: var(--color-text-primary);
     background-color: var(--color-background-default);
     box-sizing: border-box;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
 
     &:focus {
       outline: none;
@@ -89,15 +89,11 @@
     position: absolute;
     top: 100%;
     left: 0;
-    right: 0;
-    z-index: 1000;
-    background: var(--color-background-default);
+    z-index: 1300;
+    background-color: var(--color-background-default);
     border: 1px solid var(--color-border-main);
-    border-radius: var(--border-radius-lg);
-    box-shadow:
-      0 4px 6px -1px rgba(0, 0, 0, 0.1),
-      0 2px 4px -1px rgba(0, 0, 0, 0.06),
-      0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadows-lg);
     margin-top: var(--spacing-1);
     padding: var(--spacing-4);
     min-width: 320px;
@@ -130,62 +126,72 @@
     padding: var(--spacing-1);
     cursor: pointer;
     color: var(--color-text-secondary);
-    transition: color 0.2s ease, background-color 0.2s ease;
-    border-radius: var(--border-radius-base);
+    transition: background-color 0.15s ease;
+    border-radius: var(--border-radius-full);
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 32px;
+    height: 32px;
 
     &:hover {
-      color: var(--color-text-primary);
       background-color: var(--color-grey-100);
+    }
+
+    &:disabled {
+      color: var(--color-text-disabled);
+      cursor: not-allowed;
+    }
+
+    &:disabled:hover {
+      background-color: transparent;
     }
   }
 
   &__month-year {
-    font-size: 1rem;
-    font-weight: 600;
-    color: var(--color-secondary);
+    font-size: var(--font-size-lg);
+    font-weight: 500;
+    color: var(--color-text-primary);
     margin: 0;
   }
 
   &__days-header {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    gap: var(--spacing-1);
-    margin-bottom: var(--spacing-2);
+    gap: 1px;
+    margin-bottom: var(--spacing-1);
   }
 
   &__day-name {
-    text-align: center;
-    font-size: 0.75rem;
-    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 24px;
+    font-size: var(--font-size-xs);
+    font-weight: 500;
     color: var(--color-text-secondary);
-    padding: var(--spacing-1);
-    text-transform: uppercase;
   }
 
   &__days {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    gap: var(--spacing-1);
+    gap: 1px;
   }
 
   &__day {
-    background: none;
-    border: none;
-    padding: var(--spacing-2);
-    cursor: pointer;
-    color: var(--color-text-primary);
-    transition: all 0.2s ease;
-    border-radius: 50%;
-    font-size: 0.875rem;
-    font-weight: 500;
-    min-height: 36px;
-    min-width: 36px;
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 36px;
+    height: 36px;
+    border: none;
+    border-radius: var(--border-radius-sm);
+    background-color: transparent;
+    font-size: var(--font-size-sm);
+    color: var(--color-text-primary);
+    cursor: pointer;
+    transition: background-color 0.15s ease;
 
     &:hover:not(:disabled) {
       background-color: var(--color-grey-100);
@@ -193,13 +199,11 @@
 
     &--other-month {
       color: var(--color-text-secondary);
-      opacity: 0.4;
     }
 
     &--selected {
       background-color: var(--color-primary-main);
       color: var(--color-primary-contrast-text);
-      font-weight: 600;
 
       &:hover {
         background-color: var(--color-primary-main);
@@ -207,11 +211,11 @@
     }
 
     &--today {
-      background-color: var(--color-grey-100);
-      font-weight: 600;
+      color: var(--color-primary-main);
+      font-weight: 500;
 
       &:not(.datepicker__day--selected):hover {
-        background-color: var(--color-grey-200);
+        background-color: var(--color-grey-100);
       }
     }
   }
@@ -237,7 +241,7 @@
     .datepicker__input {
       border: none;
       border-bottom: 1px solid var(--color-border-main);
-      border-radius: var(--border-radius-base) var(--border-radius-base) 0 0;
+      border-radius: var(--border-radius-sm) var(--border-radius-sm) 0 0;
       background-color: var(--color-background-hover);
     }
 
