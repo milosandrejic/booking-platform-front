@@ -6,7 +6,7 @@
 
 ## 1) Scope & Goals
 
-* **Scope:** Only `shared/ui` (React components + Sass styles).
+* **Scope:** Only `shared/ui` (React components + Sass styles + Typescript).
 * **Goals:** Simple, consistent, easy to maintain.
 
 ---

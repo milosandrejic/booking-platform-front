@@ -215,8 +215,20 @@
     }
 
     &--in-range {
+      background-color: var(--color-primary-main);
+      color: var(--color-primary-contrast-text);
+      border-radius: 0;
+    }
+
+    &--hover-range {
       background-color: var(--color-primary-100);
       color: var(--color-primary-main);
+      border-radius: 0;
+    }
+
+    &--hover-end {
+      background-color: var(--color-primary-300);
+      color: var(--color-primary-contrast-text);
       border-radius: 0;
     }
 

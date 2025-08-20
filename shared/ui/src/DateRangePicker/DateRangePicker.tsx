@@ -106,6 +106,7 @@ export const DateRangePicker = forwardRef<HTMLInputElement, DateRangePickerProps
     const [isOpen, setIsOpen] = useState(false);
     const [currentMonth, setCurrentMonth] = useState(dayjs().startOf("month"));
     const [selectionState, setSelectionState] = useState<"start" | "end" | null>(null);
+    const [hoveredDate, setHoveredDate] = useState<Dayjs | null>(null);
     const inputRef = useRef<HTMLInputElement>(null);
     const popupRef = useRef<HTMLDivElement>(null);
 
@@ -113,14 +114,16 @@ export const DateRangePicker = forwardRef<HTMLInputElement, DateRangePickerProps
 
     useEffect(() => {
       const handleClickOutside = (event: MouseEvent) => {
-        if (
+        const isClickOutside =
           popupRef.current &&
           !popupRef.current.contains(event.target as Node) &&
           inputRef.current &&
-          !inputRef.current.contains(event.target as Node)
-        ) {
+          !inputRef.current.contains(event.target as Node);
+
+        if (isClickOutside) {
           setIsOpen(false);
           setSelectionState(null);
+          setHoveredDate(null);
         }
       };
 
@@ -137,6 +140,7 @@ export const DateRangePicker = forwardRef<HTMLInputElement, DateRangePickerProps
       if (!disabled) {
         setIsOpen(!isOpen);
         setSelectionState(null);
+        setHoveredDate(null);
         
         if (dateRange?.start) {
           setCurrentMonth(dateRange.start.startOf("month"));
@@ -175,6 +179,7 @@ export const DateRangePicker = forwardRef<HTMLInputElement, DateRangePickerProps
         const newRange: DateRange = { start: date, end: null };
         onChange?.(newRange);
         setSelectionState("end");
+        setHoveredDate(null);
       } else if (dateRange.start && !dateRange.end) {
         // Complete the range
         const start = dateRange.start;
@@ -188,6 +193,13 @@ export const DateRangePicker = forwardRef<HTMLInputElement, DateRangePickerProps
         onChange?.(finalRange);
         setIsOpen(false);
         setSelectionState(null);
+        setHoveredDate(null);
+      }
+    };
+
+    const handleDateHover = (date: Dayjs | null) => {
+      if (selectionState === "end" && dateRange?.start && !dateRange?.end) {
+        setHoveredDate(date);
       }
     };
 
@@ -228,7 +240,9 @@ export const DateRangePicker = forwardRef<HTMLInputElement, DateRangePickerProps
             ref={popupRef}
             currentMonth={currentMonth}
             selectedRange={dateRange}
+            hoveredDate={hoveredDate}
             onDateSelect={handleDateSelect}
+            onDateHover={handleDateHover}
             onMonthChange={setCurrentMonth}
             disabled={disabled}
             isSelectingEnd={selectionState === "end"}
@@ -313,14 +327,16 @@ DateRangePickerInput.displayName = "DateRangePickerInput";
 interface CalendarPopupProps {
   currentMonth: Dayjs;
   selectedRange: DateRange | null;
+  hoveredDate: Dayjs | null;
   onDateSelect: (date: Dayjs) => void;
+  onDateHover: (date: Dayjs | null) => void;
   onMonthChange: (month: Dayjs) => void;
   disabled: boolean;
   isSelectingEnd: boolean;
 }
 
 const CalendarPopup = forwardRef<HTMLDivElement, CalendarPopupProps>(
-  ({ currentMonth, selectedRange, onDateSelect, onMonthChange, disabled, isSelectingEnd }, ref) => {
+  ({ currentMonth, selectedRange, hoveredDate, onDateSelect, onDateHover, onMonthChange, disabled, isSelectingEnd }, ref) => {
     const nextMonth = currentMonth.add(1, "month");
 
     return (
@@ -357,8 +373,10 @@ const CalendarPopup = forwardRef<HTMLDivElement, CalendarPopupProps>(
             <CalendarGrid
               currentMonth={currentMonth}
               selectedRange={selectedRange}
+              hoveredDate={hoveredDate}
               disabled={disabled}
               onDateSelect={onDateSelect}
+              onDateHover={onDateHover}
               isSelectingEnd={isSelectingEnd}
             />
           </div>
@@ -388,8 +406,10 @@ const CalendarPopup = forwardRef<HTMLDivElement, CalendarPopupProps>(
             <CalendarGrid
               currentMonth={nextMonth}
               selectedRange={selectedRange}
+              hoveredDate={hoveredDate}
               disabled={disabled}
               onDateSelect={onDateSelect}
+              onDateHover={onDateHover}
               isSelectingEnd={isSelectingEnd}
             />
           </div>
@@ -459,12 +479,14 @@ function CalendarHeader({ currentMonth, onMonthChange, disabled, showNavigation 
 interface CalendarGridProps {
   currentMonth: Dayjs;
   selectedRange: DateRange | null;
+  hoveredDate: Dayjs | null;
   disabled: boolean;
   onDateSelect: (date: Dayjs) => void;
+  onDateHover: (date: Dayjs | null) => void;
   isSelectingEnd: boolean;
 }
 
-function CalendarGrid({ currentMonth, selectedRange, disabled, onDateSelect, isSelectingEnd }: CalendarGridProps) {
+function CalendarGrid({ currentMonth, selectedRange, hoveredDate, disabled, onDateSelect, onDateHover, isSelectingEnd }: CalendarGridProps) {
   const startOfMonth = currentMonth.startOf("month");
   const startOfCalendar = startOfMonth.startOf("week");
   const today = dayjs();
@@ -480,9 +502,11 @@ function CalendarGrid({ currentMonth, selectedRange, disabled, onDateSelect, isS
         date={date}
         currentMonth={currentMonth}
         selectedRange={selectedRange}
+        hoveredDate={hoveredDate}
         today={today}
         disabled={disabled}
         onDateSelect={onDateSelect}
+        onDateHover={onDateHover}
         isSelectingEnd={isSelectingEnd}
       />
     );
@@ -499,13 +523,15 @@ interface CalendarDayProps {
   date: Dayjs;
   currentMonth: Dayjs;
   selectedRange: DateRange | null;
+  hoveredDate: Dayjs | null;
   today: Dayjs;
   disabled: boolean;
   onDateSelect: (date: Dayjs) => void;
+  onDateHover: (date: Dayjs | null) => void;
   isSelectingEnd: boolean;
 }
 
-function CalendarDay({ date, currentMonth, selectedRange, today, disabled, onDateSelect, isSelectingEnd }: CalendarDayProps) {
+function CalendarDay({ date, currentMonth, selectedRange, hoveredDate, today, disabled, onDateSelect, onDateHover, isSelectingEnd }: CalendarDayProps) {
   const isCurrentMonth = date.month() === currentMonth.month();
   const isToday = date.isSame(today, "day");
   const isStartDate = selectedRange?.start && date.isSame(selectedRange.start, "day");
@@ -518,6 +544,15 @@ function CalendarDay({ date, currentMonth, selectedRange, today, disabled, onDat
   // Range highlighting - only show range when both start and end are selected
   const isInRange = selectedRange?.start && selectedRange?.end && 
     date.isAfter(selectedRange.start, "day") && date.isBefore(selectedRange.end, "day");
+
+  // Hover range highlighting - show when start is selected and hovering over a valid end date
+  const isInHoverRange = isSelectingEnd && selectedRange?.start && hoveredDate && 
+    !selectedRange?.end && date.isAfter(selectedRange.start, "day") && 
+    date.isBefore(hoveredDate, "day");
+  
+  // Hover end highlighting - the actual hovered date when selecting end
+  const isHoverEnd = isSelectingEnd && selectedRange?.start && hoveredDate && 
+    !selectedRange?.end && date.isSame(hoveredDate, "day");
   
   const dayClasses = [
     "daterangepicker__day",
@@ -526,6 +561,8 @@ function CalendarDay({ date, currentMonth, selectedRange, today, disabled, onDat
     isStartDate && "daterangepicker__day--start",
     isEndDate && "daterangepicker__day--end",
     isInRange && "daterangepicker__day--in-range",
+    isInHoverRange && "daterangepicker__day--hover-range",
+    isHoverEnd && "daterangepicker__day--hover-end",
     isDateDisabled && "daterangepicker__day--disabled"
   ].filter(Boolean).join(" ");
 
@@ -535,11 +572,23 @@ function CalendarDay({ date, currentMonth, selectedRange, today, disabled, onDat
     }
   };
 
+  const handleMouseEnter = () => {
+    if (!isDateDisabled && isCurrentMonth) {
+      onDateHover(date);
+    }
+  };
+
+  const handleMouseLeave = () => {
+    onDateHover(null);
+  };
+
   return (
     <button
       type="button"
       className={dayClasses}
       onClick={handleClick}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
       disabled={isDateDisabled || !isCurrentMonth}
     >
       {date.date()}
