@@ -1,3 +1,5 @@
+"use client";
+
 import { forwardRef, useId, useState, useRef, useEffect } from "react";
 import dayjs, { type Dayjs } from "dayjs";
 import "./DatePicker.scss";
