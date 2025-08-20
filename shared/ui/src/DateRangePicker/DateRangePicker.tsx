@@ -30,6 +30,8 @@ export interface DateRangePickerProps {
   placeholder?: string;
   dateFormat?: string;
   separator?: string;
+  shouldDisableDate?: (date: Dayjs) => boolean;
+  maxSelectedRange?: number;
 }
 
 const MONTHS = [
@@ -98,6 +100,8 @@ export const DateRangePicker = forwardRef<HTMLInputElement, DateRangePickerProps
       placeholder = "Select date range...",
       dateFormat = "DD/MM/YYYY",
       separator = "—",
+      shouldDisableDate,
+      maxSelectedRange,
       ...props
     },
     ref
@@ -185,6 +189,15 @@ export const DateRangePicker = forwardRef<HTMLInputElement, DateRangePickerProps
         const start = dateRange.start;
         const end = date;
         
+        // Check max range if specified
+        if (maxSelectedRange) {
+          const daysDiff = Math.abs(end.diff(start, "day")) + 1;
+          if (daysDiff > maxSelectedRange) {
+            // Range exceeds maximum, don't select
+            return;
+          }
+        }
+        
         const finalRange: DateRange = {
           start: start.isBefore(end) ? start : end,
           end: start.isBefore(end) ? end : start
@@ -246,6 +259,8 @@ export const DateRangePicker = forwardRef<HTMLInputElement, DateRangePickerProps
             onMonthChange={setCurrentMonth}
             disabled={disabled}
             isSelectingEnd={selectionState === "end"}
+            shouldDisableDate={shouldDisableDate}
+            maxSelectedRange={maxSelectedRange}
           />
         }
 
@@ -333,10 +348,26 @@ interface CalendarPopupProps {
   onMonthChange: (month: Dayjs) => void;
   disabled: boolean;
   isSelectingEnd: boolean;
+  shouldDisableDate?: (date: Dayjs) => boolean;
+  maxSelectedRange?: number;
 }
 
 const CalendarPopup = forwardRef<HTMLDivElement, CalendarPopupProps>(
-  ({ currentMonth, selectedRange, hoveredDate, onDateSelect, onDateHover, onMonthChange, disabled, isSelectingEnd }, ref) => {
+  (
+    { 
+      currentMonth, 
+      selectedRange, 
+      hoveredDate, 
+      onDateSelect, 
+      onDateHover, 
+      onMonthChange, 
+      disabled, 
+      isSelectingEnd, 
+      shouldDisableDate, 
+      maxSelectedRange 
+    }, 
+    ref
+  ) => {
     const nextMonth = currentMonth.add(1, "month");
 
     return (
@@ -378,6 +409,8 @@ const CalendarPopup = forwardRef<HTMLDivElement, CalendarPopupProps>(
               onDateSelect={onDateSelect}
               onDateHover={onDateHover}
               isSelectingEnd={isSelectingEnd}
+              shouldDisableDate={shouldDisableDate}
+              maxSelectedRange={maxSelectedRange}
             />
           </div>
 
@@ -411,6 +444,8 @@ const CalendarPopup = forwardRef<HTMLDivElement, CalendarPopupProps>(
               onDateSelect={onDateSelect}
               onDateHover={onDateHover}
               isSelectingEnd={isSelectingEnd}
+              shouldDisableDate={shouldDisableDate}
+              maxSelectedRange={maxSelectedRange}
             />
           </div>
         </div>
@@ -484,9 +519,21 @@ interface CalendarGridProps {
   onDateSelect: (date: Dayjs) => void;
   onDateHover: (date: Dayjs | null) => void;
   isSelectingEnd: boolean;
+  shouldDisableDate?: (date: Dayjs) => boolean;
+  maxSelectedRange?: number;
 }
 
-function CalendarGrid({ currentMonth, selectedRange, hoveredDate, disabled, onDateSelect, onDateHover, isSelectingEnd }: CalendarGridProps) {
+function CalendarGrid({ 
+  currentMonth, 
+  selectedRange, 
+  hoveredDate, 
+  disabled, 
+  onDateSelect, 
+  onDateHover, 
+  isSelectingEnd, 
+  shouldDisableDate, 
+  maxSelectedRange 
+}: CalendarGridProps) {
   const startOfMonth = currentMonth.startOf("month");
   const startOfCalendar = startOfMonth.startOf("week");
   const today = dayjs();
@@ -508,6 +555,8 @@ function CalendarGrid({ currentMonth, selectedRange, hoveredDate, disabled, onDa
         onDateSelect={onDateSelect}
         onDateHover={onDateHover}
         isSelectingEnd={isSelectingEnd}
+        shouldDisableDate={shouldDisableDate}
+        maxSelectedRange={maxSelectedRange}
       />
     );
   }
@@ -529,9 +578,23 @@ interface CalendarDayProps {
   onDateSelect: (date: Dayjs) => void;
   onDateHover: (date: Dayjs | null) => void;
   isSelectingEnd: boolean;
+  shouldDisableDate?: (date: Dayjs) => boolean;
+  maxSelectedRange?: number;
 }
 
-function CalendarDay({ date, currentMonth, selectedRange, hoveredDate, today, disabled, onDateSelect, onDateHover, isSelectingEnd }: CalendarDayProps) {
+function CalendarDay({ 
+  date, 
+  currentMonth, 
+  selectedRange, 
+  hoveredDate, 
+  today, 
+  disabled, 
+  onDateSelect, 
+  onDateHover, 
+  isSelectingEnd, 
+  shouldDisableDate, 
+  maxSelectedRange 
+}: CalendarDayProps) {
   const isCurrentMonth = date.month() === currentMonth.month();
   const isToday = date.isSame(today, "day");
   const isStartDate = selectedRange?.start && date.isSame(selectedRange.start, "day");
@@ -539,7 +602,15 @@ function CalendarDay({ date, currentMonth, selectedRange, hoveredDate, today, di
   
   // Disable dates before start date when selecting end date
   const isDisabledByRange = isSelectingEnd && selectedRange?.start && date.isBefore(selectedRange.start, "day");
-  const isDateDisabled = disabled || isDisabledByRange;
+  
+  // Disable dates based on custom shouldDisableDate function
+  const isDisabledByCustom = shouldDisableDate?.(date) ?? false;
+  
+  // Disable dates that would exceed maxSelectedRange when selecting end date
+  const isDisabledByMaxRange = isSelectingEnd && selectedRange?.start && maxSelectedRange && 
+    Math.abs(date.diff(selectedRange.start, "day")) >= maxSelectedRange;
+  
+  const isDateDisabled = disabled || isDisabledByRange || isDisabledByCustom || isDisabledByMaxRange;
   
   // Range highlighting - only show range when both start and end are selected
   const isInRange = selectedRange?.start && selectedRange?.end && 
@@ -548,11 +619,13 @@ function CalendarDay({ date, currentMonth, selectedRange, hoveredDate, today, di
   // Hover range highlighting - show when start is selected and hovering over a valid end date
   const isInHoverRange = isSelectingEnd && selectedRange?.start && hoveredDate && 
     !selectedRange?.end && date.isAfter(selectedRange.start, "day") && 
-    date.isBefore(hoveredDate, "day");
+    date.isBefore(hoveredDate, "day") &&
+    (!maxSelectedRange || Math.abs(hoveredDate.diff(selectedRange.start, "day")) < maxSelectedRange);
   
   // Hover end highlighting - the actual hovered date when selecting end
   const isHoverEnd = isSelectingEnd && selectedRange?.start && hoveredDate && 
-    !selectedRange?.end && date.isSame(hoveredDate, "day");
+    !selectedRange?.end && date.isSame(hoveredDate, "day") &&
+    (!maxSelectedRange || Math.abs(hoveredDate.diff(selectedRange.start, "day")) < maxSelectedRange);
   
   const dayClasses = [
     "daterangepicker__day",

@@ -172,3 +172,84 @@ export const FullWidth: Story = {
     fullWidth: true,
   },
 };
+
+export const WithShouldDisableDate: Story = {
+  render: () => (
+    <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
+      <DateRangePickerWithState
+        label="Disable weekends"
+        placeholder="Weekdays only..."
+        shouldDisableDate={(date: any) => {
+          const dayOfWeek = date.day();
+          return dayOfWeek === 0 || dayOfWeek === 6; // Sunday = 0, Saturday = 6
+        }}
+        helperText="Weekends are disabled"
+      />
+      <DateRangePickerWithState
+        label="Disable past dates"
+        placeholder="Future dates only..."
+        shouldDisableDate={(date: any) => date.isBefore(dayjs(), "day")}
+        helperText="Past dates are disabled"
+      />
+      <DateRangePickerWithState
+        label="Disable holidays (example)"
+        placeholder="No holidays..."
+        shouldDisableDate={(date: any) => {
+          // Example: disable Christmas and New Year
+          const dateStr = date.format("MM-DD");
+          return dateStr === "12-25" || dateStr === "01-01";
+        }}
+        helperText="Christmas and New Year are disabled"
+      />
+    </div>
+  ),
+};
+
+export const WithMaxSelectedRange: Story = {
+  render: () => (
+    <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
+      <DateRangePickerWithState
+        label="Max 3 days"
+        placeholder="Select up to 3 days..."
+        maxSelectedRange={3}
+        helperText="Maximum 3 days can be selected"
+      />
+      <DateRangePickerWithState
+        label="Max 7 days"
+        placeholder="Select up to 7 days..."
+        maxSelectedRange={7}
+        helperText="Maximum 7 days can be selected"
+      />
+      <DateRangePickerWithState
+        label="Max 14 days"
+        placeholder="Select up to 14 days..."
+        maxSelectedRange={14}
+        helperText="Maximum 14 days can be selected"
+      />
+    </div>
+  ),
+};
+
+export const CombinedRestrictions: Story = {
+  render: () => (
+    <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
+      <DateRangePickerWithState
+        label="Weekdays only, max 5 days"
+        placeholder="Business trip dates..."
+        shouldDisableDate={(date: any) => {
+          const dayOfWeek = date.day();
+          return dayOfWeek === 0 || dayOfWeek === 6; // Disable weekends
+        }}
+        maxSelectedRange={5}
+        helperText="Weekdays only, maximum 5 days"
+      />
+      <DateRangePickerWithState
+        label="Future dates, max 30 days"
+        placeholder="Vacation dates..."
+        shouldDisableDate={(date: any) => date.isBefore(dayjs(), "day")}
+        maxSelectedRange={30}
+        helperText="Future dates only, maximum 30 days"
+      />
+    </div>
+  ),
+};
