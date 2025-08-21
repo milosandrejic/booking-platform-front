@@ -113,10 +113,22 @@ export const DateRangePicker = forwardRef<HTMLInputElement, DateRangePickerProps
     const [currentMonth, setCurrentMonth] = useState(dayjs().startOf("month"));
     const [selectionState, setSelectionState] = useState<"start" | "end" | null>(null);
     const [hoveredDate, setHoveredDate] = useState<Dayjs | null>(null);
+    const [internalValue, setInternalValue] = useState<DateRange | null>(defaultValue || null);
     const inputRef = useRef<HTMLInputElement>(null);
     const popupRef = useRef<HTMLDivElement>(null);
 
-    const dateRange = value || defaultValue || null;
+    // Use controlled value if provided, otherwise use internal state
+    const dateRange = value !== undefined ? value : internalValue;
+
+    // Helper to update both internal state and call onChange
+    const updateDateRange = (newRange: DateRange | null) => {
+      if (value === undefined) {
+        // Uncontrolled mode: update internal state
+        setInternalValue(newRange);
+      }
+      // Always call onChange for both controlled and uncontrolled
+      onChange?.(newRange);
+    };
 
     useEffect(() => {
       const handleClickOutside = (event: MouseEvent) => {
@@ -158,7 +170,7 @@ export const DateRangePicker = forwardRef<HTMLInputElement, DateRangePickerProps
       const inputValue = event.target.value;
       
       if (!inputValue) {
-        onChange?.(null);
+        updateDateRange(null);
         return;
       }
 
@@ -173,7 +185,7 @@ export const DateRangePicker = forwardRef<HTMLInputElement, DateRangePickerProps
             start: startDate,
             end: endDate
           };
-          onChange?.(newRange);
+          updateDateRange(newRange);
           setCurrentMonth(startDate.startOf("month"));
         }
       }
@@ -183,7 +195,7 @@ export const DateRangePicker = forwardRef<HTMLInputElement, DateRangePickerProps
       if (!dateRange?.start || (dateRange.start && dateRange.end)) {
         // Start new selection
         const newRange: DateRange = { start: date, end: null };
-        onChange?.(newRange);
+        updateDateRange(newRange);
         setSelectionState("end");
         setHoveredDate(null);
       } else if (dateRange.start && !dateRange.end) {
@@ -205,7 +217,7 @@ export const DateRangePicker = forwardRef<HTMLInputElement, DateRangePickerProps
           end: start.isBefore(end) ? end : start
         };
         
-        onChange?.(finalRange);
+        updateDateRange(finalRange);
         setIsOpen(false);
         setSelectionState(null);
         setHoveredDate(null);

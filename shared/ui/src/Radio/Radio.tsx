@@ -1,6 +1,6 @@
 "use client";
 
-import { forwardRef, useId } from "react";
+import { forwardRef, useId, useState } from "react";
 import "./Radio.scss";
 
 export type RadioSize = "small" | "medium" | "large";
@@ -10,6 +10,7 @@ export interface RadioProps {
   label?: string;
   value: string | number;
   checked?: boolean;
+  defaultChecked?: boolean;
   onChange?: (value: string | number, event: React.ChangeEvent<HTMLInputElement>) => void;
   size?: RadioSize;
   color?: RadioColor;
@@ -26,7 +27,8 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>(
     {
       label,
       value,
-      checked = false,
+      checked,
+      defaultChecked = false,
       onChange,
       size = "medium",
       color = "primary",
@@ -43,9 +45,18 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>(
     const reactId = useId();
     const radioId = id || `radio-${reactId}`;
 
+    // Support both controlled and uncontrolled modes
+    const [internalChecked, setInternalChecked] = useState(defaultChecked);
+    const isChecked = checked !== undefined ? checked : internalChecked;
+
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       if (disabled) {
         return;
+      }
+      
+      // Update internal state if uncontrolled
+      if (checked === undefined) {
+        setInternalChecked(event.target.checked);
       }
       
       onChange?.(value, event);
@@ -56,7 +67,7 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>(
       `radio--${size}`,
       `radio--${color}`,
       disabled && "radio--disabled",
-      checked && "radio--checked",
+      isChecked && "radio--checked",
       className
     ].filter(Boolean).join(" ");
 
@@ -71,7 +82,7 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>(
           id={radioId}
           name={name}
           value={value}
-          checked={checked}
+          checked={isChecked}
           onChange={handleChange}
           disabled={disabled}
           required={required}

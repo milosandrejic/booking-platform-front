@@ -229,10 +229,71 @@ when function is staring with if condition no empty line is required above if
   * Include **default props** for predictable behavior.
   * Keep **logic and presentation separate** (hooks vs. UI).
   * **Support SSR by default** — components should render on the server without client-side dependencies.
+  * **Support both controlled and uncontrolled modes** — all form-like components must work in both modes for maximum flexibility.
 * Props:
 
   * Boolean props should start with `is` or `has`.
   * Enum-like props should be restricted to known values.
+
+### Controlled vs Uncontrolled Components
+
+* **All form-like components** (inputs, selects, checkboxes, radios, date pickers, etc.) must support both controlled and uncontrolled modes.
+* **Controlled mode**: Component receives both `value` and `onChange` props and does not manage internal state.
+* **Uncontrolled mode**: Component receives `defaultValue` prop (or similar) and manages its own internal state.
+* **Implementation pattern**:
+  * Use `useState` with `defaultValue` for internal state
+  * Check if `value` prop exists to determine mode: `const isControlled = value !== undefined`
+  * Use controlled value when provided, otherwise use internal state
+  * Always call `onChange` callback in both modes
+  * Update internal state only in uncontrolled mode
+
+**Examples:**
+
+✅ **Proper controlled/uncontrolled implementation:**
+```jsx
+"use client";
+
+import { useState } from 'react';
+
+export function TextInput({ value, defaultValue = '', onChange, ...props }) {
+  const [internalValue, setInternalValue] = useState(defaultValue);
+  const isControlled = value !== undefined;
+  const currentValue = isControlled ? value : internalValue;
+
+  const handleChange = (event) => {
+    const newValue = event.target.value;
+    
+    // Update internal state only in uncontrolled mode
+    if (!isControlled) {
+      setInternalValue(newValue);
+    }
+    
+    // Always call onChange callback
+    onChange?.(newValue, event);
+  };
+
+  return (
+    <input
+      {...props}
+      value={currentValue}
+      onChange={handleChange}
+    />
+  );
+}
+```
+
+✅ **Usage examples:**
+```jsx
+// Controlled mode
+const [value, setValue] = useState('');
+<TextInput value={value} onChange={setValue} />
+
+// Uncontrolled mode
+<TextInput defaultValue="initial" onChange={(val) => console.log(val)} />
+
+// Completely uncontrolled
+<TextInput defaultValue="initial" />
+```
 
 ### SSR Compatibility Rules
 
@@ -375,11 +436,41 @@ export function AutoSaveInput({ onSave, ...props }) {
 ### Required Stories
 
 * Provide at least these core stories:
-  * **Default** - Basic usage with default props
+  * **Default** - Basic usage with default props and state management
   * **Interactive** - Stateful example showing controlled usage
   * **All[Variants]** - Showcase all size/color/variant options
   * **AllStates** - Different component states (normal, disabled, loading, etc.)
   * **InForm** - Real-world usage example in form context (when applicable)
+
+### Interactive Stories Requirement
+
+* **All Default and Playground stories must be interactive** - they should demonstrate functionality, not just appearance
+* **State management required**: Form-like components must use `useState` in Default/Playground stories to show actual behavior
+* **No static displays**: Stories should respond to user interactions (clicks, typing, selections)
+
+**Examples:**
+
+✅ **Interactive Default story:**
+```tsx
+export const Default: Story = {
+  render: function DefaultTextInput(args) {
+    const [value, setValue] = useState(args.defaultValue || "");
+
+    return (
+      <TextInput 
+        {...args} 
+        value={value}
+        onChange={setValue}
+      />
+    );
+  },
+};
+```
+
+❌ **Static Default story (not allowed):**
+```tsx
+export const Default: Story = {}; // Just uses meta args without state
+```
 
 ### Documentation Standards
 

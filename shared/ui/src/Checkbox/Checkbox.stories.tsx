@@ -1,43 +1,103 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import { Checkbox } from "./Checkbox";
-import { useState } from "react";
+"use client";
 
+import type { Meta, StoryObj } from "@storybook/react";
+import { useState } from "react";
+import { Checkbox } from "./Checkbox";
+
+/**
+ * Checkbox component provides a styled checkbox input with multiple sizes and colors.
+ * 
+ * Features:
+ * - Multiple sizes (small, medium, large)
+ * - Multiple colors (primary, secondary, success, error, warning, info)
+ * - Controlled and uncontrolled modes
+ * - Disabled and error states
+ * - Custom labels and helper text
+ * - Accessibility support
+ * - SSR compatible
+ */
 const meta: Meta<typeof Checkbox> = {
   title: "UI Components/Checkbox",
   component: Checkbox,
   parameters: {
     layout: "padded",
+    docs: {
+      description: {
+        component: "A checkbox input component with multiple sizes, colors, and states for form interactions.",
+      },
+    },
   },
+  tags: ["autodocs"],
   argTypes: {
+    label: {
+      control: { type: "text" },
+      description: "Label text for the checkbox",
+    },
+    checked: {
+      control: { type: "boolean" },
+      description: "Whether the checkbox is checked",
+      table: {
+        defaultValue: { summary: "false" },
+      },
+    },
+    defaultChecked: {
+      control: { type: "boolean" },
+      description: "Whether the checkbox is checked by default (uncontrolled)",
+      table: {
+        defaultValue: { summary: "false" },
+      },
+    },
     size: {
       control: { type: "select" },
       options: ["small", "medium", "large"],
+      description: "Size of the checkbox",
+      table: {
+        defaultValue: { summary: "medium" },
+      },
     },
     color: {
       control: { type: "select" },
       options: [
-        "primary", 
-        "secondary", 
-        "success", 
-        "error", 
-        "warning", 
+        "primary",
+        "secondary",
+        "success",
+        "error",
+        "warning",
         "info"
       ],
-    },
-    checked: {
-      control: { type: "boolean" },
-    },
-    defaultChecked: {
-      control: { type: "boolean" },
+      description: "Color theme of the checkbox",
+      table: {
+        defaultValue: { summary: "primary" },
+      },
     },
     disabled: {
       control: { type: "boolean" },
+      description: "Whether the checkbox is disabled",
+      table: {
+        defaultValue: { summary: "false" },
+      },
     },
     required: {
       control: { type: "boolean" },
+      description: "Whether the checkbox is required",
+      table: {
+        defaultValue: { summary: "false" },
+      },
     },
-    label: {
+    name: {
       control: { type: "text" },
+      description: "Name attribute for the checkbox input",
+    },
+    value: {
+      control: { type: "text" },
+      description: "Value attribute for the checkbox input",
+    },
+    onChange: {
+      action: "changed",
+      description: "Callback fired when the checkbox state changes",
+      table: {
+        type: { summary: "(checked: boolean, event: React.ChangeEvent<HTMLInputElement>) => void" },
+      },
     },
   },
 };
@@ -45,360 +105,277 @@ const meta: Meta<typeof Checkbox> = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-const CheckboxWithState = (args: any) => {
-  const [checked, setChecked] = useState(args.checked ?? false);
-  
-  return (
-    <Checkbox
-      {...args}
-      checked={checked}
-      onChange={newChecked => setChecked(newChecked)}
-    />
-  );
-};
-
 export const Default: Story = {
-  render: CheckboxWithState,
-  args: {
-    label: "Default checkbox",
-  },
-};
-
-export const Checked: Story = {
-  render: CheckboxWithState,
-  args: {
-    label: "Checked checkbox",
-    checked: true,
-  },
-};
-
-export const WithoutLabel: Story = {
-  render: CheckboxWithState,
-  args: {},
-};
-
-export const Sizes: Story = {
-  render: () => (
-    <div 
-      style={{ 
-        display: "flex", 
-        flexDirection: "column", 
-        gap: "16px" 
-      }}
-    >
-      <CheckboxWithState 
-        label="Small checkbox" 
-        size="small" 
-      />
-      <CheckboxWithState 
-        label="Medium checkbox" 
-        size="medium" 
-      />
-      <CheckboxWithState 
-        label="Large checkbox" 
-        size="large" 
-      />
-    </div>
-  ),
-};
-
-export const Colors: Story = {
-  render: () => (
-    <div 
-      style={{ 
-        display: "flex", 
-        flexDirection: "column", 
-        gap: "16px" 
-      }}
-    >
-      <CheckboxWithState 
-        label="Primary" 
-        color="primary" 
-        checked 
-      />
-      <CheckboxWithState 
-        label="Secondary" 
-        color="secondary" 
-        checked 
-      />
-      <CheckboxWithState 
-        label="Success" 
-        color="success" 
-        checked 
-      />
-      <CheckboxWithState 
-        label="Error" 
-        color="error" 
-        checked 
-      />
-      <CheckboxWithState 
-        label="Warning" 
-        color="warning" 
-        checked 
-      />
-      <CheckboxWithState 
-        label="Info" 
-        color="info" 
-        checked 
-      />
-    </div>
-  ),
-};
-
-export const States: Story = {
-  render: () => (
-    <div 
-      style={{ 
-        display: "flex", 
-        flexDirection: "column", 
-        gap: "16px" 
-      }}
-    >
-      <CheckboxWithState label="Normal" />
-      <CheckboxWithState 
-        label="Checked" 
-        checked 
-      />
-      <CheckboxWithState 
-        label="Disabled" 
-        disabled 
-      />
-      <CheckboxWithState 
-        label="Disabled checked" 
-        disabled 
-        checked 
-      />
-      <CheckboxWithState 
-        label="Required" 
-        required 
-      />
-    </div>
-  ),
-};
-
-export const CustomIcons: Story = {
-  render: () => {
-    const heartOutlinePath = "M5.624 4.424C3.965 5.182 2.75 6.986 2.75 9.137c0 2.197.9 3.891 2.188 5.343c1.063 1.196 2.349 " +
-      "2.188 3.603 3.154q.448.345.885.688c.526.415.995.778 1.448 1.043s.816.385 1.126.385s.674-.12 1.126-.385c.453-.265.922-.628 " +
-      "1.448-1.043q.437-.344.885-.687c1.254-.968 2.54-1.959 3.603-3.155c1.289-1.452 2.188-3.146 2.188-5.343c0-2.15-1.215-3.955" +
-      "-2.874-4.713c-1.612-.737-3.778-.542-5.836 1.597a.75.75 0 0 1-1.08 0C9.402 3.882 7.236 3.687 5.624 4.424M12 4.46C9.688 2.39 " +
-      "7.099 2.1 5 3.059C2.786 4.074 1.25 6.426 1.25 9.138c0 2.665 1.11 4.699 2.567 6.339c1.166 1.313 2.593 2.412 3.854 " +
-      "3.382q.43.33.826.642c.513.404 1.063.834 1.62 1.16s1.193.59 1.883.59s1.326-.265 1.883-.59c.558-.326 1.107-.756 " +
-      "1.62-1.16q.396-.312.826-.642c1.26-.97 2.688-2.07 3.854-3.382c1.457-1.64 2.567-3.674 2.567-6.339c0-2.712-1.535-5.064" +
-      "-3.75-6.077c-2.099-.96-4.688-.67-7 1.399";
-    
-    const heartFilledPath = "M2 9.137C2 14 6.02 16.591 8.962 18.911C10 19.729 11 20.5 12 20.5s2-.77 " +
-      "3.038-1.59C17.981 16.592 22 14 22 9.138S16.5.825 12 5.501C7.5.825 2 4.274 2 9.137";
-
-    const HeartIconOutline = () => (
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
-        <path 
-          fill="currentColor" 
-          fillRule="evenodd" 
-          d={heartOutlinePath}
-          clipRule="evenodd"
-        />
-      </svg>
-    );
-
-    const HeartIconFilled = () => (
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
-        <path 
-          fill="currentColor" 
-          d={heartFilledPath}
-        />
-      </svg>
-    );
+  render: function DefaultCheckbox(args) {
+    const [checked, setChecked] = useState(args.defaultChecked || false);
 
     return (
-      <div 
-        style={{ 
-          display: "flex", 
-          flexDirection: "column", 
-          gap: "24px" 
-        }}
-      >
+      <Checkbox 
+        {...args} 
+        checked={checked}
+        onChange={setChecked}
+      />
+    );
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Default checkbox with primary color and medium size.",
+      },
+    },
+  },
+};
+
+export const Playground: Story = {
+  render: function PlaygroundCheckbox(args) {
+    const [checked, setChecked] = useState(args.defaultChecked || false);
+
+    return (
+      <Checkbox 
+        {...args} 
+        checked={checked}
+        onChange={setChecked}
+      />
+    );
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Interactive playground to test all checkbox props and controls.",
+      },
+    },
+  },
+};
+
+export const Interactive: Story = {
+  render: function InteractiveCheckbox() {
+    const [checked, setChecked] = useState(false);
+    
+    return (
+      <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+        <Checkbox
+          label="Interactive checkbox"
+          checked={checked}
+          onChange={setChecked}
+        />
+        <p style={{ margin: 0, fontSize: "0.875rem", color: "#666" }}>
+          Checked: {checked ? "Yes" : "No"}
+        </p>
+      </div>
+    );
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Interactive checkbox demonstrating controlled state management.",
+      },
+    },
+  },
+};
+
+export const AllSizes: Story = {
+  render: function AllSizesCheckbox() {
+    return (
+      <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
         <div>
-          <h4 style={{ margin: "0 0 12px 0", fontSize: "14px", fontWeight: 600 }}>Basic Custom Icons</h4>
-          <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-            <CheckboxWithState 
-              label="Like button (Instagram style)" 
-              icon={<HeartIconOutline />}
-              checkedIcon={<HeartIconFilled />}
-              color="error"
-            />
-            <CheckboxWithState 
-              label="Favorite item" 
-              icon={<HeartIconOutline />}
-              checkedIcon={<HeartIconFilled />}
-              color="primary"
-            />
+          <h4 style={{ marginBottom: "1rem" }}>Small</h4>
+          <Checkbox size="small" label="Small checkbox" defaultChecked />
+        </div>
+        
+        <div>
+          <h4 style={{ marginBottom: "1rem" }}>Medium (Default)</h4>
+          <Checkbox size="medium" label="Medium checkbox" defaultChecked />
+        </div>
+        
+        <div>
+          <h4 style={{ marginBottom: "1rem" }}>Large</h4>
+          <Checkbox size="large" label="Large checkbox" defaultChecked />
+        </div>
+      </div>
+    );
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "All available sizes: small, medium, and large.",
+      },
+    },
+  },
+};
+
+export const AllColors: Story = {
+  render: function AllColorsCheckbox() {
+    const colors = [
+      "primary",
+      "secondary",
+      "success",
+      "error",
+      "warning",
+      "info"
+    ] as const;
+    
+    return (
+      <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+        {colors.map(color => (
+          <Checkbox
+            key={color}
+            color={color}
+            label={`${color.charAt(0).toUpperCase() + color.slice(1)} checkbox`}
+            defaultChecked
+          />
+        ))}
+      </div>
+    );
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "All available colors: primary, secondary, success, error, warning, and info.",
+      },
+    },
+  },
+};
+
+export const AllStates: Story = {
+  render: function AllStatesCheckbox() {
+    return (
+      <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
+        <div>
+          <h4 style={{ marginBottom: "1rem" }}>Normal States</h4>
+          <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+            <Checkbox label="Unchecked checkbox" />
+            <Checkbox label="Checked checkbox" defaultChecked />
+            <Checkbox label="Checkbox with long label text that wraps to multiple lines to demonstrate how the component handles longer content" />
           </div>
         </div>
-
+        
         <div>
-          <h4 style={{ margin: "0 0 12px 0", fontSize: "14px", fontWeight: 600 }}>Different Sizes</h4>
-          <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-            <CheckboxWithState 
-              label="Small heart" 
-              icon={<HeartIconOutline />}
-              checkedIcon={<HeartIconFilled />}
-              color="error"
-              size="small"
-            />
-            <CheckboxWithState 
-              label="Medium heart" 
-              icon={<HeartIconOutline />}
-              checkedIcon={<HeartIconFilled />}
-              color="error"
-              size="medium"
-            />
-            <CheckboxWithState 
-              label="Large heart" 
-              icon={<HeartIconOutline />}
-              checkedIcon={<HeartIconFilled />}
-              color="error"
-              size="large"
-            />
-          </div>
-        </div>
-
-        <div>
-          <h4 style={{ margin: "0 0 12px 0", fontSize: "14px", fontWeight: 600 }}>Different Colors</h4>
-          <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-            <CheckboxWithState 
-              label="Primary" 
-              icon={<HeartIconOutline />}
-              checkedIcon={<HeartIconFilled />}
-              color="primary"
-              checked
-            />
-            <CheckboxWithState 
-              label="Success" 
-              icon={<HeartIconOutline />}
-              checkedIcon={<HeartIconFilled />}
-              color="success"
-              checked
-            />
-            <CheckboxWithState 
-              label="Error" 
-              icon={<HeartIconOutline />}
-              checkedIcon={<HeartIconFilled />}
-              color="error"
-              checked
-            />
-            <CheckboxWithState 
-              label="Warning" 
-              icon={<HeartIconOutline />}
-              checkedIcon={<HeartIconFilled />}
-              color="warning"
-              checked
-            />
-          </div>
-        </div>
-
-        <div>
-          <h4 style={{ margin: "0 0 12px 0", fontSize: "14px", fontWeight: 600 }}>States</h4>
-          <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-            <CheckboxWithState 
-              label="Normal state" 
-              icon={<HeartIconOutline />}
-              checkedIcon={<HeartIconFilled />}
-              color="error"
-            />
-            <CheckboxWithState 
-              label="Checked state" 
-              icon={<HeartIconOutline />}
-              checkedIcon={<HeartIconFilled />}
-              color="error"
-              checked
-            />
-            <CheckboxWithState 
-              label="Disabled unchecked" 
-              icon={<HeartIconOutline />}
-              checkedIcon={<HeartIconFilled />}
-              color="error"
-              disabled
-            />
-            <CheckboxWithState 
-              label="Disabled checked" 
-              icon={<HeartIconOutline />}
-              checkedIcon={<HeartIconFilled />}
-              color="error"
-              disabled
-              checked
-            />
-            <CheckboxWithState 
-              label="Required field" 
-              icon={<HeartIconOutline />}
-              checkedIcon={<HeartIconFilled />}
-              color="error"
-              required
-            />
+          <h4 style={{ marginBottom: "1rem" }}>Disabled State</h4>
+          <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+            <Checkbox label="Disabled unchecked" disabled />
+            <Checkbox label="Disabled checked" disabled defaultChecked />
           </div>
         </div>
       </div>
     );
   },
+  parameters: {
+    docs: {
+      description: {
+        story: "Different checkbox states: normal, checked, disabled variations.",
+      },
+    },
+  },
 };
 
-const InteractiveExample = () => {
-  const [items, setItems] = useState([
-    { id: 1, label: "Item 1", checked: false }, { id: 2, label: "Item 2", checked: true }, { id: 3, label: "Item 3", checked: false },
-  ]);
+export const InForm: Story = {
+  render: function InFormCheckbox() {
+    const [formData, setFormData] = useState({
+      newsletter: false,
+      terms: false,
+      marketing: false,
+      notifications: false,
+    });
 
-  const handleItemChange = (id: number, checked: boolean) => {
-    setItems(prev => prev.map(item => 
-      item.id === id ? { ...item, checked } : item
-    ));
-  };
+    const [errors, setErrors] = useState({
+      terms: false,
+    });
 
-  const allChecked = items.every(item => item.checked);
-  const someChecked = items.some(item => item.checked);
-
-  const handleSelectAll = (checked: boolean) => {
-    setItems(prev => prev.map(item => ({ ...item, checked })));
-  };
-
-  return (
-    <div 
-      style={{ 
-        display: "flex", 
-        flexDirection: "column", 
-        gap: "12px" 
-      }}
-    >
-      <Checkbox
-        label="Select All"
-        checked={allChecked}
-        onChange={handleSelectAll}
-        style={{ 
-          opacity: someChecked && !allChecked ? 0.6 : 1,
-          fontWeight: 600 
-        }}
-      />
-      <hr 
-        style={{ 
-          margin: "8px 0", 
-          border: "none", 
-          borderTop: "1px solid #e0e0e0" 
-        }} 
-      />
-      {
-        items.map(item =>
-          <Checkbox
-            key={item.id}
-            label={item.label}
-            checked={item.checked}
-            onChange={checked => handleItemChange(item.id, checked)}
-            style={{ marginLeft: "24px" }}
-          />
-        )
+    const handleCheckboxChange = (field: keyof typeof formData) => (checked: boolean) => {
+      setFormData(prev => ({ ...prev, [field]: checked }));
+      if (field === "terms") {
+        setErrors(prev => ({ ...prev, terms: !checked }));
       }
-    </div>
-  );
-};
+    };
 
-export const Interactive: Story = {
-  render: () => <InteractiveExample />,
+    const handleSubmit = (e: React.FormEvent) => {
+      e.preventDefault();
+      
+      const newErrors = {
+        terms: !formData.terms,
+      };
+      
+      setErrors(newErrors);
+      
+      if (!Object.values(newErrors).some(Boolean)) {
+        alert("Form submitted successfully!");
+      }
+    };
+
+    return (
+      <div style={{ maxWidth: "500px", margin: "0 auto" }}>
+        <form onSubmit={handleSubmit} style={{ padding: "2rem", backgroundColor: "#f8f9fa", borderRadius: "8px" }}>
+          <h3 style={{ margin: "0 0 2rem 0" }}>Account Preferences</h3>
+          
+          <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+            <Checkbox
+              label="Subscribe to newsletter for updates and news"
+              checked={formData.newsletter}
+              onChange={handleCheckboxChange("newsletter")}
+              color="primary"
+            />
+            
+            <Checkbox
+              label="Accept terms and conditions *"
+              checked={formData.terms}
+              onChange={handleCheckboxChange("terms")}
+              color={errors.terms ? "error" : "primary"}
+            />
+            {errors.terms && (
+              <span style={{ fontSize: "0.75rem", color: "#d32f2f", marginTop: "-1rem" }}>
+                You must accept the terms and conditions to continue
+              </span>
+            )}
+            
+            <Checkbox
+              label="Receive marketing communications"
+              checked={formData.marketing}
+              onChange={handleCheckboxChange("marketing")}
+              color="secondary"
+            />
+            
+            <Checkbox
+              label="Enable push notifications"
+              checked={formData.notifications}
+              onChange={handleCheckboxChange("notifications")}
+              color="info"
+            />
+            
+            <div style={{ marginTop: "1rem", padding: "1rem", backgroundColor: "#e3f2fd", borderRadius: "4px" }}>
+              <h5 style={{ margin: "0 0 0.5rem 0", fontSize: "0.875rem" }}>Selected Options:</h5>
+              <ul style={{ margin: 0, paddingLeft: "1.5rem", fontSize: "0.8rem" }}>
+                <li>Newsletter: {formData.newsletter ? "Yes" : "No"}</li>
+                <li>Terms: {formData.terms ? "Accepted" : "Not accepted"}</li>
+                <li>Marketing: {formData.marketing ? "Yes" : "No"}</li>
+                <li>Notifications: {formData.notifications ? "Yes" : "No"}</li>
+              </ul>
+            </div>
+            
+            <button
+              type="submit"
+              style={{
+                padding: "0.75rem 1.5rem",
+                border: "none",
+                borderRadius: "4px",
+                backgroundColor: "#1976d2",
+                color: "white",
+                cursor: "pointer",
+                fontSize: "1rem",
+                marginTop: "1rem",
+              }}
+            >
+              Save Preferences
+            </button>
+          </div>
+        </form>
+      </div>
+    );
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Real-world example of checkboxes in an account preferences form with validation and different colors.",
+      },
+    },
+  },
 };

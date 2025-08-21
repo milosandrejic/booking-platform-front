@@ -5,6 +5,9 @@
   cursor: pointer;
   font-family: var(--font-family-primary);
   position: relative;
+  /* Prevent baseline shifts and ensure consistent vertical alignment */
+  vertical-align: top;
+  line-height: 1;
 
   &--disabled {
     cursor: not-allowed;
@@ -30,8 +33,10 @@
     border-radius: var(--border-radius-sm);
     border: 2px solid var(--color-border-main);
     background-color: var(--color-background-default);
-    transition: all 0.15s ease;
+    transition: border-color 0.15s ease, background-color 0.15s ease;
     flex-shrink: 0;
+    /* Prevent layout shifts by ensuring consistent box model */
+    box-sizing: border-box;
   }
 
   &__icon {
@@ -40,8 +45,10 @@
     justify-content: center;
     opacity: 0;
     transform: scale(0.8);
-    transition: all 0.15s ease;
+    transition: opacity 0.15s ease, transform 0.15s ease;
     color: var(--color-primary-contrast-text);
+    /* Ensure icon doesn't cause layout shifts */
+    position: relative;
   }
 
   &__custom-icon {
@@ -49,12 +56,14 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: all 0.15s ease;
+    transition: color 0.15s ease;
     flex-shrink: 0;
     color: var(--color-text-secondary);
+    /* Prevent transform-based layout shifts */
+    box-sizing: border-box;
 
     svg {
-      transition: all 0.15s ease;
+      transition: color 0.15s ease;
     }
   }
 
@@ -63,6 +72,9 @@
     color: var(--color-text-primary);
     line-height: 1.5;
     user-select: none;
+    /* Ensure consistent text baseline */
+    display: flex;
+    align-items: center;
   }
 
   &__required {
@@ -86,10 +98,13 @@
   // Focus state
   &__input:focus+.checkbox__box {
     box-shadow: 0 0 0 2px var(--color-primary-100);
+    /* Ensure box-shadow doesn't affect layout */
+    outline: none;
   }
 
   &__input:focus+.checkbox__custom-icon {
-    filter: brightness(1.1);
+    /* Remove brightness filter that could cause visual jumps */
+    outline: none;
   }
 
   // Hover state
@@ -102,8 +117,9 @@
       background-color: var(--color-primary-50);
     }
 
+    /* Remove transform scale to prevent layout jumps */
     .checkbox__custom-icon {
-      transform: scale(1.05);
+      color: var(--color-primary-main);
     }
   }
 
