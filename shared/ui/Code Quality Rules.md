@@ -356,22 +356,122 @@ export function AutoSaveInput({ onSave, ...props }) {
 
 ---
 
-## 7) Storybook Stories — Good Practices
+## 7) Storybook Stories — Enhanced Rules
 
-* Each component must have a `.stories.jsx` file in the same folder.
+* Each component must have a `.stories.tsx` file in the same folder.
+* **Add `"use client"` directive** if stories use React hooks (`useState`, `useEffect`, etc.).
 * **Use named exports** for stories; the default export defines metadata.
-* Always include:
 
-  * `title` (follows folder/component path)
-  * `component` (the React component)
-  * `args` with default prop values
-  * `argTypes` for controls
-* Provide at least:
+### Required Metadata
 
-  * **Default** story
-  * **Variants** story
-  * **Edge cases** story
-* Use **args** instead of hardcoding props in JSX.
+* Always include in meta configuration:
+  * `title` - Use "UI Components/ComponentName" format
+  * `component` - The React component
+  * `tags: ["autodocs"]` - Enable automatic documentation
+  * `parameters.docs.description.component` - Clear component description
+  * `args` with sensible default prop values
+  * `argTypes` with detailed prop documentation
+
+### Required Stories
+
+* Provide at least these core stories:
+  * **Default** - Basic usage with default props
+  * **Interactive** - Stateful example showing controlled usage
+  * **All[Variants]** - Showcase all size/color/variant options
+  * **AllStates** - Different component states (normal, disabled, loading, etc.)
+  * **InForm** - Real-world usage example in form context (when applicable)
+
+### Documentation Standards
+
+* **Story descriptions**: Add `parameters.docs.description.story` for each story
+* **Prop documentation**: Include `description`, `defaultValue`, and `table` info in `argTypes`
+* **Action logging**: Use `action: "eventName"` for event handler props
+* **Control types**: Specify appropriate control types (`select`, `boolean`, `text`, etc.)
+
+### Code Quality in Stories
+
+* **Function naming**: Use descriptive function names for render functions
+* **State management**: Use proper state handling with `useState`
+* **Array formatting**: Multi-item arrays must be formatted with line breaks
+* **Type safety**: Use proper TypeScript types and `as const` for arrays
+* **Real examples**: Show practical usage patterns, not just demos
+
+### Examples
+
+✅ **Good story structure:**
+```tsx
+"use client";
+
+import type { Meta, StoryObj } from "@storybook/react";
+import { useState } from "react";
+import { Switch } from "./Switch";
+
+const meta: Meta<typeof Switch> = {
+  title: "UI Components/Switch",
+  component: Switch,
+  tags: ["autodocs"],
+  parameters: {
+    layout: "centered",
+    docs: {
+      description: {
+        component: "A toggle switch component that allows users to switch between two states.",
+      },
+    },
+  },
+  argTypes: {
+    size: {
+      control: { type: "select" },
+      options: ["small", "medium", "large"],
+      description: "Size variant of the switch",
+      table: { defaultValue: { summary: "medium" } },
+    },
+    onChange: {
+      action: "changed",
+      description: "Callback fired when switch state changes",
+    },
+  },
+  args: {
+    size: "medium",
+    label: "Switch label",
+  },
+};
+
+export const Interactive: Story = {
+  render: function InteractiveSwitch(args) {
+    const [checked, setChecked] = useState(false);
+
+    return (
+      <Switch
+        {...args}
+        checked={checked}
+        onChange={setChecked}
+      />
+    );
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Interactive switch showing controlled usage pattern.",
+      },
+    },
+  },
+};
+```
+
+✅ **Good array formatting:**
+```tsx
+const colors = [
+  "primary", 
+  "secondary", 
+  "success", 
+  "error"
+] as const;
+```
+
+❌ **Bad array formatting:**
+```tsx
+const colors = ["primary", "secondary", "success", "error"] as const;
+```
 
 ---
 
