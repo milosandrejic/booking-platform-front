@@ -10,3 +10,4 @@ export * from "./src/DateRangePicker";
 export * from "./src/Checkbox";
 export * from "./src/Radio";
 export * from "./src/Switch";
+export * from "./src/Slider";
