@@ -56,11 +56,16 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
     ].filter(Boolean).join(" ");
 
     const enhancedChildren = Children.map(children, (child) => {
-      if (!isValidElement(child) || child.type !== Radio) {
+      if (!isValidElement(child)) {
         return child;
       }
 
-      const radioProps = child.props as RadioProps;
+      const isRadio = (child.type === Radio) || ((child.type as any)?.displayName === Radio.displayName);
+      if (!isRadio) {
+        return child;
+      }
+
+      const radioProps = child.props as Partial<RadioProps> & Record<string, unknown>;
       
       let isChecked = false;
       if (value !== undefined) {
@@ -71,22 +76,19 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
         isChecked = defaultValue === radioProps.value;
       }
       
-      return cloneElement(
-        child, 
-        {
-          ...radioProps,
-          name: groupName,
-          size: radioProps.size || size,
-          color: radioProps.color || color,
-          disabled: radioProps.disabled || disabled,
-          required: radioProps.required || required,
-          checked: isChecked,
-          onChange: (radioValue: string | number, event: React.ChangeEvent<HTMLInputElement>) => {
-            handleChange(radioValue);
-            radioProps.onChange?.(radioValue, event);
-          },
-        }
-      );
+      return cloneElement(child as React.ReactElement<any>, {
+        ...radioProps,
+        name: groupName,
+        size: (radioProps.size as RadioSize) || size,
+        color: (radioProps.color as RadioColor) || color,
+        disabled: (radioProps.disabled as boolean) || disabled,
+        required: (radioProps.required as boolean) || required,
+        checked: isChecked,
+        onChange: (radioValue: string | number, event: React.ChangeEvent<HTMLInputElement>) => {
+          handleChange(radioValue);
+          (radioProps.onChange as RadioProps["onChange"])?.(radioValue, event);
+        },
+      });
     });
 
     return (

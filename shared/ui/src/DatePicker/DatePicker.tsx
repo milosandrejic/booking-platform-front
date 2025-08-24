@@ -7,7 +7,7 @@ import "./DatePicker.scss";
 export type DatePickerVariant = "outlined" | "filled";
 export type DatePickerSize = "small" | "medium" | "large";
 
-interface DatePickerProps {
+export interface DatePickerProps {
   value?: Date;
   onChange?: (date: Date | null) => void;
   placeholder?: string;
