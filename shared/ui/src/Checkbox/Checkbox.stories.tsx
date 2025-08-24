@@ -17,7 +17,7 @@ import { Checkbox } from "./Checkbox";
  * - SSR compatible
  */
 const meta: Meta<typeof Checkbox> = {
-  title: "UI Components/Checkbox",
+  title: "Inputs/Checkbox",
   component: Checkbox,
   parameters: {
     layout: "padded",

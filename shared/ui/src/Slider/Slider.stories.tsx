@@ -19,7 +19,7 @@ import { Slider } from "./Slider";
  * - SSR compatible
  */
 const meta: Meta<typeof Slider> = {
-  title: "UI Components/Slider",
+  title: "Inputs/Slider",
   component: Slider,
   parameters: {
     layout: "padded",

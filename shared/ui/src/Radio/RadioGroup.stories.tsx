@@ -4,7 +4,7 @@ import { Radio } from "./Radio";
 import { useState } from "react";
 
 const meta: Meta<typeof RadioGroup> = {
-  title: "UI Components/RadioGroup",
+  title: "Inputs/RadioGroup",
   component: RadioGroup,
   parameters: {
     layout: "padded",

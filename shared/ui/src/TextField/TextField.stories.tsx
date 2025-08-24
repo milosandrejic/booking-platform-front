@@ -17,7 +17,7 @@ import { TextField } from "./TextField";
  * - SSR compatible
  */
 const meta = {
-  title: "UI Components/TextField",
+  title: "Inputs/TextField",
   component: TextField,
   parameters: {
     layout: "centered",

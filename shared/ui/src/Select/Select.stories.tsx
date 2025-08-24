@@ -19,7 +19,7 @@ import { Select, SelectOption } from "./Select";
  * - SSR compatible
  */
 const meta: Meta<typeof Select> = {
-  title: "UI Components/Select",
+  title: "Inputs/Select",
   component: Select,
   parameters: {
     layout: "padded",

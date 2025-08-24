@@ -21,7 +21,7 @@ import dayjs from "dayjs";
  * - SSR compatible
  */
 const meta: Meta<typeof DateRangePicker> = {
-  title: "UI Components/DateRangePicker",
+  title: "Pickers/DateRangePicker",
   component: DateRangePicker,
   parameters: {
     layout: "padded",

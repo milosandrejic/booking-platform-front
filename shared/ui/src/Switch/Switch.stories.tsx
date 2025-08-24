@@ -18,7 +18,7 @@ import { Switch } from "./Switch";
  * - Accessible with proper ARIA attributes
  */
 const meta = {
-  title: "UI Components/Switch",
+  title: "Inputs/Switch",
   component: Switch,
   parameters: {
     layout: "centered",

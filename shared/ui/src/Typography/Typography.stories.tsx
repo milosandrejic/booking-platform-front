@@ -13,7 +13,7 @@ import { Typography } from "./Typography";
  * - Accessible text rendering
  */
 const meta = {
-  title: "UI Components/Typography",
+  title: "Data Display/Typography",
   component: Typography,
   parameters: {
     layout: "centered",

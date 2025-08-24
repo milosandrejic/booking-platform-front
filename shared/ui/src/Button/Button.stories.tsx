@@ -14,7 +14,7 @@ import { Button } from "./Button";
  * - Accessible with proper ARIA attributes
  */
 const meta = {
-  title: "UI Components/Button",
+  title: "Inputs/Button",
   component: Button,
   parameters: {
     layout: "centered",

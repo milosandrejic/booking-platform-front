@@ -17,7 +17,7 @@ import { useState } from "react";
  * - SSR compatible
  */
 const meta: Meta<typeof DatePicker> = {
-  title: "UI Components/DatePicker",
+  title: "Pickers/DatePicker",
   component: DatePicker,
   parameters: {
     layout: "padded",

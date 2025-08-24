@@ -15,7 +15,7 @@ import { useState } from "react";
  * - SSR compatible
  */
 const meta: Meta<typeof Radio> = {
-  title: "UI Components/Radio",
+  title: "Inputs/Radio",
   component: Radio,
   parameters: {
     layout: "padded",
