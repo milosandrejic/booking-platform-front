@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Stack, type StackGap } from "./Stack";
 
 // Helper component for consistent demo items
