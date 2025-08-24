@@ -5,6 +5,7 @@ import { merge } from "lodash";
 import type { Theme } from "./types";
 import { theme as defaultTheme } from "./theme";
 import { CssBaseline } from "./CssBaseline";
+import { useThemeVariables } from "./useThemeVariables";
 
 // Create theme context
 const ThemeContext = createContext<Theme>(defaultTheme);
@@ -32,6 +33,9 @@ export const ThemeProvider = ({
   applyCssReset = true
 }: ThemeProviderProps) => {
   const themeValue = theme ? merge({}, defaultTheme, theme) : defaultTheme;
+  
+  // Inject CSS variables in the document head based on the theme
+  useThemeVariables(themeValue);
   
   return (
     <ThemeContext.Provider value={themeValue}>

@@ -1,6 +1,5 @@
 import type { Preview } from "@storybook/react-vite";
 import { ThemeProvider } from "@booking-platform-shared/theme";
-import "@booking-platform-shared/theme/dist/variables.css";
 
 const preview: Preview = {
   parameters: {

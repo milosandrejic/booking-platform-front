@@ -1,3 +1,5 @@
+@use "../utils/breakpoints" as *;
+
 .grid {
   &--container {
     display: grid;
@@ -87,7 +89,7 @@
   }
 
   // Small breakpoint
-  @media (width >=var(--breakpoints-sm)) {
+  @media (min-width: $bp-sm) {
     &--sm-1 {
       grid-column: span 1 / span 1;
     }
@@ -138,7 +140,7 @@
   }
 
   // Medium breakpoint
-  @media (width >=var(--breakpoints-md)) {
+  @media (min-width: $bp-md) {
     &--md-1 {
       grid-column: span 1 / span 1;
     }
@@ -189,7 +191,7 @@
   }
 
   // Large breakpoint
-  @media (width >=var(--breakpoints-lg)) {
+  @media (min-width: $bp-lg) {
     &--lg-1 {
       grid-column: span 1 / span 1;
     }
@@ -240,7 +242,7 @@
   }
 
   // Extra large breakpoint
-  @media (width >=var(--breakpoints-xl)) {
+  @media (min-width: $bp-xl) {
     &--xl-1 {
       grid-column: span 1 / span 1;
     }

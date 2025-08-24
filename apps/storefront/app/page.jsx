@@ -1,4 +1,4 @@
-import { Typography, Container, Button } from "@booking-platform-shared/ui";
+import { Typography, Container, Button, Box, Divider, Avatar, Badge, Chip } from "@booking-platform-shared/ui";
 
 export default function Home() {
   return (
@@ -7,11 +7,18 @@ export default function Home() {
       <Typography variant="bodyLarge">
         Find and book amazing accommodations for your next trip.
       </Typography>
-      <Typography variant="headlineMedium">Featured Destinations</Typography>
-      <Typography variant="bodyMedium" color="primary">
-        Discover the world's most beautiful places to stay.
-      </Typography>
-      <Button variant="filled" size="large">
+
+      <Divider style={{ marginTop: 24 }}>Featured</Divider>
+
+      <Box display="flex" gap={4} alignItems="center" mt={6}>
+        <Avatar name="Grace Hopper" />
+        <Badge badgeContent={3} color="secondary">
+          <span style={{ display: "inline-block", width: 28, height: 28, background: "var(--color-grey-300)", borderRadius: 6 }} />
+        </Badge>
+        <Chip label="New" color="info" />
+      </Box>
+
+      <Button variant="filled" size="large" style={{ marginTop: 24 }}>
         Start Exploring
       </Button>
     </Container>

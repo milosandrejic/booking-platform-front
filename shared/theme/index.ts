@@ -7,6 +7,7 @@ export type { Theme } from "./types";
 export { default as ThemeProvider, useTheme } from "./ThemeProvider";
 export type { ThemeProviderProps } from "./ThemeProvider";
 export { CssBaseline } from "./CssBaseline";
+export { useThemeVariables } from "./useThemeVariables";
 
 // CSS Variables utilities
 export {
