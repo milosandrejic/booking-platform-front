@@ -12,3 +12,4 @@ export * from "./src/Radio";
 export * from "./src/Switch";
 export * from "./src/Slider";
 export * from "./src/Avatar";
+export * from "./src/Badge";
