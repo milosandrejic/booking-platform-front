@@ -1,0 +1,195 @@
+.chip {
+  --chip-radius: var(--border-radius-xl);
+  --chip-padding-x: 0.5rem;
+  --chip-padding-y: 0.25rem;
+  --chip-gap: 0.375rem;
+  --chip-height: 1.75rem;
+  /* default medium */
+  --chip-font-size: var(--font-size-sm);
+
+  display: inline-flex;
+  align-items: center;
+  gap: var(--chip-gap);
+  border-radius: var(--chip-radius);
+  padding-inline: var(--chip-padding-x);
+  padding-block: var(--chip-padding-y);
+  inline-size: auto;
+  block-size: var(--chip-height);
+  border: 1px solid transparent;
+  user-select: none;
+  white-space: nowrap;
+  font-family: var(--font-family-primary);
+  font-size: var(--chip-font-size);
+  line-height: 1;
+  /* ensure inline alignment with surrounding text */
+  vertical-align: middle;
+
+  &--size-small {
+    --chip-height: 1.5rem;
+    --chip-font-size: var(--font-size-xs);
+    --chip-padding-x: 0.375rem;
+    --chip-gap: 0.25rem;
+  }
+
+  &--size-large {
+    --chip-height: 2rem;
+    --chip-font-size: var(--font-size-md);
+    --chip-padding-x: 0.625rem;
+  }
+
+  /* Variants */
+  &--variant-filled {
+    background-color: var(--color-grey-200);
+    color: var(--color-text-primary, #212121);
+  }
+
+  &--variant-outlined {
+    background-color: transparent;
+    border-color: var(--color-border-main);
+    color: var(--color-text-primary, #212121);
+  }
+
+  /* Colors (override backgrounds and text as needed) */
+  /* default color relies on base variant styles */
+
+  &--color-primary {
+    &.chip--variant-filled {
+      background-color: var(--color-primary-main);
+      color: #fff;
+    }
+
+    &.chip--variant-outlined {
+      border-color: var(--color-primary-main);
+      color: var(--color-primary-main);
+    }
+  }
+
+  &--color-secondary {
+    &.chip--variant-filled {
+      background-color: var(--color-secondary-main);
+      color: #fff;
+    }
+
+    &.chip--variant-outlined {
+      border-color: var(--color-secondary-main);
+      color: var(--color-secondary-main);
+    }
+  }
+
+  &--color-success {
+    &.chip--variant-filled {
+      background-color: var(--color-success-main);
+      color: #fff;
+    }
+
+    &.chip--variant-outlined {
+      border-color: var(--color-success-main);
+      color: var(--color-success-main);
+    }
+  }
+
+  &--color-error {
+    &.chip--variant-filled {
+      background-color: var(--color-error-main);
+      color: #fff;
+    }
+
+    &.chip--variant-outlined {
+      border-color: var(--color-error-main);
+      color: var(--color-error-main);
+    }
+  }
+
+  &--color-warning {
+    &.chip--variant-filled {
+      background-color: var(--color-warning-main);
+      color: #fff;
+    }
+
+    &.chip--variant-outlined {
+      border-color: var(--color-warning-main);
+      color: var(--color-warning-main);
+    }
+  }
+
+  &--color-info {
+    &.chip--variant-filled {
+      background-color: var(--color-info-main);
+      color: #fff;
+    }
+
+    &.chip--variant-outlined {
+      border-color: var(--color-info-main);
+      color: var(--color-info-main);
+    }
+  }
+
+  /* Interactions for clickable */
+  &--clickable {
+    cursor: pointer;
+  }
+
+  &--clickable:active {
+    transform: translateY(0.5px);
+  }
+
+  &__avatar {
+    inline-size: 1.25rem;
+    block-size: 1.25rem;
+    border-radius: 50%;
+    overflow: hidden;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-grey-300);
+    color: var(--color-grey-900);
+    font-weight: 500;
+    font-size: 0.75rem;
+  }
+
+  /* make sure image avatars fill the slot without shrinking */
+  &__avatar>img,
+  &__avatar>picture>img {
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  &--size-small &__avatar {
+    inline-size: 1rem;
+    block-size: 1rem;
+    font-size: 0.625rem;
+  }
+
+  &--size-large &__avatar {
+    inline-size: 1.5rem;
+    block-size: 1.5rem;
+    font-size: 0.875rem;
+  }
+
+  &__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+  }
+
+  &__label {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  &__delete {
+    inline-size: 1rem;
+    block-size: 1rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+    padding: 0;
+  }
+}
