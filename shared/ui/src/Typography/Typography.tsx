@@ -7,7 +7,18 @@ export type TypographyVariant =
   | "bodyLarge" | "bodyMedium" | "bodySmall"
   | "labelLarge" | "labelMedium" | "labelSmall";
 
-export type TypographyColor = "onSurface" | string;
+// Support semantic tokens and arbitrary CSS color strings (hex, rgb, var(), etc.)
+export type TypographyColor =
+  | "onSurface"
+  | "onSurfaceVariant"
+  | "outline"
+  | "primary"
+  | "secondary"
+  | "success"
+  | "warning"
+  | "error"
+  | "info"
+  | string;
 export type TypographyAlign = "left" | "center" | "right" | "justify";
 
 export interface TypographyProps {
@@ -24,6 +35,21 @@ export interface TypographyProps {
   [key: string]: any;
 }
 
+const semanticColorToVar: Record<string, string> = {
+  onSurface: "var(--color-text-primary)",
+  onSurfaceVariant: "var(--color-text-secondary)",
+  outline: "var(--color-border-main)",
+  primary: "var(--color-primary-main)",
+  secondary: "var(--color-secondary-main)",
+  success: "var(--color-success-main)",
+  warning: "var(--color-warning-main)",
+  error: "var(--color-error-main)",
+  info: "var(--color-info-main)"
+};
+
+const isDirectCssColor = (v: string) =>
+  /^#|^rgb|^hsl|^lab|^lch|^oklch|^color\(|^var\(/i.test(v.trim());
+
 export const Typography = ({ 
   children, 
   variant = "bodyLarge",
@@ -37,21 +63,33 @@ export const Typography = ({
   ...props 
 }: TypographyProps) => {
   const Component = (component || getDefaultComponent(variant)) as React.ElementType;
+ 
+  // Resolve color to inline style for semantic tokens or direct CSS values
+  let resolvedInlineColor: string | undefined;
+  if (typeof color === "string") {
+    if (semanticColorToVar[color]) {
+      resolvedInlineColor = semanticColorToVar[color];
+    } else if (isDirectCssColor(color)) {
+      resolvedInlineColor = color;
+    }
+  }
   
   const classes = [
     "typography",
     `typography--variant-${variant}`,
-    color !== "onSurface" && `typography--color-${color}`,
+    // If no inline color was resolved, allow class-based styling for custom tokens
+    !resolvedInlineColor && color !== "onSurface" && `typography--color-${color}`,
     align && `typography--align-${align}`,
     gutterBottom && "typography--gutterBottom",
     noWrap && "typography--noWrap",
     className?.trim() || null
   ].filter(Boolean).join(" ");
-  
+  const mergedStyle = resolvedInlineColor ? { ...style, color: resolvedInlineColor } : style;
+
   return (
     <Component
       className={classes}
-      style={style}
+      style={mergedStyle}
       {...props}
     >
       {children}

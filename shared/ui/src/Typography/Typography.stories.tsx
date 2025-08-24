@@ -274,11 +274,26 @@ export const ColorVariations: Story = {
         <Typography variant="titleMedium" color="primary">
           Primary Blue
         </Typography>
-        <Typography variant="titleMedium" color="error">
+        <Typography variant="titleMedium" color="#dc004e">
           Error Red
         </Typography>
-        <Typography variant="titleMedium" color="success">
+        <Typography variant="titleMedium" color="#00c853">
           Success Green
+        </Typography>
+        <Typography variant="titleMedium" color="secondary">
+          Secondary
+        </Typography>
+        <Typography variant="titleMedium" color="warning">
+          Warning
+        </Typography>
+        <Typography variant="titleMedium" color="info">
+          Info
+        </Typography>
+        <Typography variant="titleMedium" color="onSurfaceVariant">
+          On Surface Variant
+        </Typography>
+        <Typography variant="titleMedium" color="outline">
+          Outline Color
         </Typography>
         <Typography variant="bodyMedium" color="#666">
           Muted text in gray
@@ -289,7 +304,7 @@ export const ColorVariations: Story = {
   parameters: {
     docs: {
       description: {
-        story: "Typography with different color values, including design tokens and custom colors.",
+        story: "Typography supports semantic colors (primary, secondary, success, warning, error, info, onSurface, onSurfaceVariant, outline) and direct CSS values like hex, rgb, hsl, or var().",
       },
     },
   },
