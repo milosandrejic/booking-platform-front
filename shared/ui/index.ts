@@ -15,3 +15,4 @@ export * from "./src/Avatar";
 export * from "./src/Badge";
 export * from "./src/Chip";
 export * from "./src/Divider";
+export * from "./src/Box";
