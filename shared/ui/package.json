@@ -48,7 +48,8 @@
   },
   "dependencies": {
     "@booking-platform-shared/theme": "workspace:*",
-    "sass": "^1.89.2"
+    "sass": "^1.89.2",
+    "dayjs": "^1.11.13"
   },
   "peerDependencies": {
     "react": "19.1.0",
