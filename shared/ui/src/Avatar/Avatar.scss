@@ -1,0 +1,79 @@
+.avatar {
+  --avatar-size: var(--spacing-10);
+  --avatar-font-size: var(--font-size-sm);
+  --avatar-radius: 50%;
+
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: var(--avatar-size);
+  block-size: var(--avatar-size);
+  border-radius: var(--avatar-radius);
+  background-color: var(--color-grey-200);
+  color: var(--color-grey-900);
+  font-family: var(--font-family-primary);
+  font-weight: 600;
+  font-size: var(--avatar-font-size);
+  user-select: none;
+  overflow: hidden;
+
+  &--size-small {
+    --avatar-size: var(--spacing-8);
+    --avatar-font-size: var(--font-size-xs);
+  }
+
+  &--size-medium {
+    --avatar-size: var(--spacing-10);
+    --avatar-font-size: var(--font-size-sm);
+  }
+
+  &--size-large {
+    --avatar-size: var(--spacing-12);
+    --avatar-font-size: var(--font-size-lg);
+  }
+
+  &--shape-square {
+    --avatar-radius: var(--border-radius-md);
+  }
+
+  &__img {
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+  }
+
+  &__fallback {
+    letter-spacing: 0.02em;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    inline-size: 100%;
+    block-size: 100%;
+  }
+}
+
+.avatar-group {
+  --avatar-group-overlap: 8px;
+  /* positive value; applied as negative margin */
+  display: inline-flex;
+  align-items: center;
+
+  &__item {
+    display: inline-flex;
+    /* Visual stacking order */
+    position: relative;
+
+    &:not(:first-child) {
+      margin-inline-start: calc(-1 * var(--avatar-group-overlap));
+    }
+  }
+
+  &__surplus {
+    background-color: var(--color-grey-300);
+    color: var(--color-grey-900);
+  }
+}
