@@ -5,10 +5,9 @@ A modern, type-safe design system with automated CSS generation.
 ## Overview
 
 This theme system provides:
-- **Design Tokens** - Single source of truth in `tokens.json`
-- **TypeScript Types** - Full type safety for theme values
-- **CSS Variables** - Automatically generated static CSS file
-- **React Context** - Theme object available in components
+- Design Tokens in `tokens.json`
+- TypeScript types and a `ThemeProvider`
+- CSS Variables injected at runtime from JS (SSR-friendly)
 
 ## Usage
 
@@ -26,12 +25,9 @@ export default function App({ children }) {
 }
 ```
 
-### 2. Import CSS Variables
+### 2. CSS Variables runtime injection (default)
 
-```tsx
-// In your app layout or main CSS file
-import '@/shared/theme/dist/variables.css';
-```
+Variables are injected by `ThemeProvider` on the client. For zero-flicker SSR, you can inline a style tag or rely on hydration.
 
 ### 3. Use in Components
 
@@ -188,8 +184,8 @@ export const DarkThemeProvider = ({ children }) => (
 
 ### Scripts
 
-- `pnpm run theme:build` - Build theme and generate CSS variables
-- `pnpm run theme:watch` - Watch for changes and auto-rebuild
+- `pnpm run build` - TypeScript build only
+- `pnpm run dev` - TypeScript watch
 
 ### File Structure
 
@@ -201,8 +197,7 @@ shared/theme/
 ├── cssVariables.ts     # CSS generation utilities
 ├── ThemeProvider.tsx   # React context provider
 ├── CssBaseline.tsx     # CSS reset component
-└── dist/
-    └── variables.css   # Generated CSS variables (auto-generated)
+└── dist/                # Compiled JS/DTs for theme utilities
 ```
 
 ## Design Tokens

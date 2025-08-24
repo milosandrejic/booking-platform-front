@@ -8,12 +8,12 @@ export { default as ThemeProvider, useTheme } from "./ThemeProvider";
 export type { ThemeProviderProps } from "./ThemeProvider";
 export { CssBaseline } from "./CssBaseline";
 export { useThemeVariables } from "./useThemeVariables";
+export { useDefaultFont } from "./useDefaultFont";
 
 // CSS Variables utilities
 export {
   flattenTheme,
-  generateCSSVariables,
-  generateCompleteCSS
+  generateCSSVariables
 } from "./cssVariables";
 
 // Type exports for consumers

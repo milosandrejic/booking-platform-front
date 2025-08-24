@@ -271,13 +271,13 @@ export const ColorVariations: Story = {
         <Typography variant="titleMedium">
           Default Color (onSurface)
         </Typography>
-        <Typography variant="titleMedium" color="#1976d2">
+        <Typography variant="titleMedium" color="primary">
           Primary Blue
         </Typography>
-        <Typography variant="titleMedium" color="#dc004e">
+        <Typography variant="titleMedium" color="error">
           Error Red
         </Typography>
-        <Typography variant="titleMedium" color="#00c853">
+        <Typography variant="titleMedium" color="success">
           Success Green
         </Typography>
         <Typography variant="bodyMedium" color="#666">

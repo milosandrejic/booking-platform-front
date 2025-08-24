@@ -19,6 +19,7 @@ export const CssBaseline = () => {
     body {
       line-height: 1.5;
       -webkit-font-smoothing: antialiased;
+      font-family: var(--font-family, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji");
     }
 
     img,

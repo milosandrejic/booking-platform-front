@@ -143,9 +143,6 @@ importers:
 
   shared/theme:
     dependencies:
-      dayjs:
-        specifier: ^1.11.13
-        version: 1.11.13
       react:
         specifier: 19.1.0
         version: 19.1.0

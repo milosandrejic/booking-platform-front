@@ -11,17 +11,14 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
       "require": "./dist/index.js"
-    },
-    "./dist/variables.css": "./dist/variables.css"
+    }
   },
   "files": [
-    "dist/",
-    "fonts/"
+    "dist/"
   ],
   "scripts": {
     "build": "tsc --build",
     "dev": "tsc --watch",
-    "build:css": "tsx build-css.ts",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "clean": "rm -rf dist node_modules package-lock.json yarn.lock pnpm-lock.yaml",
