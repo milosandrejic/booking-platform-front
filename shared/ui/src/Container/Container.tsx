@@ -39,7 +39,7 @@ export const Container = ({
   return (
     <div
       className={classes}
-  style={{ ...style, ...resolveSx(theme, sx) }}
+      style={{ ...style, ...resolveSx(theme, sx) }}
       {...props}
     >
       {children}

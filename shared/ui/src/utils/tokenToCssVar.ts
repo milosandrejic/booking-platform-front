@@ -10,10 +10,16 @@
  * Raw CSS values are passed through unchanged (e.g., "#fff", "rgba(...)", "var(--foo)").
  */
 export const tokenToCssVar = (token?: string): string | undefined => {
-  if (!token) return undefined;
+  if (!token) {
+    return undefined;
+  }
   // passthrough for raw CSS values
-  if (token.startsWith("var(")) return token;
-  if (token.startsWith("#") || token.includes("(")) return token; // hex or rgba/hsl
+  if (token.startsWith("var(")) {
+    return token;
+  }
+  if (token.startsWith("#") || token.includes("(")) {
+    return token; // hex or rgba/hsl
+  }
 
   // drop optional "color." prefix
   const normalized = token.startsWith("color.") ? token.slice("color.".length) : token;
@@ -21,7 +27,7 @@ export const tokenToCssVar = (token?: string): string | undefined => {
   // dots to dashes and camelCase to kebab-case: contrastText -> contrast-text
   const dashed = normalized
     .replaceAll(".", "-")
-    .replace(/[A-Z]/g, (m) => `-${m.toLowerCase()}`);
+    .replace(/[A-Z]/g, m => `-${m.toLowerCase()}`);
 
   return `var(--color-${dashed})`;
 };

@@ -111,10 +111,10 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
     name,
     className = "",
     dateFormat = "MM/DD/YYYY",
-  sx,
+    sx,
     ...props
   }, ref) {
-  const theme = useTheme();
+    const theme = useTheme();
     const initialValue = toDayjs(value || defaultValue || null);
     const [isOpen, setIsOpen] = useState(false);
     const [inputValue, setInputValue] = useState(formatDate(initialValue, dateFormat));

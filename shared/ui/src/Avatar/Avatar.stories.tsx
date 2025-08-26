@@ -10,6 +10,7 @@ const meta = {
     layout: "centered",
     docs: {
       description: {
+        // eslint-disable-next-line @stylistic/max-len
         component: "Avatar shows a user image or initials, with circle (default) and square shapes. AvatarGroup stacks avatars with overlap and optional surplus counter.",
       },
     },
@@ -108,7 +109,7 @@ export const WithSx: Story = {
     return (
       <div style={{ display: "flex", gap: 16, alignItems: "center" }}>
         <Avatar name="Styled" sx={{ backgroundColor: "var(--color-secondary-light)", color: "var(--color-secondary-contrast-text)" }} />
-        <Avatar name="Theme" sx={(t) => ({ backgroundColor: t.color.primary.main, color: t.color.primary.contrastText })} />
+        <Avatar name="Theme" sx={t => ({ backgroundColor: t.color.primary.main, color: t.color.primary.contrastText })} />
         <AvatarGroup spacing={12} sx={{ padding: 8, background: "var(--color-background-subtle)", borderRadius: 8 }}>
           <Avatar name="A" />
           <Avatar name="B" />

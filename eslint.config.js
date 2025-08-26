@@ -118,12 +118,17 @@ export const nodeConfig = {
 export default [
   {
     ignores: [
-      "dist",
-      "build", 
-      "node_modules",
-      ".next",
-      "coverage",
-      "*.min.js",
+      "**/node_modules/**",
+      "**/dist/**",
+      "**/build/**", 
+      "**/.next/**",
+      "**/storybook-static/**",
+      "**/coverage/**",
+      "**/.turbo/**",
+      "**/.cache/**",
+      "**/.pnpm-store/**",
+      "**/*.min.js",
+      "**/*.d.ts",
     ],
   },
   {

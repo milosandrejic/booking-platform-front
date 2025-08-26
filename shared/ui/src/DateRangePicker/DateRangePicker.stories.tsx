@@ -162,7 +162,16 @@ export const WithSx: Story = {
   render: function WithSxDateRangePicker(args) {
     const [value, setValue] = useState<any>(null);
     return (
-      <DateRangePicker {...args} value={value} onChange={(v) => setValue(v)} sx={{ border: "1px solid var(--color-secondary-main)", borderRadius: 8, padding: 8 }} />
+      <DateRangePicker
+        {...args}
+        value={value}
+        onChange={v => setValue(v)}
+        sx={{
+          border: "1px solid var(--color-secondary-main)",
+          borderRadius: 8,
+          padding: 8,
+        }}
+      />
     );
   },
 };

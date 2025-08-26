@@ -304,7 +304,9 @@ export const ColorVariations: Story = {
   parameters: {
     docs: {
       description: {
-        story: "Typography supports semantic colors (primary, secondary, success, warning, error, info, onSurface, onSurfaceVariant, outline) and direct CSS values like hex, rgb, hsl, or var().",
+        story:
+          "Typography supports semantic colors (primary, secondary, success, warning, error, info, onSurface, onSurfaceVariant, outline) " +
+          "and direct CSS values like hex, rgb, hsl, or var().",
       },
     },
   },
@@ -314,10 +316,21 @@ export const WithSx: Story = {
   render: function TypographyWithSx() {
     return (
       <div style={{ display: "grid", gap: 12 }}>
-        <Typography variant="titleLarge" sx={{ padding: 8, background: "var(--color-primary-light)", borderRadius: 8, color: "var(--color-primary-contrast-text)" }}>
+        <Typography
+          variant="titleLarge"
+          sx={{
+            padding: 8,
+            background: "var(--color-primary-light)",
+            borderRadius: 8,
+            color: "var(--color-primary-contrast-text)",
+          }}
+        >
           Boxed Title with sx
         </Typography>
-        <Typography variant="bodyMedium" sx={(t) => ({ color: t.color.text.secondary })}>
+        <Typography
+          variant="bodyMedium"
+          sx={t => ({ color: t.color.text.secondary })}
+        >
           Theme-driven secondary text via sx(theme)
         </Typography>
       </div>

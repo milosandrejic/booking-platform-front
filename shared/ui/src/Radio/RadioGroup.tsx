@@ -100,7 +100,7 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
       <div
         ref={ref}
         className={classes}
-  style={{ ...style, ...resolveSx(theme, sx) }}
+        style={{ ...style, ...resolveSx(theme, sx) }}
         role="radiogroup"
         {...props}
       >

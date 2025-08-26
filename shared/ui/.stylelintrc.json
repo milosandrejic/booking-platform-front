@@ -7,7 +7,7 @@
     "selector-class-pattern": null,
     "no-descending-specificity": null,
     "declaration-block-single-line-max-declarations": 2,
-    "alpha-value-notation": "percentage",
+    "alpha-value-notation": "number",
     "color-function-notation": "modern",
     "length-zero-no-unit": true,
     "font-family-name-quotes": null,

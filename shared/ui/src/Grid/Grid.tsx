@@ -48,7 +48,7 @@ export const Grid = ({
   return (
     <div
       className={classes}
-  style={{ ...style, ...resolveSx(theme, sx) }}
+      style={{ ...style, ...resolveSx(theme, sx) }}
       {...props}
     >
       {children}

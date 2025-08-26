@@ -465,7 +465,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(pr
   return (
     <div 
       className={classes}
-  style={{ ...style, ...resolveSx(theme, sx) }}
+      style={{ ...style, ...resolveSx(theme, sx) }}
       ref={ref}
       {...restProps}
     >

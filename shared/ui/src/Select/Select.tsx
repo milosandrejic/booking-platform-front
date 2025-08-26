@@ -85,7 +85,7 @@ export const SelectOption = ({
       role="option"
       aria-selected={selected}
       className={optionClasses}
-  style={{ ...style, ...resolveSx(useTheme(), sx) }}
+      style={{ ...style, ...resolveSx(useTheme(), sx) }}
       onMouseDown={(e) => { e.preventDefault(); }}
       onClick={handleClick}
       {...props}
@@ -270,7 +270,7 @@ export const Select = ({
       <div
         ref={rootRef}
         className={classes}
-  style={{ ...style, ...resolveSx(theme, sx) }}
+        style={{ ...style, ...resolveSx(theme, sx) }}
         {...props}
       >
         <button

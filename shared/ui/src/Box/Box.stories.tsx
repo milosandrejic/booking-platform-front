@@ -40,7 +40,14 @@ export const AsElement: Story = {
 
 export const SxFunction: Story = {
   render: () => (
-  <Box sx={(t: Theme) => ({ padding: t.spacing[6], background: t.color.primary.light, color: t.color.primary.contrastText, borderRadius: t.borderRadius.lg })}>
+    <Box
+      sx={(t: Theme) => ({
+        padding: t.spacing[6],
+        background: t.color.primary.light,
+        color: t.color.primary.contrastText,
+        borderRadius: t.borderRadius.lg 
+      })}
+    >
       sx(theme) as function
     </Box>
   ),

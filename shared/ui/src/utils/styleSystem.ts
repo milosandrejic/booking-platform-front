@@ -5,8 +5,13 @@ import { tokenToCssVar } from "./tokenToCssVar";
 export type SpacingValue = number | string | undefined;
 
 export const toSpacing = (v: SpacingValue): string | undefined => {
-  if (v === undefined) return undefined;
-  if (typeof v === "number") return getSpacing(v);
+  if (v === undefined) {
+    return undefined;
+  }
+
+  if (typeof v === "number") {
+    return getSpacing(v);
+  }
   return v;
 };
 
@@ -15,9 +20,23 @@ export const mergeStyles = (
 ): CSSProperties => Object.assign({}, ...styles.filter(Boolean));
 
 export const buildSpacingStyles = (args: {
-  p?: SpacingValue; px?: SpacingValue; py?: SpacingValue; pt?: SpacingValue; pr?: SpacingValue; pb?: SpacingValue; pl?: SpacingValue;
-  m?: SpacingValue; mx?: SpacingValue; my?: SpacingValue; mt?: SpacingValue; mr?: SpacingValue; mb?: SpacingValue; ml?: SpacingValue;
-  gap?: SpacingValue; rowGap?: SpacingValue; columnGap?: SpacingValue;
+  p?: SpacingValue;
+  px?: SpacingValue;
+  py?: SpacingValue;
+  pt?: SpacingValue;
+  pr?: SpacingValue;
+  pb?: SpacingValue;
+  pl?: SpacingValue;
+  m?: SpacingValue;
+  mx?: SpacingValue;
+  my?: SpacingValue;
+  mt?: SpacingValue;
+  mr?: SpacingValue;
+  mb?: SpacingValue;
+  ml?: SpacingValue;
+  gap?: SpacingValue;
+  rowGap?: SpacingValue;
+  columnGap?: SpacingValue;
   flexDirection?: CSSProperties["flexDirection"];
 }): CSSProperties => {
   const { p, px, py, pt, pr, pb, pl, m, mx, my, mt, mr, mb, ml, gap, rowGap, columnGap, flexDirection } = args;
@@ -29,6 +48,25 @@ export const buildSpacingStyles = (args: {
 
   const gapAll = toSpacing(gap);
 
+  const rowGapResolved = toSpacing(rowGap);
+  const columnGapResolved = toSpacing(columnGap);
+
+  let computedRowGap: string | undefined = rowGapResolved;
+  if (computedRowGap == null) {
+    computedRowGap = flexDirection === "column" ? gapAll : undefined;
+  }
+
+  let computedColumnGap: string | undefined = columnGapResolved;
+  if (computedColumnGap == null) {
+    if (!flexDirection) {
+      computedColumnGap = gapAll;
+    } else if (flexDirection.startsWith("row")) {
+      computedColumnGap = gapAll;
+    } else {
+      computedColumnGap = undefined;
+    }
+  }
+
   return {
     paddingTop: _pt ?? _py ?? _p,
     paddingRight: _pr ?? _px ?? _p,
@@ -39,13 +77,20 @@ export const buildSpacingStyles = (args: {
     marginBottom: _mb ?? _my ?? _m,
     marginLeft: _ml ?? _mx ?? _m,
     gap: gapAll,
-    rowGap: toSpacing(rowGap) ?? (flexDirection === "column" ? gapAll : undefined),
-    columnGap: toSpacing(columnGap) ?? (flexDirection && flexDirection.startsWith("row") ? gapAll : (flexDirection ? undefined : gapAll)),
+    rowGap: computedRowGap,
+    columnGap: computedColumnGap,
   };
 };
 
 export const buildLayoutStyles = (args: {
-  display?: CSSProperties["display"]; flexDirection?: CSSProperties["flexDirection"]; alignItems?: CSSProperties["alignItems"]; justifyContent?: CSSProperties["justifyContent"]; flexWrap?: CSSProperties["flexWrap"]; flex?: CSSProperties["flex"]; gridTemplateColumns?: CSSProperties["gridTemplateColumns"]; gridTemplateRows?: CSSProperties["gridTemplateRows"];
+  display?: CSSProperties["display"];
+  flexDirection?: CSSProperties["flexDirection"];
+  alignItems?: CSSProperties["alignItems"];
+  justifyContent?: CSSProperties["justifyContent"];
+  flexWrap?: CSSProperties["flexWrap"];
+  flex?: CSSProperties["flex"];
+  gridTemplateColumns?: CSSProperties["gridTemplateColumns"];
+  gridTemplateRows?: CSSProperties["gridTemplateRows"];
 }): CSSProperties => ({ ...args });
 
 export const buildVisualStyles = (args: {

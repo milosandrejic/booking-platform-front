@@ -43,7 +43,7 @@ export const Button = ({
   return (
     <button
       className={classes}
-  style={{ ...style, ...resolveSx(theme, sx) }}
+      style={{ ...style, ...resolveSx(theme, sx) }}
       disabled={disabled}
       onClick={onClick}
       type={type}

@@ -383,7 +383,14 @@ export const WithSx: Story = {
         <Button {...args} sx={{ backgroundColor: "var(--color-success-main)" }}>
           Success BG via sx
         </Button>
-        <Button {...args} variant="outlined" sx={(t) => ({ color: t.color.primary.main, borderColor: "var(--color-primary-main)" })}>
+        <Button
+          {...args}
+          variant="outlined"
+          sx={t => ({
+            color: t.color.primary.main,
+            borderColor: "var(--color-primary-main)",
+          })}
+        >
           Themed color via sx(theme)
         </Button>
       </div>

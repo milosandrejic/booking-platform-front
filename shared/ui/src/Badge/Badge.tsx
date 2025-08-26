@@ -68,7 +68,7 @@ export function Badge({
   ].filter(Boolean).join(" ");
 
   return (
-  <span className={classes} style={{ ...style, ...resolveSx(theme, sx) }} {...rest}>
+    <span className={classes} style={{ ...style, ...resolveSx(theme, sx) }} {...rest}>
       <span className="badge__child">
         {children}
       </span>

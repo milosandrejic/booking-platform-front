@@ -48,8 +48,8 @@ export function Divider({
       className={classes}
       role={role}
       aria-orientation={orientation}
-  style={{ ...style, ...resolveSx(theme, sx) }}
-  {...rest}
+      style={{ ...style, ...resolveSx(theme, sx) }}
+      {...rest}
     >
       {hasLabel && <span className="divider__label">{children}</span>}
     </div>

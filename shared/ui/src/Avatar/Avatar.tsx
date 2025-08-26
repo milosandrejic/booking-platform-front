@@ -37,17 +37,23 @@ export function Avatar({
 }: AvatarProps) {
   const theme = useTheme();
   const letters = useMemo(() => {
-    if (fallback && fallback.trim()) return fallback.trim().slice(0, 2).toUpperCase();
+    if (fallback && fallback.trim()) {
+      return fallback.trim().slice(0, 2).toUpperCase();
+    }
 
-    if (!name) return "";
+    if (!name) {
+      return "";
+    }
 
     const parts = name.trim().split(/\s+/).filter(Boolean);
 
-    if (parts.length === 0) return "";
+    if (parts.length === 0) {
+      return "";
+    }
 
     const first = parts[0]?.[0] ?? "";
-  const lastPart = parts.length > 1 ? parts[parts.length - 1] : "";
-  const last = typeof lastPart === "string" && lastPart ? lastPart[0] : "";
+    const lastPart = parts.length > 1 ? parts[parts.length - 1] : "";
+    const last = typeof lastPart === "string" && lastPart ? lastPart[0] : "";
     return `${first}${last}`.toUpperCase();
   }, [name, fallback]);
 
@@ -59,7 +65,13 @@ export function Avatar({
   ].filter(Boolean).join(" ");
 
   return (
-  <div className={classes} role={src ? undefined : "img"} aria-label={!src && letters ? letters : undefined} style={{ ...style, ...resolveSx(theme, sx) }} {...rest}>
+    <div
+      className={classes}
+      role={src ? undefined : "img"}
+      aria-label={!src && letters ? letters : undefined}
+      style={{ ...style, ...resolveSx(theme, sx) }}
+      {...rest}
+    >
       {
         src &&
         <img
@@ -104,8 +116,7 @@ export function AvatarGroup({ max, total, spacing = 8, className = "", children,
   const surplus = Math.max(0, count - visible.length);
 
   const classes = [
-    "avatar-group",
-    className?.trim() || null,
+    "avatar-group", className?.trim() || null,
   ].filter(Boolean).join(" ");
 
   const groupStyle = {

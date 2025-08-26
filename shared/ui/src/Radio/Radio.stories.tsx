@@ -181,8 +181,19 @@ export const WithSx: Story = {
     const [selected, setSelected] = useState("a");
     return (
       <div style={{ display: "grid", gap: 8 }}>
-        <Radio value="a" label="Styled" checked={selected === "a"} onChange={() => setSelected("a")} sx={{ padding: 8, background: "var(--color-background-subtle)", borderRadius: 8 }} />
-        <Radio value="b" label="Default" checked={selected === "b"} onChange={() => setSelected("b")} />
+        <Radio
+          value="a"
+          label="Styled"
+          checked={selected === "a"}
+          onChange={() => setSelected("a")}
+          sx={{ padding: 8, background: "var(--color-background-subtle)", borderRadius: 8 }}
+        />
+        <Radio
+          value="b"
+          label="Default"
+          checked={selected === "b"}
+          onChange={() => setSelected("b")}
+        />
       </div>
     );
   },

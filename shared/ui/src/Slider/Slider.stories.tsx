@@ -191,7 +191,12 @@ export const WithSx: Story = {
     const [value, setValue] = useState<number>(40);
     return (
       <div style={{ width: 420, padding: "1.5rem" }}>
-        <Slider {...args} value={value} onChange={v => setValue(v as number)} sx={{ padding: 12, background: "var(--color-background-subtle)", borderRadius: 8 }} />
+        <Slider
+          {...args}
+          value={value}
+          onChange={v => setValue(v as number)}
+          sx={{ padding: 12, background: "var(--color-background-subtle)", borderRadius: 8 }}
+        />
       </div>
     );
   },
