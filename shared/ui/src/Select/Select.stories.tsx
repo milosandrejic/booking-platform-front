@@ -168,6 +168,22 @@ export const Playground: Story = {
   },
 };
 
+export const WithSx: Story = {
+  render: function WithSxSelect(args) {
+    const [value, setValue] = useState<SelectValue | SelectValue[] | undefined>(args.multiple ? [] : undefined);
+    return (
+      <div style={{ width: 360 }}>
+        <Select {...args} value={value} onChange={setValue} sx={{ border: "1px solid var(--color-primary-main)", borderRadius: 8, padding: 4 }}>
+          <SelectOption value="apple" sx={{ color: "var(--color-success-dark)" }}>Apple</SelectOption>
+          <SelectOption value="banana">Banana</SelectOption>
+          <SelectOption value="cherry">Cherry</SelectOption>
+          <SelectOption value="date">Date</SelectOption>
+        </Select>
+      </div>
+    );
+  },
+};
+
 export const Interactive: Story = {
   render: function InteractiveSelect() {
     const [singleValue, setSingleValue] = useState<SelectValue>("");

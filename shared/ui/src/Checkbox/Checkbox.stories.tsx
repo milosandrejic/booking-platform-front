@@ -173,6 +173,15 @@ export const Interactive: Story = {
   },
 };
 
+export const WithSx: Story = {
+  render: function WithSxCheckbox(args) {
+    const [checked, setChecked] = useState(false);
+    return (
+      <Checkbox {...args} checked={checked} onChange={setChecked} sx={{ padding: 8, borderRadius: 8, background: "var(--color-background-subtle)" }} />
+    );
+  },
+};
+
 export const AllSizes: Story = {
   render: function AllSizesCheckbox() {
     return (

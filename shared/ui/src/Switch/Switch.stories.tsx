@@ -184,6 +184,15 @@ export const Interactive: Story = {
   },
 };
 
+export const WithSx: Story = {
+  render: function WithSxSwitch(args) {
+    const [checked, setChecked] = useState(false);
+    return (
+      <Switch {...args} checked={checked} onChange={setChecked} sx={{ padding: 8, borderRadius: 12, background: "var(--color-background-subtle)" }} />
+    );
+  },
+};
+
 export const AllSizes: Story = {
   render: function AllSizesSwitch(args) {
     const [checkedStates, setCheckedStates] = useState({

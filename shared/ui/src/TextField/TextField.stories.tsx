@@ -241,6 +241,21 @@ export const AllSizes: Story = {
   },
 };
 
+export const WithSx: Story = {
+  render: function WithSxTextField(args) {
+    const [value, setValue] = useState("");
+    return (
+      <TextField
+        {...args}
+        label="With sx"
+        value={value}
+        onChange={e => setValue(e.target.value)}
+        sx={{ border: "1px solid var(--color-info-main)", borderRadius: 8, padding: 8 }}
+      />
+    );
+  },
+};
+
 export const AllTypes: Story = {
   render: function AllTypesTextField() {
     return (

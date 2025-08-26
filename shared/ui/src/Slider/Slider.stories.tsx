@@ -186,6 +186,17 @@ export const Playground: Story = {
   },
 };
 
+export const WithSx: Story = {
+  render: function WithSxSlider(args) {
+    const [value, setValue] = useState<number>(40);
+    return (
+      <div style={{ width: 420, padding: "1.5rem" }}>
+        <Slider {...args} value={value} onChange={v => setValue(v as number)} sx={{ padding: 12, background: "var(--color-background-subtle)", borderRadius: 8 }} />
+      </div>
+    );
+  },
+};
+
 export const RangeSlider: Story = {
   render: function RangeSliderStory() {
     const [value, setValue] = useState<[number, number]>([20, 80]);

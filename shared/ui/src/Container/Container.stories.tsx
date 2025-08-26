@@ -397,3 +397,13 @@ export const Wide: Story = {
     </Container>
   ),
 };
+
+export const WithSx: Story = {
+  render: args => (
+    <Container {...args} sx={{ backgroundColor: "var(--color-background-subtle)", padding: 24, borderRadius: 12 }}>
+      <div style={{ backgroundColor: "white", padding: 16, borderRadius: 8, border: "1px solid var(--color-border-main)" }}>
+        Container styled with sx
+      </div>
+    </Container>
+  ),
+};

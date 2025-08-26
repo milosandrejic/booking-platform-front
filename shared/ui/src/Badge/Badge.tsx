@@ -1,6 +1,8 @@
 "use client";
 
 import "./Badge.scss";
+import { useTheme } from "@booking-platform-shared/theme";
+import { resolveSx, type SxProps } from "../utils/sx";
 
 export type BadgeColor = "default" | "primary" | "secondary" | "success" | "error" | "warning" | "info";
 export type BadgeVariant = "standard" | "dot";
@@ -16,6 +18,7 @@ export interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
   anchorOrigin?: BadgeAnchor;
   icon?: React.ReactNode; // optional icon instead of text/number
   children?: React.ReactNode; // wrapped element
+  sx?: SxProps;
 }
 
 /**
@@ -34,8 +37,11 @@ export function Badge({
   anchorOrigin = "top-right",
   icon,
   className = "",
+  style,
+  sx,
   ...rest
 }: BadgeProps) {
+  const theme = useTheme();
   const isZeroLike = badgeContent === 0 || badgeContent === "0";
   const hideForZero = !showZero && isZeroLike;
   const isDot = variant === "dot";
@@ -62,7 +68,7 @@ export function Badge({
   ].filter(Boolean).join(" ");
 
   return (
-    <span className={classes} {...rest}>
+  <span className={classes} style={{ ...style, ...resolveSx(theme, sx) }} {...rest}>
       <span className="badge__child">
         {children}
       </span>

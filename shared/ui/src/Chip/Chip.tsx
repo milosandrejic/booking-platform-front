@@ -2,6 +2,8 @@
 
 import "./Chip.scss";
 import { Avatar as UiAvatar } from "../Avatar";
+import { useTheme } from "@booking-platform-shared/theme";
+import { resolveSx, type SxProps } from "../utils/sx";
 
 export type ChipVariant = "filled" | "outlined";
 export type ChipSize = "small" | "medium" | "large";
@@ -19,6 +21,7 @@ export interface ChipProps extends React.HTMLAttributes<HTMLDivElement> {
   deleteIcon?: React.ReactNode;
   clickable?: boolean;
   disabled?: boolean;
+  sx?: SxProps;
 }
 
 /**
@@ -37,8 +40,11 @@ export function Chip({
   clickable,
   disabled = false,
   className = "",
+  style,
+  sx,
   ...rest
 }: ChipProps) {
+  const theme = useTheme();
   const classes = [
     "chip",
     `chip--variant-${variant}`,
@@ -61,6 +67,7 @@ export function Chip({
   return (
     <div
       className={classes}
+  style={{ ...style, ...resolveSx(theme, sx) }}
       onClick={handleClick}
       aria-disabled={disabled || undefined}
       {...rest}

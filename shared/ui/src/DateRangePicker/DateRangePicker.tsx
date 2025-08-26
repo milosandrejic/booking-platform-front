@@ -3,6 +3,8 @@
 import { forwardRef, useId, useState, useRef, useEffect } from "react";
 import dayjs, { type Dayjs } from "dayjs";
 import "./DateRangePicker.scss";
+import { useTheme } from "@booking-platform-shared/theme";
+import { resolveSx, type SxProps } from "../utils/sx";
 
 export type DateRangePickerVariant = "outlined" | "filled";
 export type DateRangePickerSize = "small" | "medium" | "large";
@@ -34,6 +36,7 @@ export interface DateRangePickerProps {
   separator?: string;
   shouldDisableDate?: (date: Dayjs) => boolean;
   maxSelectedRange?: number;
+  sx?: SxProps;
 }
 
 const MONTHS = [
@@ -104,10 +107,12 @@ export const DateRangePicker = forwardRef<HTMLInputElement, DateRangePickerProps
       separator = "—",
       shouldDisableDate,
       maxSelectedRange,
+      sx,
       ...props
     },
     ref
   ) => {
+    const theme = useTheme();
     const inputId = useId();
     const [isOpen, setIsOpen] = useState(false);
     const [currentMonth, setCurrentMonth] = useState(dayjs().startOf("month"));
@@ -243,7 +248,7 @@ export const DateRangePicker = forwardRef<HTMLInputElement, DateRangePickerProps
     ].filter(Boolean).join(" ");
 
     return (
-      <div className={classes} style={style}>
+      <div className={classes} style={{ ...style, ...resolveSx(theme, sx) }}>
         <DateRangePickerInput
           ref={ref || inputRef}
           id={inputId}

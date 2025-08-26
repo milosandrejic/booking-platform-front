@@ -2,6 +2,8 @@
 
 import { forwardRef, useId, useState } from "react";
 import "./Radio.scss";
+import { useTheme } from "@booking-platform-shared/theme";
+import { resolveSx, type SxProps } from "../utils/sx";
 
 export type RadioSize = "small" | "medium" | "large";
 export type RadioColor = "primary" | "secondary" | "success" | "error" | "warning" | "info";
@@ -20,6 +22,7 @@ export interface RadioProps {
   className?: string;
   id?: string;
   style?: React.CSSProperties;
+  sx?: SxProps;
 }
 
 export const Radio = forwardRef<HTMLInputElement, RadioProps>(
@@ -38,10 +41,12 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>(
       className = "",
       id,
       style,
+      sx,
       ...props
     },
     ref
   ) {
+    const theme = useTheme();
     const reactId = useId();
     const radioId = id || `radio-${reactId}`;
 
@@ -74,7 +79,7 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>(
     return (
       <label 
         className={classes} 
-        style={style}
+        style={{ ...style, ...resolveSx(theme, sx) }}
       >
         <input
           ref={ref}

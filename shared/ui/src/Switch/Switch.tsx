@@ -2,6 +2,8 @@
 
 import { forwardRef, useId, useState } from "react";
 import "./Switch.scss";
+import { useTheme } from "@booking-platform-shared/theme";
+import { resolveSx, type SxProps } from "../utils/sx";
 
 export type SwitchSize = "small" | "medium" | "large";
 export type SwitchColor = "primary" | "secondary" | "success" | "error" | "warning" | "info";
@@ -31,6 +33,8 @@ export interface SwitchProps {
   id?: string;
   /** Inline styles */
   style?: React.CSSProperties;
+  /** sx prop for theme-aware inline styles */
+  sx?: SxProps;
 }
 
 export const Switch = forwardRef<HTMLInputElement, SwitchProps>(
@@ -48,10 +52,12 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(
       className = "",
       id,
       style,
+      sx,
       ...props
     },
     ref
   ) {
+    const theme = useTheme();
     const [internalChecked, setInternalChecked] = useState(defaultChecked);
     const reactId = useId();
     const switchId = id || `switch-${reactId}`;
@@ -85,7 +91,7 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(
     return (
       <label 
         className={classes} 
-        style={style}
+        style={{ ...style, ...resolveSx(theme, sx) }}
       >
         <input
           ref={ref}

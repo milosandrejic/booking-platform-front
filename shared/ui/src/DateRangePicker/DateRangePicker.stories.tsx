@@ -158,6 +158,15 @@ export const Playground: Story = {
   },
 };
 
+export const WithSx: Story = {
+  render: function WithSxDateRangePicker(args) {
+    const [value, setValue] = useState<any>(null);
+    return (
+      <DateRangePicker {...args} value={value} onChange={(v) => setValue(v)} sx={{ border: "1px solid var(--color-secondary-main)", borderRadius: 8, padding: 8 }} />
+    );
+  },
+};
+
 export const Interactive: Story = {
   render: function InteractiveDateRangePicker() {
     const [dateRange, setDateRange] = useState<DateRange | null>(null);

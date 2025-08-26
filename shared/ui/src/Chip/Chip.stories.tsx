@@ -115,3 +115,33 @@ export const WithAvatar: Story = {
   },
   parameters: { docs: { description: { story: "Chips with letter and image avatars." } } },
 };
+
+export const WithSx: Story = {
+  render: function WithSxStory() {
+    return (
+      <div style={{ display: "flex", gap: 12, alignItems: "center", flexWrap: "wrap" }}>
+        <Chip
+          label="Object sx"
+          color="primary"
+          sx={{
+            backgroundColor: "#eef6ff",
+            color: "#1e3a8a",
+            borderRadius: 12,
+            paddingInline: 10,
+          }}
+        />
+        <Chip
+          label="Function sx"
+          variant="outlined"
+          sx={() => ({
+            backgroundColor: "#f5f3ff",
+            color: "#3730a3",
+            border: "1px dashed #6366f1",
+            transform: "scale(1.02)",
+          })}
+        />
+      </div>
+    );
+  },
+  parameters: { docs: { description: { story: "Chip styled via the sx prop using both object and function forms." } } },
+};

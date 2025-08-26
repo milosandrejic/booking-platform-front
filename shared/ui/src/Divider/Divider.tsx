@@ -1,6 +1,8 @@
 "use client";
 
 import "./Divider.scss";
+import { useTheme } from "@booking-platform-shared/theme";
+import { resolveSx, type SxProps } from "../utils/sx";
 
 export type DividerOrientation = "horizontal" | "vertical";
 export type DividerTextAlign = "left" | "center" | "right";
@@ -10,6 +12,7 @@ export interface DividerProps extends React.HTMLAttributes<HTMLDivElement> {
   children?: React.ReactNode;
   flexItem?: boolean;
   textAlign?: DividerTextAlign;
+  sx?: SxProps;
 }
 
 /**
@@ -22,8 +25,11 @@ export function Divider({
   textAlign = "center",
   className = "",
   role = "separator",
+  style,
+  sx,
   ...rest
 }: DividerProps) {
+  const theme = useTheme();
   const hasLabel = Boolean(children) && orientation === "horizontal";
 
   const classes = [
@@ -42,7 +48,8 @@ export function Divider({
       className={classes}
       role={role}
       aria-orientation={orientation}
-      {...rest}
+  style={{ ...style, ...resolveSx(theme, sx) }}
+  {...rest}
     >
       {hasLabel && <span className="divider__label">{children}</span>}
     </div>

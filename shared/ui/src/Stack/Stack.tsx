@@ -1,5 +1,7 @@
 import type { ReactNode, CSSProperties } from "react";
 import "./Stack.scss";
+import { useTheme } from "@booking-platform-shared/theme";
+import { resolveSx, type SxProps } from "../utils/sx";
 
 export type StackDirection = "row" | "column" | "row-reverse" | "column-reverse";
 export type StackJustify = "flex-start" | "flex-end" | "center" | "space-between" | "space-around" | "space-evenly";
@@ -17,6 +19,7 @@ export interface StackProps {
   className?: string;
   style?: CSSProperties;
   as?: keyof JSX.IntrinsicElements;
+  sx?: SxProps;
 }
 
 function getSpacingVar(gap: StackGap): string {
@@ -33,8 +36,10 @@ export function Stack({
   className = "",
   style = {},
   as: Component = "div",
+  sx,
   ...rest
 }: StackProps) {
+  const theme = useTheme();
   const classes = [
     "stack",
     `stack--${direction}`,
@@ -45,12 +50,11 @@ export function Stack({
   ].filter(Boolean).join(" ");
 
   const inlineStyles: CSSProperties = {
-    ...style,
     gap: getSpacingVar(gap)
   };
 
   return (
-    <Component className={classes} style={inlineStyles} {...rest}>
+    <Component className={classes} style={{ ...inlineStyles, ...style, ...resolveSx(theme, sx) }} {...rest}>
       {children}
     </Component>
   );

@@ -1,4 +1,6 @@
 import "./Typography.scss";
+import { useTheme } from "@booking-platform-shared/theme";
+import { resolveSx, type SxProps } from "../utils/sx";
 
 export type TypographyVariant =
   | "displayLarge" | "displayMedium" | "displaySmall"
@@ -31,6 +33,7 @@ export interface TypographyProps {
   noWrap?: boolean;
   className?: string;
   style?: React.CSSProperties;
+  sx?: SxProps;
   title?: string;
   [key: string]: any;
 }
@@ -60,8 +63,10 @@ export const Typography = ({
   gutterBottom = false,
   noWrap = false,
   style = {},
+  sx,
   ...props 
 }: TypographyProps) => {
+  const theme = useTheme();
   const Component = (component || getDefaultComponent(variant)) as React.ElementType;
  
   // Resolve color to inline style for semantic tokens or direct CSS values
@@ -84,7 +89,8 @@ export const Typography = ({
     noWrap && "typography--noWrap",
     className?.trim() || null
   ].filter(Boolean).join(" ");
-  const mergedStyle = resolvedInlineColor ? { ...style, color: resolvedInlineColor } : style;
+  const mergedStyleBase = resolvedInlineColor ? { ...style, color: resolvedInlineColor } : style;
+  const mergedStyle = { ...mergedStyleBase, ...resolveSx(theme, sx) };
 
   return (
     <Component

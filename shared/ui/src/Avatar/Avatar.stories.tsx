@@ -102,3 +102,20 @@ export const GroupOnlyChildrenCount: Story = {
     docs: { description: { story: "When total is not provided, surplus is computed from children length." } },
   },
 };
+
+export const WithSx: Story = {
+  render: function AvatarWithSx() {
+    return (
+      <div style={{ display: "flex", gap: 16, alignItems: "center" }}>
+        <Avatar name="Styled" sx={{ backgroundColor: "var(--color-secondary-light)", color: "var(--color-secondary-contrast-text)" }} />
+        <Avatar name="Theme" sx={(t) => ({ backgroundColor: t.color.primary.main, color: t.color.primary.contrastText })} />
+        <AvatarGroup spacing={12} sx={{ padding: 8, background: "var(--color-background-subtle)", borderRadius: 8 }}>
+          <Avatar name="A" />
+          <Avatar name="B" />
+          <Avatar name="C" />
+        </AvatarGroup>
+      </div>
+    );
+  },
+  parameters: { docs: { description: { story: "Avatar and AvatarGroup styled using the sx prop." } } },
+};

@@ -176,6 +176,18 @@ export const Interactive: Story = {
   },
 };
 
+export const WithSx: Story = {
+  render: function WithSxRadio() {
+    const [selected, setSelected] = useState("a");
+    return (
+      <div style={{ display: "grid", gap: 8 }}>
+        <Radio value="a" label="Styled" checked={selected === "a"} onChange={() => setSelected("a")} sx={{ padding: 8, background: "var(--color-background-subtle)", borderRadius: 8 }} />
+        <Radio value="b" label="Default" checked={selected === "b"} onChange={() => setSelected("b")} />
+      </div>
+    );
+  },
+};
+
 export const AllSizes: Story = {
   render: function AllSizesRadio() {
     const [selectedValue, setSelectedValue] = useState<string>("medium");

@@ -375,3 +375,19 @@ export const InForm: Story = {
     },
   },
 };
+
+export const WithSx: Story = {
+  render: function ButtonWithSx(args) {
+    return (
+      <div style={{ display: "flex", gap: "1rem" }}>
+        <Button {...args} sx={{ backgroundColor: "var(--color-success-main)" }}>
+          Success BG via sx
+        </Button>
+        <Button {...args} variant="outlined" sx={(t) => ({ color: t.color.primary.main, borderColor: "var(--color-primary-main)" })}>
+          Themed color via sx(theme)
+        </Button>
+      </div>
+    );
+  },
+  parameters: { docs: { description: { story: "Demonstrates styling the Button using the sx prop (object and function)." } } },
+};

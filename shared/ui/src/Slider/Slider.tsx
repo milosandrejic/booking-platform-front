@@ -2,6 +2,8 @@
 
 import { forwardRef, useCallback, useId, useMemo, useRef, useState } from "react";
 import "./Slider.scss";
+import { useTheme } from "@booking-platform-shared/theme";
+import { resolveSx, type SxProps } from "../utils/sx";
 
 export type SliderSize = "small" | "medium" | "large";
 export type SliderColor = "primary" | "secondary" | "success" | "error" | "warning" | "info";
@@ -43,6 +45,8 @@ export interface SliderProps {
   id?: string;
   /** Inline styles */
   style?: React.CSSProperties;
+  /** sx styles */
+  sx?: SxProps;
   /** ARIA label */
   "aria-label"?: string;
   /** ARIA labelledby */
@@ -69,10 +73,12 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(pr
     className = "",
     id,
     style,
+    sx,
     "aria-label": ariaLabel,
     "aria-labelledby": ariaLabelledby,
     ...restProps
   } = props;
+  const theme = useTheme();
 
   const reactId = useId();
   const sliderId = id || `slider-${reactId}`;
@@ -459,7 +465,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(pr
   return (
     <div 
       className={classes}
-      style={style}
+  style={{ ...style, ...resolveSx(theme, sx) }}
       ref={ref}
       {...restProps}
     >

@@ -162,6 +162,15 @@ export const Playground: Story = {
   },
 };
 
+export const WithSx: Story = {
+  render: function WithSxDatePicker(args) {
+    const [value, setValue] = useState<Date | undefined>(undefined);
+    return (
+      <DatePicker {...args} value={value} onChange={d => setValue(d || undefined)} sx={{ border: "1px solid var(--color-primary-main)", borderRadius: 8, padding: 8 }} />
+    );
+  },
+};
+
 export const Interactive: Story = {
   render: function InteractiveDatePicker() {
     const [selectedDate, setSelectedDate] = useState<Date | null>(null);

@@ -2,6 +2,8 @@
 
 import { forwardRef, useId } from "react";
 import "./TextField.scss";
+import { useTheme } from "@booking-platform-shared/theme";
+import { resolveSx, type SxProps } from "../utils/sx";
 
 export type TextFieldType = "text" | "password";
 export type TextFieldVariant = "outlined" | "filled";
@@ -28,6 +30,7 @@ type BaseProps = {
   autoComplete?: string;
   className?: string;
   style?: React.CSSProperties;
+  sx?: SxProps;
 };
 
 type InputOnly = Omit<
@@ -65,6 +68,7 @@ export const TextField = forwardRef<
   className = "",
   ...props
 }, ref) {
+  const theme = useTheme();
   const classes = [
     "textfield",
     `textfield--${variant}`,
@@ -83,7 +87,7 @@ export const TextField = forwardRef<
   const helperId = helperText ? `${inputId}-helper-text` : undefined;
 
   return (
-    <div className={classes}>
+    <div className={classes} style={resolveSx(theme, (props as any).sx)}>
       {
         label &&
         <label className="textfield__label" htmlFor={inputId}>

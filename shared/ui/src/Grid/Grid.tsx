@@ -1,4 +1,6 @@
 import "./Grid.scss";
+import { useTheme } from "@booking-platform-shared/theme";
+import { resolveSx, type SxProps } from "../utils/sx";
 
 export interface GridProps extends React.HTMLAttributes<HTMLDivElement> {
   container?: boolean;
@@ -11,6 +13,7 @@ export interface GridProps extends React.HTMLAttributes<HTMLDivElement> {
   xl?: number;
   className?: string;
   style?: React.CSSProperties;
+  sx?: SxProps;
 }
 
 export const Grid = ({
@@ -25,8 +28,10 @@ export const Grid = ({
   xl,
   className = "",
   style = {},
+  sx,
   ...props
 }: GridProps) => {
+  const theme = useTheme();
   const classes = [
     "grid",
     container && "grid--container",
@@ -43,7 +48,7 @@ export const Grid = ({
   return (
     <div
       className={classes}
-      style={style}
+  style={{ ...style, ...resolveSx(theme, sx) }}
       {...props}
     >
       {children}

@@ -130,3 +130,19 @@ export const OnIcon: Story = {
   },
   parameters: { docs: { description: { story: "Badge applied to a provided SVG icon as its child." } } },
 };
+
+export const WithSx: Story = {
+  render: function BadgeWithSx(args) {
+    return (
+      <div style={{ display: "flex", gap: 24 }}>
+        <Badge {...args} sx={{ ["--badge-bg" as any]: "var(--color-error-main)" }}>
+          <DemoIcon />
+        </Badge>
+        <Badge {...args} variant="dot" sx={{ transform: "scale(1.2)" }}>
+          <DemoIcon />
+        </Badge>
+      </div>
+    );
+  },
+  parameters: { docs: { description: { story: "Apply custom inline styles and CSS variables with sx." } } },
+};

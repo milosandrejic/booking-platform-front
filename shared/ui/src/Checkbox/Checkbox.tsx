@@ -2,6 +2,8 @@
 
 import { forwardRef, useId, useState } from "react";
 import "./Checkbox.scss";
+import { useTheme } from "@booking-platform-shared/theme";
+import { resolveSx, type SxProps } from "../utils/sx";
 
 export type CheckboxSize = "small" | "medium" | "large";
 export type CheckboxColor = "primary" | "secondary" | "success" | "error" | "warning" | "info";
@@ -22,6 +24,7 @@ export interface CheckboxProps {
   className?: string;
   id?: string;
   style?: React.CSSProperties;
+  sx?: SxProps;
 }
 
 const CheckIcon = () => (
@@ -60,10 +63,12 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
       className = "",
       id,
       style,
+      sx,
       ...props
     },
     ref
   ) {
+    const theme = useTheme();
     const [internalChecked, setInternalChecked] = useState(defaultChecked);
     const reactId = useId();
     const checkboxId = id || `checkbox-${reactId}`;
@@ -103,7 +108,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
     return (
       <label 
         className={classes} 
-        style={style}
+        style={{ ...style, ...resolveSx(theme, sx) }}
       >
         <input
           ref={ref}

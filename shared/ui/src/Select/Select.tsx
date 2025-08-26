@@ -3,6 +3,8 @@
 import { createContext, useContext, useEffect, useMemo, useRef, useState, useCallback, Children, isValidElement } from "react";
 import type { CSSProperties, HTMLAttributes, ReactNode, MouseEvent } from "react";
 import "./Select.scss";
+import { useTheme } from "@booking-platform-shared/theme";
+import { resolveSx, type SxProps } from "../utils/sx";
 
 export type SelectSize = "small" | "medium" | "large";
 export type SelectValue = string | number | object;
@@ -11,6 +13,7 @@ export interface SelectOptionProps extends HTMLAttributes<HTMLLIElement> {
   value: SelectValue;
   disabled?: boolean;
   children: ReactNode;
+  sx?: SxProps;
 }
 
 export interface SelectProps extends Omit<
@@ -30,6 +33,7 @@ export interface SelectProps extends Omit<
   className?: string;
   style?: CSSProperties;
   children: ReactNode;
+  sx?: SxProps;
 }
 
 // Context to share Select state with Option components
@@ -46,6 +50,8 @@ export const SelectOption = ({
   children,
   className = "",
   onClick,
+  style,
+  sx,
   ...props
 }: SelectOptionProps) => {
   const context = useContext(SelectContext);
@@ -79,6 +85,7 @@ export const SelectOption = ({
       role="option"
       aria-selected={selected}
       className={optionClasses}
+  style={{ ...style, ...resolveSx(useTheme(), sx) }}
       onMouseDown={(e) => { e.preventDefault(); }}
       onClick={handleClick}
       {...props}
@@ -102,8 +109,10 @@ export const Select = ({
   className = "",
   style = {},
   children,
+  sx,
   ...props
 }: SelectProps) => {
+  const theme = useTheme();
   const isControlled = value !== undefined;
   const [internalValue, setInternalValue] = useState<SelectValue | SelectValue[] | undefined>(
     defaultValue ?? (multiple ? [] : undefined)
@@ -261,7 +270,7 @@ export const Select = ({
       <div
         ref={rootRef}
         className={classes}
-        style={style}
+  style={{ ...style, ...resolveSx(theme, sx) }}
         {...props}
       >
         <button

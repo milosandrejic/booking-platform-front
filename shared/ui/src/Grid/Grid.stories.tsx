@@ -158,6 +158,19 @@ export const Playground: Story = {
   },
 };
 
+export const WithSx: Story = {
+  render: () => (
+    <div style={{ display: "grid", gap: 16 }}>
+      <div>Above</div>
+      <Grid container spacing={2} sx={{ padding: 12, background: "var(--color-background-subtle)", borderRadius: 8 }}>
+        <Grid item xs={6}><div style={{ background: "#eee", padding: 8 }}>xs=6</div></Grid>
+        <Grid item xs={6}><div style={{ background: "#eee", padding: 8 }}>xs=6</div></Grid>
+      </Grid>
+      <div>Below</div>
+    </div>
+  ),
+};
+
 export const AllBreakpoints: Story = {
   render: function AllBreakpointsGrid() {
     const breakpoints = [

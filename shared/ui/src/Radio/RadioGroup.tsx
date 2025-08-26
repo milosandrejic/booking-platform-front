@@ -4,6 +4,8 @@ import { forwardRef, useId, Children, cloneElement, isValidElement } from "react
 import type { RadioProps, RadioSize, RadioColor } from "./Radio";
 import { Radio } from "./Radio";
 import "./RadioGroup.scss";
+import { useTheme } from "@booking-platform-shared/theme";
+import { resolveSx, type SxProps } from "../utils/sx";
 
 export type RadioGroupDirection = "horizontal" | "vertical";
 
@@ -20,6 +22,7 @@ export interface RadioGroupProps {
   className?: string;
   style?: React.CSSProperties;
   children: React.ReactNode;
+  sx?: SxProps;
 }
 
 export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
@@ -36,11 +39,13 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
       name,
       className = "",
       style,
+      sx,
       children,
       ...props
     },
     ref
   ) {
+    const theme = useTheme();
     const reactId = useId();
     const groupName = name || `radio-group-${reactId}`;
 
@@ -95,7 +100,7 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
       <div
         ref={ref}
         className={classes}
-        style={style}
+  style={{ ...style, ...resolveSx(theme, sx) }}
         role="radiogroup"
         {...props}
       >

@@ -49,3 +49,12 @@ export const Vertical: Story = {
     </div>
   ),
 };
+
+export const WithSx: Story = {
+  render: () => (
+    <div style={{ display: "grid", gap: 16 }}>
+      <Divider sx={{ borderColor: "var(--color-primary-main)" }}>Primary</Divider>
+      <Divider sx={(t) => ({ color: t.color.text.secondary })}>Theme text</Divider>
+    </div>
+  ),
+};

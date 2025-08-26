@@ -1,4 +1,6 @@
 import "./Container.scss";
+import { useTheme } from "@booking-platform-shared/theme";
+import { resolveSx, type SxProps } from "../utils/sx";
 
 export type ContainerMax = "xs" | "sm" | "md" | "lg" | "xl" | "2xl";
 export type ContainerSpacing = "compact" | "default" | "comfortable";
@@ -10,6 +12,7 @@ export interface ContainerProps extends React.HTMLAttributes<HTMLDivElement> {
   spacing?: ContainerSpacing;
   className?: string;
   style?: React.CSSProperties;
+  sx?: SxProps;
 }
 
 export const Container = ({ 
@@ -17,11 +20,13 @@ export const Container = ({
   maxWidth = "xl", 
   className = "",
   style = {},
+  sx,
   fixed = false,
   disableGutters = false,
   spacing = "default",
   ...props 
 }: ContainerProps) => {
+  const theme = useTheme();
   const classes = [
     "container",
     `container--maxWidth-${maxWidth}`,
@@ -34,7 +39,7 @@ export const Container = ({
   return (
     <div
       className={classes}
-      style={style}
+  style={{ ...style, ...resolveSx(theme, sx) }}
       {...props}
     >
       {children}

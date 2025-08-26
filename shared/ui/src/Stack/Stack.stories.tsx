@@ -157,6 +157,16 @@ export const Playground: Story = {
   },
 };
 
+export const WithSx: Story = {
+  render: () => (
+    <Stack direction="row" gap={3} sx={{ padding: 12, background: "var(--color-background-subtle)", borderRadius: 8 }}>
+      <StackItem>One</StackItem>
+      <StackItem color="#e8f5e8">Two</StackItem>
+      <StackItem color="#fff3e0">Three</StackItem>
+    </Stack>
+  ),
+};
+
 export const AllDirections: Story = {
   render: function AllDirectionsStack() {
     const directions = [

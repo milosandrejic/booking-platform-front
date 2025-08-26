@@ -3,6 +3,8 @@
 import { forwardRef, useId, useState, useRef, useEffect } from "react";
 import dayjs, { type Dayjs } from "dayjs";
 import "./DatePicker.scss";
+import { useTheme } from "@booking-platform-shared/theme";
+import { resolveSx, type SxProps } from "../utils/sx";
 
 export type DatePickerVariant = "outlined" | "filled";
 export type DatePickerSize = "small" | "medium" | "large";
@@ -27,6 +29,7 @@ export interface DatePickerProps {
   helperText?: string;
   name?: string;
   dateFormat?: string;
+  sx?: SxProps;
 }
 
 const MONTHS = [
@@ -108,8 +111,10 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
     name,
     className = "",
     dateFormat = "MM/DD/YYYY",
+  sx,
     ...props
   }, ref) {
+  const theme = useTheme();
     const initialValue = toDayjs(value || defaultValue || null);
     const [isOpen, setIsOpen] = useState(false);
     const [inputValue, setInputValue] = useState(formatDate(initialValue, dateFormat));
@@ -201,7 +206,7 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
     };
 
     return (
-      <div className={classes} ref={containerRef}>
+      <div className={classes} ref={containerRef} style={resolveSx(theme, sx)}>
         {
           label &&
           <label className="datepicker__label" htmlFor={inputId}>
