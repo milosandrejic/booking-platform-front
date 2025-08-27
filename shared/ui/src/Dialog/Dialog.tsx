@@ -98,16 +98,18 @@ const DialogRoot = forwardRef<HTMLDivElement, DialogProps>(function DialogRoot(p
   const classes = [
     "dialog",
     fullScreen ? "dialog--full-screen" : undefined,
-    maxWidth ? `dialog--max-width-${maxWidth}` : undefined,
+    !fullScreen && maxWidth ? `dialog--max-width-${maxWidth}` : undefined,
     fullWidth ? "dialog--full-width" : undefined,
     scroll === "body" ? "dialog--scroll-body" : undefined,
     className,
   ].filter(Boolean).join(" ");
 
+  const backdropClasses = ["dialog__backdrop", fullScreen ? "dialog__backdrop--full-screen" : undefined].filter(Boolean).join(" ");
+
   const style: CSSProperties = { ...styleProp, ...resolveSx(theme, sx) };
 
   return (
-    <div className="dialog__backdrop" ref={backdropRef} onClick={handleBackdropClick}>
+    <div className={backdropClasses} ref={backdropRef} onClick={handleBackdropClick}>
       <div
         ref={ref}
         className={classes}

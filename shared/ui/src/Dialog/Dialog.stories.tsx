@@ -280,3 +280,46 @@ export const WithSx: Story = {
     },
   },
 };
+
+export const FullScreen: Story = {
+  render: function FullScreenDialog() {
+    const [open, setOpen] = useState(false);
+
+    return (
+      <div>
+        <Button onClick={() => setOpen(true)}>
+          Open Full Screen Dialog
+        </Button>
+
+        <Dialog open={open} onClose={() => setOpen(false)} fullScreen>
+          <DialogTitle>
+            Full Screen Dialog
+          </DialogTitle>
+
+          <DialogContent>
+            <p>
+              This dialog takes up the entire viewport when fullScreen is enabled.
+              It removes all padding from the backdrop and stretches to fill the screen.
+            </p>
+            <p>
+              Perfect for mobile experiences or when you need maximum space for content.
+            </p>
+          </DialogContent>
+
+          <DialogActions>
+            <Button variant="text" onClick={() => setOpen(false)}>
+              Close
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </div>
+    );
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Dialog that takes up the entire viewport when fullScreen is enabled.",
+      },
+    },
+  },
+};

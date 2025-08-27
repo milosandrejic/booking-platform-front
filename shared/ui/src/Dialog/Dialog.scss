@@ -9,6 +9,12 @@
   padding: var(--spacing-4, 1rem);
   backdrop-filter: blur(12px) saturate(1.8);
   animation: dialog-backdrop-fade-in 0.3s ease-out;
+
+  &--full-screen {
+    padding: 0;
+    align-items: stretch;
+    justify-content: stretch;
+  }
 }
 
 @keyframes dialog-backdrop-fade-in {
