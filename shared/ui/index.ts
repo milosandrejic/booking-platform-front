@@ -18,3 +18,4 @@ export * from "./src/Divider";
 export * from "./src/Box";
 export * from "./src/Card";
 export * from "./src/Dialog";
+export * from "./src/Alert";
