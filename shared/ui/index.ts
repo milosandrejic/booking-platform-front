@@ -16,3 +16,4 @@ export * from "./src/Badge";
 export * from "./src/Chip";
 export * from "./src/Divider";
 export * from "./src/Box";
+export * from "./src/Card";

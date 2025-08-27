@@ -2,10 +2,9 @@
 
 import React, { forwardRef } from "react";
 import type { CSSProperties, ElementType } from "react";
-import { useTheme, type Theme } from "@booking-platform-shared/theme";
+import { useTheme } from "@booking-platform-shared/theme";
 import { styleSystem, type SpacingValue } from "../utils/styleSystem";
-
-export type SxProps = CSSProperties | ((theme: Theme) => CSSProperties);
+import { resolveSx, type SxProps } from "../utils/sx";
 
 export type BoxProps<T extends ElementType = "div"> = {
   component?: T;
@@ -72,12 +71,7 @@ export const Box = forwardRef<HTMLElement, BoxProps<any>>(function Box(props, re
     gridTemplateColumns, gridTemplateRows,
   });
   const visualStyles = buildVisualStyles({ color, bgcolor, borderRadius, boxShadow });
-  let sxStyles: CSSProperties = {};
-  if (typeof sx === "function") {
-    sxStyles = (sx as (t: Theme) => CSSProperties)(theme);
-  } else if (sx) {
-    sxStyles = sx as CSSProperties;
-  }
+  const sxStyles: CSSProperties = resolveSx(theme, sx);
 
   // Precedence: styleProp < shorthand/layout/visuals < sx
   const style = mergeStyles(styleProp, { ...spacingStyles, ...layoutStyles, ...visualStyles }, sxStyles);
