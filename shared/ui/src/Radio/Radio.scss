@@ -193,51 +193,51 @@
   }
 
   // Color hover states
-  &--primary:hover:not(.radio--disabled) .radio__circle {
+  &--primary:hover:not(:is(.radio--disabled)) .radio__circle {
     border-color: var(--color-primary-main);
   }
 
-  &--primary:hover:not(.radio--disabled):not(.radio--checked) .radio__circle {
+  &--primary:hover:not(:is(.radio--disabled, .radio--checked)) .radio__circle {
     background-color: var(--color-primary-50);
   }
 
-  &--secondary:hover:not(.radio--disabled) .radio__circle {
+  &--secondary:hover:not(:is(.radio--disabled)) .radio__circle {
     border-color: var(--color-secondary-main);
   }
 
-  &--secondary:hover:not(.radio--disabled):not(.radio--checked) .radio__circle {
+  &--secondary:hover:not(:is(.radio--disabled, .radio--checked)) .radio__circle {
     background-color: var(--color-secondary-50);
   }
 
-  &--success:hover:not(.radio--disabled) .radio__circle {
+  &--success:hover:not(:is(.radio--disabled)) .radio__circle {
     border-color: var(--color-success-main);
   }
 
-  &--success:hover:not(.radio--disabled):not(.radio--checked) .radio__circle {
+  &--success:hover:not(:is(.radio--disabled, .radio--checked)) .radio__circle {
     background-color: var(--color-success-50);
   }
 
-  &--error:hover:not(.radio--disabled) .radio__circle {
+  &--error:hover:not(:is(.radio--disabled)) .radio__circle {
     border-color: var(--color-error-main);
   }
 
-  &--error:hover:not(.radio--disabled):not(.radio--checked) .radio__circle {
+  &--error:hover:not(:is(.radio--disabled, .radio--checked)) .radio__circle {
     background-color: var(--color-error-50);
   }
 
-  &--warning:hover:not(.radio--disabled) .radio__circle {
+  &--warning:hover:not(:is(.radio--disabled)) .radio__circle {
     border-color: var(--color-warning-main);
   }
 
-  &--warning:hover:not(.radio--disabled):not(.radio--checked) .radio__circle {
+  &--warning:hover:not(:is(.radio--disabled, .radio--checked)) .radio__circle {
     background-color: var(--color-warning-50);
   }
 
-  &--info:hover:not(.radio--disabled) .radio__circle {
+  &--info:hover:not(:is(.radio--disabled)) .radio__circle {
     border-color: var(--color-info-main);
   }
 
-  &--info:hover:not(.radio--disabled):not(.radio--checked) .radio__circle {
+  &--info:hover:not(:is(.radio--disabled, .radio--checked)) .radio__circle {
     background-color: var(--color-info-50);
   }
 }

@@ -58,12 +58,14 @@
 
 .avatar-group {
   --avatar-group-overlap: 8px;
+
   /* positive value; applied as negative margin */
   display: inline-flex;
   align-items: center;
 
   &__item {
     display: inline-flex;
+
     /* Visual stacking order */
     position: relative;
 

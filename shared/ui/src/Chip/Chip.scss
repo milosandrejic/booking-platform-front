@@ -4,6 +4,7 @@
   --chip-padding-y: 0.25rem;
   --chip-gap: 0.375rem;
   --chip-height: 1.75rem;
+
   /* default medium */
   --chip-font-size: var(--font-size-sm);
 
@@ -21,6 +22,7 @@
   font-family: var(--font-family-primary);
   font-size: var(--chip-font-size);
   line-height: 1;
+
   /* ensure inline alignment with surrounding text */
   vertical-align: middle;
 
@@ -50,12 +52,13 @@
   }
 
   /* Colors (override backgrounds and text as needed) */
+
   /* default color relies on base variant styles */
 
   &--color-primary {
     &.chip--variant-filled {
       background-color: var(--color-primary-main);
-      color: #fff;
+      color: #ffffff;
     }
 
     &.chip--variant-outlined {
@@ -67,7 +70,7 @@
   &--color-secondary {
     &.chip--variant-filled {
       background-color: var(--color-secondary-main);
-      color: #fff;
+      color: #ffffff;
     }
 
     &.chip--variant-outlined {
@@ -79,7 +82,7 @@
   &--color-success {
     &.chip--variant-filled {
       background-color: var(--color-success-main);
-      color: #fff;
+      color: #ffffff;
     }
 
     &.chip--variant-outlined {
@@ -91,7 +94,7 @@
   &--color-error {
     &.chip--variant-filled {
       background-color: var(--color-error-main);
-      color: #fff;
+      color: #ffffff;
     }
 
     &.chip--variant-outlined {
@@ -103,7 +106,7 @@
   &--color-warning {
     &.chip--variant-filled {
       background-color: var(--color-warning-main);
-      color: #fff;
+      color: #ffffff;
     }
 
     &.chip--variant-outlined {
@@ -115,7 +118,7 @@
   &--color-info {
     &.chip--variant-filled {
       background-color: var(--color-info-main);
-      color: #fff;
+      color: #ffffff;
     }
 
     &.chip--variant-outlined {

@@ -204,19 +204,19 @@
     &--selected {
       background-color: var(--color-primary-main);
       color: var(--color-primary-contrast-text);
+    }
 
-      &:hover {
-        background-color: var(--color-primary-main);
-      }
+    &--selected:hover {
+      background-color: var(--color-primary-main);
     }
 
     &--today {
       color: var(--color-primary-main);
       font-weight: 500;
+    }
 
-      &:not(.datepicker__day--selected):hover {
-        background-color: var(--color-grey-100);
-      }
+    &--today:not(.datepicker__day--selected):hover {
+      background-color: var(--color-grey-100);
     }
   }
 

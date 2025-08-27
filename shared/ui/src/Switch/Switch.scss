@@ -170,17 +170,15 @@
   }
 
   /* Disabled state */
-  &--disabled {
-    .switch__track {
-      background-color: var(--color-border-light);
-    }
+  &--disabled .switch__track {
+    background-color: var(--color-border-light);
+  }
 
-    .switch__thumb {
-      background-color: var(--color-background-disabled);
-    }
+  &--disabled .switch__thumb {
+    background-color: var(--color-background-disabled);
+  }
 
-    .switch__label {
-      color: var(--color-text-disabled);
-    }
+  &--disabled .switch__label {
+    color: var(--color-text-disabled);
   }
 }

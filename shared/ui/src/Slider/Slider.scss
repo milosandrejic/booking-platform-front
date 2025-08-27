@@ -14,7 +14,7 @@
   flex-direction: column;
   gap: 0.75rem;
   width: 100%;
-  color: rgba(0, 0, 0, 0.87);
+  color: rgb(0 0 0 / 0.87);
   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
 
   &--disabled {
@@ -25,9 +25,9 @@
   &__label {
     font-size: 0.875rem;
     font-weight: 400;
-    color: rgba(0, 0, 0, 0.6);
+    color: rgb(0 0 0 / 0.6);
     margin-bottom: 0.5rem;
-    letter-spacing: 0.00938em;
+    letter-spacing: 0.0094em;
   }
 
   &__container {
@@ -41,17 +41,17 @@
     display: flex;
     justify-content: space-between;
     font-size: 0.75rem;
-    color: rgba(0, 0, 0, 0.6);
+    color: rgb(0 0 0 / 0.6);
     font-weight: 400;
   }
 
   &__value-label {
     font-family: "Roboto Mono", "Monaco", "Consolas", monospace;
-    background: rgba(0, 0, 0, 0.04);
+    background: rgb(0 0 0 / 0.04);
     padding: 0.25rem 0.5rem;
     border-radius: 4px;
     font-size: 0.75rem;
-    color: rgba(0, 0, 0, 0.87);
+    color: rgb(0 0 0 / 0.87);
   }
 
   &__root {
@@ -70,7 +70,7 @@
     width: 100%;
     height: var(--slider-track-height);
     border-radius: 2px;
-    background-color: rgba(0, 0, 0, 0.12);
+    background-color: rgb(0 0 0 / 0.12);
     pointer-events: none;
   }
 
@@ -92,7 +92,7 @@
     width: 2px;
     height: 2px;
     border-radius: 50%;
-    background-color: rgba(0, 0, 0, 0.38);
+    background-color: rgb(0 0 0 / 0.38);
     pointer-events: none;
 
     &-label {
@@ -102,7 +102,7 @@
       transform: translateX(-50%);
       margin-top: 0.5rem;
       font-size: 0.75rem;
-      color: rgba(0, 0, 0, 0.6);
+      color: rgb(0 0 0 / 0.6);
       white-space: nowrap;
       font-weight: 400;
     }
@@ -125,80 +125,54 @@
     box-sizing: border-box;
     outline: none !important; // Remove outline for all states
     box-shadow:
-      0px 2px 1px -1px rgba(0, 0, 0, 0.2),
-      0px 1px 1px 0px rgba(0, 0, 0, 0.14),
-      0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+      0 2px 1px -1px rgb(0 0 0 / 0.2),
+      0 1px 1px 0 rgb(0 0 0 / 0.14),
+      0 1px 3px 0 rgb(0 0 0 / 0.12);
 
     // Remove all focus rings and browser defaults
-    &:focus,
-    &:focus-visible,
-    &:focus-within {
-      outline: none !important;
-      box-shadow:
-        0px 2px 1px -1px rgba(0, 0, 0, 0.2),
-        0px 1px 1px 0px rgba(0, 0, 0, 0.14),
-        0px 1px 3px 0px rgba(0, 0, 0, 0.12) !important;
-    }
+  }
 
-    &::before {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background-color: currentColor;
-      opacity: 0;
-      transition: opacity 250ms cubic-bezier(0.4, 0, 0.2, 1);
-      pointer-events: none;
-      color: var(--slider-primary);
-      display: none; // Completely hide the ripple effect
-    }
+  /* Flattened pseudo-element and focus rules to reduce nesting */
+  &__thumb::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: currentcolor;
+    opacity: 0;
+    transition: opacity 250ms cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+    color: var(--slider-primary);
+    display: none; // Completely hide the ripple effect
+  }
 
-    &:hover {
-      box-shadow:
-        0px 3px 1px -2px rgba(0, 0, 0, 0.2),
-        0px 2px 2px 0px rgba(0, 0, 0, 0.14),
-        0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+  /* Hover/focus/active states flattened to avoid deep nesting */
+  &__thumb:hover {
+    box-shadow:
+      0 3px 1px -2px rgb(0 0 0 / 0.2),
+      0 2px 2px 0 rgb(0 0 0 / 0.14),
+      0 1px 5px 0 rgb(0 0 0 / 0.12);
+  }
 
-      &::before {
-        opacity: 0; // No hover effect
-      }
-    }
+  &__thumb:focus,
+  &__thumb:focus-visible,
+  &__thumb:focus-within {
+    outline: none !important;
+    box-shadow:
+      0 2px 1px -1px rgb(0 0 0 / 0.2),
+      0 1px 1px 0 rgb(0 0 0 / 0.14),
+      0 1px 3px 0 rgb(0 0 0 / 0.12) !important;
+  }
 
-    &:focus {
-      outline: none;
-
-      &::before {
-        opacity: 0; // No focus effect
-      }
-    }
-
-    &--hovered {
-      &::before {
-        opacity: 0; // No hover effect
-      }
-    }
-
-    &:active,
-    &--active {
-      cursor: grabbing;
-      z-index: 3;
-
-      &::before {
-        opacity: 0; // No active effect
-      }
-    }
-
-    &--dragging {
-      cursor: grabbing;
-
-      &::before {
-        opacity: 0; // No dragging effect
-      }
-    }
+  &__thumb:active,
+  &__thumb.slider__thumb--active,
+  &__thumb.slider__thumb--dragging {
+    cursor: grabbing;
+    z-index: 3;
   }
 
   /* Size Variants */
@@ -267,38 +241,31 @@
   }
 
   /* Range Slider Specific */
-  &--range {
-    .slider__thumb {
+  &--range .slider__thumb:first-of-type,
+  &--range .slider__thumb:last-of-type {
+    width: var(--slider-thumb-size);
+    height: var(--slider-thumb-size);
+    min-width: var(--slider-thumb-size);
+    min-height: var(--slider-thumb-size);
+    max-width: var(--slider-thumb-size);
+    max-height: var(--slider-thumb-size);
+    z-index: 2;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 50%;
+  }
 
-      // Ensure both thumbs are exactly the same size and properly positioned
-      &:first-of-type,
-      &:last-of-type {
-        width: var(--slider-thumb-size);
-        height: var(--slider-thumb-size);
-        min-width: var(--slider-thumb-size);
-        min-height: var(--slider-thumb-size);
-        max-width: var(--slider-thumb-size);
-        max-height: var(--slider-thumb-size);
-        z-index: 2;
-        position: absolute;
-        transform: translate(-50%, -50%);
-        top: 50%;
-      }
+  &--range .slider__thumb--active {
+    z-index: 4 !important;
+  }
 
-      &--active {
-        z-index: 4 !important;
-      }
-    }
+  /* Ensure track and rail stacking context without deep nesting */
+  &--range .slider__track {
+    z-index: 1;
+  }
 
-    // Ensure track has lower z-index
-    .slider__track {
-      z-index: 1;
-    }
-
-    // Ensure rail has lowest z-index  
-    .slider__rail {
-      z-index: 0;
-    }
+  &--range .slider__rail {
+    z-index: 0;
   }
 
   /* Dragging State */
@@ -317,42 +284,41 @@
     }
   }
 
-  /* Disabled State - Material UI Style */
-  &--disabled {
-    .slider__rail {
-      background-color: rgba(0, 0, 0, 0.06);
-    }
+  /* Disabled State - Material UI Style (flattened to avoid duplicate selector) */
 
-    .slider__track {
-      background-color: rgba(0, 0, 0, 0.26);
-    }
+  &--disabled .slider__rail {
+    background-color: rgb(0 0 0 / 0.06);
+  }
 
-    .slider__thumb {
-      background-color: #fafafa;
-      border-color: rgba(0, 0, 0, 0.26);
-      cursor: not-allowed;
-      box-shadow: none;
+  &--disabled .slider__track {
+    background-color: rgb(0 0 0 / 0.26);
+  }
 
-      &:hover {
-        box-shadow: none;
-      }
+  &--disabled .slider__thumb {
+    background-color: #fafafa;
+    border-color: rgb(0 0 0 / 0.26);
+    cursor: not-allowed;
+    box-shadow: none;
+  }
 
-      &::before {
-        display: none;
-      }
-    }
+  &--disabled .slider__thumb:hover {
+    box-shadow: none;
+  }
 
-    .slider__mark {
-      background-color: rgba(0, 0, 0, 0.26);
-    }
+  &--disabled .slider__thumb::before {
+    display: none;
+  }
 
-    .slider__label {
-      color: rgba(0, 0, 0, 0.38);
-    }
+  &--disabled .slider__mark {
+    background-color: rgb(0 0 0 / 0.26);
+  }
 
-    .slider__value-label {
-      background-color: rgba(0, 0, 0, 0.26);
-      color: rgba(255, 255, 255, 0.7);
-    }
+  &--disabled .slider__label {
+    color: rgb(0 0 0 / 0.38);
+  }
+
+  &--disabled .slider__value-label {
+    background-color: rgb(0 0 0 / 0.26);
+    color: rgb(255 255 255 / 0.7);
   }
 }

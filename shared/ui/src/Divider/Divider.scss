@@ -18,6 +18,7 @@
     inline-size: 0;
     align-self: stretch;
     border-inline-start: var(--divider-thickness) solid var(--divider-color);
+
     /* give it natural height in non-flex context */
     min-block-size: 1rem;
   }
