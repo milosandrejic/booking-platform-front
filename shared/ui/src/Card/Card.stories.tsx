@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import { Card, CardHeader, CardContent, CardActions, type CardProps } from "./Card";
 
 const meta: Meta<typeof Card> = {
-  title: "UI Components/Card",
+  title: "Surfaces/Card",
   component: Card,
   tags: ["autodocs"],
   parameters: {
