@@ -171,5 +171,3 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(function Progr
     </div>
   );
 });
-
-export default undefined;
