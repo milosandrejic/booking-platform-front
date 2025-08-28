@@ -486,6 +486,7 @@ export const Default: Story = {}; // Just uses meta args without state
 * **Array formatting**: Multi-item arrays must be formatted with line breaks
 * **Type safety**: Use proper TypeScript types and `as const` for arrays
 * **Real examples**: Show practical usage patterns, not just demos
+* **Use shared components**: Always use components from the shared UI library (e.g., `Button`, `TextField`) instead of raw HTML elements in stories
 
 ### Examples
 
@@ -496,6 +497,7 @@ export const Default: Story = {}; // Just uses meta args without state
 import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
 import { Switch } from "./Switch";
+import { Button } from "../Button"; // Use shared components
 
 const meta: Meta<typeof Switch> = {
   title: "UI Components/Switch",
@@ -532,11 +534,16 @@ export const Interactive: Story = {
     const [checked, setChecked] = useState(false);
 
     return (
-      <Switch
-        {...args}
-        checked={checked}
-        onChange={setChecked}
-      />
+      <div>
+        <Switch
+          {...args}
+          checked={checked}
+          onChange={setChecked}
+        />
+        <Button onClick={() => setChecked(!checked)}>
+          Toggle Switch
+        </Button>
+      </div>
     );
   },
   parameters: {
@@ -545,6 +552,22 @@ export const Interactive: Story = {
         story: "Interactive switch showing controlled usage pattern.",
       },
     },
+  },
+};
+```
+
+❌ **Bad story structure (raw HTML elements):**
+```tsx
+export const Interactive: Story = {
+  render: function InteractiveSwitch(args) {
+    const [checked, setChecked] = useState(false);
+
+    return (
+      <div>
+        <Switch {...args} checked={checked} onChange={setChecked} />
+        <button onClick={() => setChecked(!checked)}>Toggle Switch</button> {/* Should use Button component */}
+      </div>
+    );
   },
 };
 ```

@@ -19,3 +19,4 @@ export * from "./src/Box";
 export * from "./src/Card";
 export * from "./src/Dialog";
 export * from "./src/Alert";
+export * from "./src/Progress";
