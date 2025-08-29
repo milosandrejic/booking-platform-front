@@ -3,7 +3,6 @@
 import { forwardRef, useId, useState, useRef, useEffect } from "react";
 import dayjs, { type Dayjs } from "dayjs";
 import "./DatePicker.scss";
-import { useTheme } from "@booking-platform-shared/theme";
 import { resolveSx, type SxProps } from "../utils/sx";
 
 export type DatePickerVariant = "outlined" | "filled";
@@ -114,7 +113,7 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
     sx,
     ...props
   }, ref) {
-    const theme = useTheme();
+    const { styles, className: sxClassName } = resolveSx(sx);
     const initialValue = toDayjs(value || defaultValue || null);
     const [isOpen, setIsOpen] = useState(false);
     const [inputValue, setInputValue] = useState(formatDate(initialValue, dateFormat));
@@ -136,6 +135,7 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
       disabled && "datepicker--disabled",
       fullWidth && "datepicker--full-width",
       isOpen && "datepicker--open",
+      sxClassName,
       className?.trim() || null
     ].filter(Boolean).join(" ");
 
@@ -206,7 +206,7 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
     };
 
     return (
-      <div className={classes} ref={containerRef} style={resolveSx(theme, sx)}>
+      <div className={classes} ref={containerRef} style={styles}>
         {
           label &&
           <label className="datepicker__label" htmlFor={inputId}>

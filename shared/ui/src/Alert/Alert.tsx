@@ -1,9 +1,6 @@
 /* eslint-disable @stylistic/max-len */
-"use client";
-
 import React, { forwardRef } from "react";
 import type { ReactNode, HTMLAttributes } from "react";
-import { useTheme } from "@booking-platform-shared/theme";
 import { resolveSx, type SxProps } from "../utils/sx";
 import "./Alert.scss";
 
@@ -85,17 +82,18 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
   },
   ref,
 ) {
-  const theme = useTheme();
-
   if (!children) {
     return null;
   }
+
+  const { styles: sxStyles, className: sxClassName } = resolveSx(sx);
 
   const classes = [
     "alert",
     `alert--variant-${variant}`,
     `alert--severity-${severity}`,
     className.trim() || null,
+    sxClassName,
   ].filter(Boolean).join(" ");
 
   const displayIcon = icon === false ? null : icon || defaultIcons[severity];
@@ -118,7 +116,7 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
     <div
       ref={ref}
       className={classes}
-      style={{ ...style, ...resolveSx(theme, sx) }}
+      style={{ ...style, ...sxStyles }}
       role="alert"
       {...rest}
     >

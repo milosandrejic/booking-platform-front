@@ -2,7 +2,6 @@
 
 import { forwardRef, useId, useState } from "react";
 import "./Switch.scss";
-import { useTheme } from "@booking-platform-shared/theme";
 import { resolveSx, type SxProps } from "../utils/sx";
 
 export type SwitchSize = "small" | "medium" | "large";
@@ -57,7 +56,7 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(
     },
     ref
   ) {
-    const theme = useTheme();
+    const { styles, className: sxClassName } = resolveSx(sx);
     const [internalChecked, setInternalChecked] = useState(defaultChecked);
     const reactId = useId();
     const switchId = id || `switch-${reactId}`;
@@ -85,13 +84,14 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(
       `switch--${color}`,
       disabled && "switch--disabled",
       isChecked && "switch--checked",
+      sxClassName,
       className
     ].filter(Boolean).join(" ");
 
     return (
       <label 
         className={classes} 
-        style={{ ...style, ...resolveSx(theme, sx) }}
+        style={{ ...style, ...styles }}
       >
         <input
           ref={ref}

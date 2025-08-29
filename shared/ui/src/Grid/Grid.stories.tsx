@@ -160,15 +160,75 @@ export const Playground: Story = {
 
 export const WithSx: Story = {
   render: () => (
-    <div style={{ display: "grid", gap: 16 }}>
-      <div>Above</div>
-      <Grid container spacing={2} sx={{ padding: 12, background: "var(--color-background-subtle)", borderRadius: 8 }}>
-        <Grid item xs={6}><div style={{ background: "#eee", padding: 8 }}>xs=6</div></Grid>
-        <Grid item xs={6}><div style={{ background: "#eee", padding: 8 }}>xs=6</div></Grid>
+    <div style={{ display: "grid", gap: 24 }}>
+      <Grid 
+        container 
+        spacing={2} 
+        sx={{ 
+          padding: t => t.spacing[3], 
+          background: "var(--color-background-subtle)", 
+          borderRadius: "8px",
+          border: t => `1px solid ${t.color.border.light}`,
+          "&:hover": {
+            boxShadow: t => t.shadows.md,
+            transform: "translateY(-2px)",
+          }
+        }}
+      >
+        <Grid item xs={6}>
+          <div style={{ background: "#eee", padding: 8, borderRadius: 4 }}>
+            xs=6 with hover effects
+          </div>
+        </Grid>
+        <Grid item xs={6}>
+          <div style={{ background: "#eee", padding: 8, borderRadius: 4 }}>
+            xs=6 with hover effects
+          </div>
+        </Grid>
       </Grid>
-      <div>Below</div>
+      
+      <Grid 
+        container 
+        spacing={3}
+        sx={{
+          background: t => `linear-gradient(135deg, ${t.color.primary.light}, ${t.color.secondary.light})`,
+          padding: "16px",
+          borderRadius: t => t.borderRadius.lg,
+          color: "white",
+        }}
+      >
+        <Grid 
+          item 
+          xs={12} 
+          md={4}
+          sx={{
+            padding: t => t.spacing[2],
+            "&:hover": {
+              backgroundColor: "rgba(255, 255, 255, 0.1)",
+              borderRadius: "4px",
+            }
+          }}
+        >
+          <div style={{ padding: 8 }}>
+            Grid item with sx
+          </div>
+        </Grid>
+
+        <Grid item xs={12} md={8}>
+          <div style={{ padding: 8 }}>
+            Regular grid item
+          </div>
+        </Grid>
+      </Grid>
     </div>
   ),
+  parameters: {
+    docs: {
+      description: {
+        story: "New sx system: each property can be a function (receives theme) or direct value, with pseudo-selectors."
+      }
+    }
+  },
 };
 
 export const AllBreakpoints: Story = {

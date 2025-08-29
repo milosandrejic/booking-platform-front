@@ -2,7 +2,6 @@
 
 import { forwardRef, useId, useState } from "react";
 import "./Radio.scss";
-import { useTheme } from "@booking-platform-shared/theme";
 import { resolveSx, type SxProps } from "../utils/sx";
 
 export type RadioSize = "small" | "medium" | "large";
@@ -46,7 +45,7 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>(
     },
     ref
   ) {
-    const theme = useTheme();
+    const { styles, className: sxClassName } = resolveSx(sx);
     const reactId = useId();
     const radioId = id || `radio-${reactId}`;
 
@@ -73,13 +72,14 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>(
       `radio--${color}`,
       disabled && "radio--disabled",
       isChecked && "radio--checked",
+      sxClassName,
       className
     ].filter(Boolean).join(" ");
 
     return (
       <label 
         className={classes} 
-        style={{ ...style, ...resolveSx(theme, sx) }}
+        style={{ ...style, ...styles }}
       >
         <input
           ref={ref}

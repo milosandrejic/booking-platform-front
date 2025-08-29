@@ -1,8 +1,5 @@
-"use client";
-
-import React, { forwardRef } from "react";
+import { forwardRef } from "react";
 import type { CSSProperties, HTMLAttributes, ReactNode } from "react";
-import { useTheme } from "@booking-platform-shared/theme";
 import { resolveSx, type SxProps } from "../utils/sx";
 import "./Card.scss";
 
@@ -18,8 +15,8 @@ export type CardProps = BaseProps & {
 };
 
 export const Card = forwardRef<HTMLDivElement, CardProps>(function Card(props, ref) {
-  const theme = useTheme();
   const { className, shadow = "md", sx, style: styleProp, children, ...rest } = props;
+  const { styles, className: sxClassName } = resolveSx(sx);
 
   const classes = [
     "card",
@@ -27,10 +24,11 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(function Card(props, r
     shadow === "sm" ? "card--shadow-sm" : undefined,
     shadow === "md" ? "card--shadow-md" : undefined,
     shadow === "lg" ? "card--shadow-lg" : undefined,
+    sxClassName,
     className,
   ].filter(Boolean).join(" ");
 
-  const style: CSSProperties = { ...styleProp, ...resolveSx(theme, sx) };
+  const style: CSSProperties = { ...styleProp, ...styles };
 
   return (
     <div
@@ -47,14 +45,14 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(function Card(props, r
 export type CardSectionProps = BaseProps;
 
 export const CardHeader = forwardRef<HTMLDivElement, CardSectionProps>(function CardHeader(props, ref) {
-  const theme = useTheme();
   const { className, sx, style: styleProp, children, ...rest } = props;
-  const style: CSSProperties = { ...styleProp, ...resolveSx(theme, sx) };
+  const { styles, className: sxClassName } = resolveSx(sx);
+  const style: CSSProperties = { ...styleProp, ...styles };
 
   return (
     <div
       ref={ref}
-      className={["card__header", className].filter(Boolean).join(" ")}
+      className={["card__header", sxClassName, className].filter(Boolean).join(" ")}
       style={style}
       {...rest}
     >
@@ -64,14 +62,14 @@ export const CardHeader = forwardRef<HTMLDivElement, CardSectionProps>(function 
 });
 
 export const CardContent = forwardRef<HTMLDivElement, CardSectionProps>(function CardContent(props, ref) {
-  const theme = useTheme();
   const { className, sx, style: styleProp, children, ...rest } = props;
-  const style: CSSProperties = { ...styleProp, ...resolveSx(theme, sx) };
+  const { styles, className: sxClassName } = resolveSx(sx);
+  const style: CSSProperties = { ...styleProp, ...styles };
 
   return (
     <div
       ref={ref}
-      className={["card__content", className].filter(Boolean).join(" ")}
+      className={["card__content", sxClassName, className].filter(Boolean).join(" ")}
       style={style}
       {...rest}
     >
@@ -81,14 +79,14 @@ export const CardContent = forwardRef<HTMLDivElement, CardSectionProps>(function
 });
 
 export const CardActions = forwardRef<HTMLDivElement, CardSectionProps>(function CardActions(props, ref) {
-  const theme = useTheme();
   const { className, sx, style: styleProp, children, ...rest } = props;
-  const style: CSSProperties = { ...styleProp, ...resolveSx(theme, sx) };
+  const { styles, className: sxClassName } = resolveSx(sx);
+  const style: CSSProperties = { ...styleProp, ...styles };
 
   return (
     <div
       ref={ref}
-      className={["card__actions", className].filter(Boolean).join(" ")}
+      className={["card__actions", sxClassName, className].filter(Boolean).join(" ")}
       style={style}
       {...rest}
     >

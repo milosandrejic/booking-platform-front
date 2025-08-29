@@ -2,7 +2,6 @@
 
 import { forwardRef, useCallback, useId, useMemo, useRef, useState } from "react";
 import "./Slider.scss";
-import { useTheme } from "@booking-platform-shared/theme";
 import { resolveSx, type SxProps } from "../utils/sx";
 
 export type SliderSize = "small" | "medium" | "large";
@@ -78,7 +77,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(pr
     "aria-labelledby": ariaLabelledby,
     ...restProps
   } = props;
-  const theme = useTheme();
+  const { styles, className: sxClassName } = resolveSx(sx);
 
   const reactId = useId();
   const sliderId = id || `slider-${reactId}`;
@@ -438,6 +437,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(pr
     disabled && "slider--disabled",
     isDragging && "slider--dragging",
     isRange && "slider--range",
+    sxClassName,
     className?.trim() || null
   ].filter(Boolean).join(" ");
   
@@ -465,7 +465,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(pr
   return (
     <div 
       className={classes}
-      style={{ ...style, ...resolveSx(theme, sx) }}
+      style={{ ...style, ...styles }}
       ref={ref}
       {...restProps}
     >

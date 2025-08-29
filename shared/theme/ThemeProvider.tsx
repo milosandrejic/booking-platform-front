@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, type ReactNode } from "react";
+import React, { createContext, useContext, type ReactNode } from "react";
 import { merge } from "lodash";
 import type { Theme } from "./types";
 import { theme as defaultTheme } from "./theme";
@@ -42,7 +42,6 @@ export const ThemeProvider = ({
   // Optionally load default font (Roboto via Google Fonts or custom URL)
   if (loadDefaultFont) {
     const { url, id } = typeof loadDefaultFont === "object" ? loadDefaultFont : {};
-
     useDefaultFont(themeValue.fontFamily, id, url);
   }
   

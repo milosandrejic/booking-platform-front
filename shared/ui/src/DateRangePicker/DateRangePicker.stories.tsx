@@ -162,17 +162,47 @@ export const WithSx: Story = {
   render: function WithSxDateRangePicker(args) {
     const [value, setValue] = useState<any>(null);
     return (
-      <DateRangePicker
-        {...args}
-        value={value}
-        onChange={v => setValue(v)}
-        sx={{
-          border: "1px solid var(--color-secondary-main)",
-          borderRadius: 8,
-          padding: 8,
-        }}
-      />
+      <div style={{ display: "flex", flexDirection: "column", gap: "2rem", maxWidth: "500px" }}>
+        <DateRangePicker
+          {...args}
+          label="Mixed sx properties"
+          value={value}
+          onChange={v => setValue(v)}
+          sx={{
+            border: t => `1px solid ${t.color.secondary.main}`,
+            borderRadius: "8px",
+            padding: t => t.spacing[2],
+            backgroundColor: "var(--color-background-paper)",
+            "&:hover": {
+              boxShadow: t => t.shadows.md,
+              borderColor: t => t.color.secondary.dark,
+            }
+          }}
+        />
+        <DateRangePicker
+          {...args}
+          label="Theme functions with effects"
+          variant="filled"
+          sx={{
+            backgroundColor: t => t.color.background.subtle,
+            borderRadius: t => t.borderRadius.lg,
+            padding: "12px",
+            "&:focus-within": {
+              backgroundColor: t => t.color.secondary.light,
+              transform: "scale(1.01)",
+              boxShadow: t => t.shadows.lg,
+            }
+          }}
+        />
+      </div>
     );
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "New sx system: each property can be a function (receives theme) or direct value, with pseudo-selectors."
+      }
+    }
   },
 };
 

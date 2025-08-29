@@ -400,10 +400,54 @@ export const Wide: Story = {
 
 export const WithSx: Story = {
   render: args => (
-    <Container {...args} sx={{ backgroundColor: "var(--color-background-subtle)", padding: 24, borderRadius: 12 }}>
-      <div style={{ backgroundColor: "white", padding: 16, borderRadius: 8, border: "1px solid var(--color-border-main)" }}>
-        Container styled with sx
-      </div>
-    </Container>
+    <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
+      <Container 
+        {...args} 
+        maxWidth="md"
+        sx={{ 
+          backgroundColor: t => t.color.background.subtle, 
+          padding: "24px", 
+          borderRadius: t => t.borderRadius.lg,
+          border: t => `1px solid ${t.color.border.light}`,
+          "&:hover": {
+            boxShadow: t => t.shadows.md,
+            transform: "translateY(-2px)",
+          }
+        }}
+      >
+        <div 
+          style={{ 
+            backgroundColor: "white", 
+            padding: 16, 
+            borderRadius: 8, 
+            textAlign: "center" 
+          }}
+        >
+          Container with mixed sx properties and hover effects
+        </div>
+      </Container>
+      
+      <Container 
+        {...args} 
+        maxWidth="sm"
+        sx={{
+          background: t => `linear-gradient(135deg, ${t.color.primary.light}, ${t.color.primary.main})`,
+          color: "white",
+          padding: t => `${t.spacing[4]} ${t.spacing[6]}`,
+          borderRadius: "16px",
+        }}
+      >
+        <div style={{ textAlign: "center" }}>
+          Container with theme gradient and spacing functions
+        </div>
+      </Container>
+    </div>
   ),
+  parameters: {
+    docs: {
+      description: {
+        story: "New sx system: each property can be a function (receives theme) or direct value, with pseudo-selectors."
+      }
+    }
+  },
 };

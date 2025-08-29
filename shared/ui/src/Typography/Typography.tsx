@@ -1,5 +1,4 @@
 import "./Typography.scss";
-import { useTheme } from "@booking-platform-shared/theme";
 import { resolveSx, type SxProps } from "../utils/sx";
 
 export type TypographyVariant =
@@ -66,7 +65,7 @@ export const Typography = ({
   sx,
   ...props 
 }: TypographyProps) => {
-  const theme = useTheme();
+  const { styles: sxStyles, className: sxClassName } = resolveSx(sx);
   const Component = (component || getDefaultComponent(variant)) as React.ElementType;
  
   // Resolve color to inline style for semantic tokens or direct CSS values
@@ -87,10 +86,11 @@ export const Typography = ({
     align && `typography--align-${align}`,
     gutterBottom && "typography--gutterBottom",
     noWrap && "typography--noWrap",
-    className?.trim() || null
+    className?.trim() || null,
+    sxClassName,
   ].filter(Boolean).join(" ");
   const mergedStyleBase = resolvedInlineColor ? { ...style, color: resolvedInlineColor } : style;
-  const mergedStyle = { ...mergedStyleBase, ...resolveSx(theme, sx) };
+  const mergedStyle = { ...mergedStyleBase, ...sxStyles };
 
   return (
     <Component

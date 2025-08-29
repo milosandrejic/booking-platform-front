@@ -1,5 +1,3 @@
-"use client";
-
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Badge } from "./Badge";
 // Shared demo icon (Solar by 480 Design - CC BY 4.0)

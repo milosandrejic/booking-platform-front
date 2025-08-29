@@ -2,7 +2,6 @@
 
 import "./Chip.scss";
 import { Avatar as UiAvatar } from "../Avatar";
-import { useTheme } from "@booking-platform-shared/theme";
 import { resolveSx, type SxProps } from "../utils/sx";
 
 export type ChipVariant = "filled" | "outlined";
@@ -44,7 +43,7 @@ export function Chip({
   sx,
   ...rest
 }: ChipProps) {
-  const theme = useTheme();
+  const { styles: sxStyles, className: sxClassName } = resolveSx(sx);
   const classes = [
     "chip",
     `chip--variant-${variant}`,
@@ -52,6 +51,7 @@ export function Chip({
     `chip--color-${color}`,
     (clickable || onClick) && !disabled ? "chip--clickable" : null,
     className?.trim() || null,
+    sxClassName,
   ].filter(Boolean).join(" ");
 
   const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -71,7 +71,7 @@ export function Chip({
   return (
     <div
       className={classes}
-      style={{ ...style, ...resolveSx(theme, sx) }}
+      style={{ ...style, ...sxStyles }}
       onClick={handleClick}
       aria-disabled={disabled || undefined}
       {...rest}

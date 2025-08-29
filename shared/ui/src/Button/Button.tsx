@@ -1,7 +1,6 @@
 "use client";
 
 import "./Button.scss";
-import { useTheme } from "@booking-platform-shared/theme";
 import { resolveSx, type SxProps } from "../utils/sx";
 
 export type ButtonVariant = "filled" | "outlined" | "text";
@@ -31,19 +30,20 @@ export const Button = ({
   sx,
   ...props 
 }: ButtonProps) => {
-  const theme = useTheme();
+  const { styles, className: sxClassName } = resolveSx(sx);
   const classes = [
     "button",
     `button--variant-${variant}`,
     `button--size-${size}`,
     fullWidth && "button--full-width",
+    sxClassName,
     className?.trim() || null
   ].filter(Boolean).join(" ");
 
   return (
     <button
       className={classes}
-      style={{ ...style, ...resolveSx(theme, sx) }}
+      style={{ ...style, ...styles }}
       disabled={disabled}
       onClick={onClick}
       type={type}

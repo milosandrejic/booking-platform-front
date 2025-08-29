@@ -3,7 +3,6 @@
 import { forwardRef, useId, useState, useRef, useEffect } from "react";
 import dayjs, { type Dayjs } from "dayjs";
 import "./DateRangePicker.scss";
-import { useTheme } from "@booking-platform-shared/theme";
 import { resolveSx, type SxProps } from "../utils/sx";
 
 export type DateRangePickerVariant = "outlined" | "filled";
@@ -112,7 +111,7 @@ export const DateRangePicker = forwardRef<HTMLInputElement, DateRangePickerProps
     },
     ref
   ) => {
-    const theme = useTheme();
+    const { styles, className: sxClassName } = resolveSx(sx);
     const inputId = useId();
     const [isOpen, setIsOpen] = useState(false);
     const [currentMonth, setCurrentMonth] = useState(dayjs().startOf("month"));
@@ -244,11 +243,12 @@ export const DateRangePicker = forwardRef<HTMLInputElement, DateRangePickerProps
       error && "daterangepicker--error",
       disabled && "daterangepicker--disabled",
       fullWidth && "daterangepicker--full-width",
+      sxClassName,
       className
     ].filter(Boolean).join(" ");
 
     return (
-      <div className={classes} style={{ ...style, ...resolveSx(theme, sx) }}>
+      <div className={classes} style={{ ...style, ...styles }}>
         <DateRangePickerInput
           ref={ref || inputRef}
           id={inputId}

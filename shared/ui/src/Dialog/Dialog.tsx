@@ -3,7 +3,6 @@
 import React, { forwardRef, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import type { CSSProperties, HTMLAttributes, ReactNode, MouseEvent } from "react";
-import { useTheme } from "@booking-platform-shared/theme";
 import { resolveSx, type SxProps } from "../utils/sx";
 import "./Dialog.scss";
 
@@ -35,7 +34,6 @@ export type DialogContentProps = BaseProps & {
 export type DialogActionsProps = BaseProps;
 
 const DialogRoot = forwardRef<HTMLDivElement, DialogProps>(function DialogRoot(props, ref) {
-  const theme = useTheme();
   const {
     className,
     sx,
@@ -54,6 +52,7 @@ const DialogRoot = forwardRef<HTMLDivElement, DialogProps>(function DialogRoot(p
     ...rest
   } = props;
 
+  const { styles, className: sxClassName } = resolveSx(sx);
   const backdropRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -101,12 +100,13 @@ const DialogRoot = forwardRef<HTMLDivElement, DialogProps>(function DialogRoot(p
     !fullScreen && maxWidth ? `dialog--max-width-${maxWidth}` : undefined,
     fullWidth ? "dialog--full-width" : undefined,
     scroll === "body" ? "dialog--scroll-body" : undefined,
+    sxClassName,
     className,
   ].filter(Boolean).join(" ");
 
   const backdropClasses = ["dialog__backdrop", fullScreen ? "dialog__backdrop--full-screen" : undefined].filter(Boolean).join(" ");
 
-  const style: CSSProperties = { ...styleProp, ...resolveSx(theme, sx) };
+  const style: CSSProperties = { ...styleProp, ...styles };
 
   return (
     <div className={backdropClasses} ref={backdropRef} onClick={handleBackdropClick}>
@@ -139,14 +139,14 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(function Dialog(pr
 });
 
 export const DialogTitle = forwardRef<HTMLDivElement, DialogTitleProps>(function DialogTitle(props, ref) {
-  const theme = useTheme();
   const { className, sx, style: styleProp, children, ...rest } = props;
-  const style: CSSProperties = { ...styleProp, ...resolveSx(theme, sx) };
+  const { styles, className: sxClassName } = resolveSx(sx);
+  const style: CSSProperties = { ...styleProp, ...styles };
 
   return (
     <div
       ref={ref}
-      className={["dialog__title", className].filter(Boolean).join(" ")}
+      className={["dialog__title", sxClassName, className].filter(Boolean).join(" ")}
       style={style}
       {...rest}
     >
@@ -156,14 +156,17 @@ export const DialogTitle = forwardRef<HTMLDivElement, DialogTitleProps>(function
 });
 
 export const DialogContent = forwardRef<HTMLDivElement, DialogContentProps>(function DialogContent(props, ref) {
-  const theme = useTheme();
   const { className, sx, style: styleProp, children, dividers = false, ...rest } = props;
+  const { styles, className: sxClassName } = resolveSx(sx);
 
   const classes = [
-    "dialog__content", dividers ? "dialog__content--dividers" : undefined, className,
+    "dialog__content", 
+    dividers ? "dialog__content--dividers" : undefined, 
+    sxClassName, 
+    className,
   ].filter(Boolean).join(" ");
 
-  const style: CSSProperties = { ...styleProp, ...resolveSx(theme, sx) };
+  const style: CSSProperties = { ...styleProp, ...styles };
 
   return (
     <div
@@ -178,14 +181,14 @@ export const DialogContent = forwardRef<HTMLDivElement, DialogContentProps>(func
 });
 
 export const DialogActions = forwardRef<HTMLDivElement, DialogActionsProps>(function DialogActions(props, ref) {
-  const theme = useTheme();
   const { className, sx, style: styleProp, children, ...rest } = props;
-  const style: CSSProperties = { ...styleProp, ...resolveSx(theme, sx) };
+  const { styles, className: sxClassName } = resolveSx(sx);
+  const style: CSSProperties = { ...styleProp, ...styles };
 
   return (
     <div
       ref={ref}
-      className={["dialog__actions", className].filter(Boolean).join(" ")}
+      className={["dialog__actions", sxClassName, className].filter(Boolean).join(" ")}
       style={style}
       {...rest}
     >

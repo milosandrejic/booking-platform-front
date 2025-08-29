@@ -2,7 +2,6 @@
 
 import { forwardRef, useId, useState } from "react";
 import "./Checkbox.scss";
-import { useTheme } from "@booking-platform-shared/theme";
 import { resolveSx, type SxProps } from "../utils/sx";
 
 export type CheckboxSize = "small" | "medium" | "large";
@@ -68,7 +67,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
     },
     ref
   ) {
-    const theme = useTheme();
+    const { styles, className: sxClassName } = resolveSx(sx);
     const [internalChecked, setInternalChecked] = useState(defaultChecked);
     const reactId = useId();
     const checkboxId = id || `checkbox-${reactId}`;
@@ -92,6 +91,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
       `checkbox--${color}`,
       disabled && "checkbox--disabled",
       isChecked && "checkbox--checked",
+      sxClassName,
       className
     ].filter(Boolean).join(" ");
 
@@ -108,7 +108,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
     return (
       <label 
         className={classes} 
-        style={{ ...style, ...resolveSx(theme, sx) }}
+        style={{ ...style, ...styles }}
       >
         <input
           ref={ref}

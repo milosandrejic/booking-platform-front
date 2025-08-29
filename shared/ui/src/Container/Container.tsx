@@ -1,5 +1,4 @@
 import "./Container.scss";
-import { useTheme } from "@booking-platform-shared/theme";
 import { resolveSx, type SxProps } from "../utils/sx";
 
 export type ContainerMax = "xs" | "sm" | "md" | "lg" | "xl" | "2xl";
@@ -26,20 +25,21 @@ export const Container = ({
   spacing = "default",
   ...props 
 }: ContainerProps) => {
-  const theme = useTheme();
+  const { styles: sxStyles, className: sxClassName } = resolveSx(sx);
   const classes = [
     "container",
     `container--maxWidth-${maxWidth}`,
     fixed && "container--fixed",
     disableGutters && "container--disableGutters",
     !disableGutters && spacing !== "default" && `container--spacing-${spacing}`,
-    className?.trim() || null
+    className?.trim() || null,
+    sxClassName,
   ].filter(Boolean).join(" ");
 
   return (
     <div
       className={classes}
-      style={{ ...style, ...resolveSx(theme, sx) }}
+      style={{ ...style, ...sxStyles }}
       {...props}
     >
       {children}

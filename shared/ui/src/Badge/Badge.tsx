@@ -1,7 +1,4 @@
-"use client";
-
 import "./Badge.scss";
-import { useTheme } from "@booking-platform-shared/theme";
 import { resolveSx, type SxProps } from "../utils/sx";
 
 export type BadgeColor = "default" | "primary" | "secondary" | "success" | "error" | "warning" | "info";
@@ -41,7 +38,7 @@ export function Badge({
   sx,
   ...rest
 }: BadgeProps) {
-  const theme = useTheme();
+  const { styles: sxStyles, className: sxClassName } = resolveSx(sx);
   const isZeroLike = badgeContent === 0 || badgeContent === "0";
   const hideForZero = !showZero && isZeroLike;
   const isDot = variant === "dot";
@@ -65,10 +62,11 @@ export function Badge({
     `badge--anchor-${anchorOrigin}`,
     (invisible || hideForZero) && "badge--invisible",
     className?.trim() || null,
+    sxClassName,
   ].filter(Boolean).join(" ");
 
   return (
-    <span className={classes} style={{ ...style, ...resolveSx(theme, sx) }} {...rest}>
+    <span className={classes} style={{ ...style, ...sxStyles }} {...rest}>
       <span className="badge__child">
         {children}
       </span>

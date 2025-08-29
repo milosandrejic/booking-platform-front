@@ -2,7 +2,6 @@
 
 import React, { forwardRef } from "react";
 import type { HTMLAttributes, ReactNode } from "react";
-import { useTheme } from "@booking-platform-shared/theme";
 import { resolveSx, type SxProps } from "../utils/sx";
 import "./Progress.scss";
 
@@ -55,7 +54,7 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(function Progr
   },
   ref,
 ) {
-  const theme = useTheme();
+  const { styles, className: sxClassName } = resolveSx(sx);
 
   const isDeterminate = typeof value === "number";
   const normalizedValue = isDeterminate ? clampValue(value as number) : 0;
@@ -67,6 +66,7 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(function Progr
     `progress--color-${color}`,
     `progress--size-${size}`,
     isDeterminate ? "progress--determinate" : "progress--indeterminate",
+    sxClassName,
     className.trim() || null,
   ].filter(Boolean).join(" ");
 
@@ -75,7 +75,7 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(function Progr
       <div
         ref={ref}
         className={classes}
-        style={{ ...style, ...resolveSx(theme, sx) }}
+        style={{ ...style, ...styles }}
         role="progressbar"
         aria-valuemin={isDeterminate ? 0 : undefined}
         aria-valuemax={isDeterminate ? 100 : undefined}
@@ -123,7 +123,7 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(function Progr
     <div
       ref={ref}
       className={classes}
-      style={{ width: circularSize, height: circularSize, ...style, ...resolveSx(theme, sx) }}
+      style={{ width: circularSize, height: circularSize, ...style, ...styles }}
       role="progressbar"
       aria-valuemin={isDeterminate ? 0 : undefined}
       aria-valuemax={isDeterminate ? 100 : undefined}

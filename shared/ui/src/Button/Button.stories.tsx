@@ -386,15 +386,26 @@ export const WithSx: Story = {
         <Button
           {...args}
           variant="outlined"
-          sx={t => ({
-            color: t.color.primary.main,
+          sx={{
+            color: t => t.color.primary.main,
             borderColor: "var(--color-primary-main)",
-          })}
+            padding: t => `${t.spacing[2]} ${t.spacing[4]}`,
+            "&:hover": {
+              backgroundColor: t => t.color.primary.light,
+              borderColor: t => t.color.primary.dark,
+            }
+          }}
         >
-          Themed color via sx(theme)
+          Mixed functions & values
         </Button>
       </div>
     );
   },
-  parameters: { docs: { description: { story: "Demonstrates styling the Button using the sx prop (object and function)." } } },
+  parameters: { 
+    docs: { 
+      description: { 
+        story: "New sx system: each property can be a function (receives theme) or direct value, with pseudo-selectors." 
+      } 
+    } 
+  },
 };

@@ -1,8 +1,5 @@
-"use client";
-
 import "./Avatar.scss";
 import { useMemo } from "react";
-import { useTheme } from "@booking-platform-shared/theme";
 import { resolveSx, type SxProps } from "../utils/sx";
 
 export type AvatarSize = "small" | "medium" | "large";
@@ -35,7 +32,7 @@ export function Avatar({
   sx,
   ...rest
 }: AvatarProps) {
-  const theme = useTheme();
+  const { styles: sxStyles, className: sxClassName } = resolveSx(sx);
   const letters = useMemo(() => {
     if (fallback && fallback.trim()) {
       return fallback.trim().slice(0, 2).toUpperCase();
@@ -62,6 +59,7 @@ export function Avatar({
     `avatar--size-${size}`,
     shape === "square" ? "avatar--shape-square" : null,
     className?.trim() || null,
+    sxClassName,
   ].filter(Boolean).join(" ");
 
   return (
@@ -69,7 +67,7 @@ export function Avatar({
       className={classes}
       role={src ? undefined : "img"}
       aria-label={!src && letters ? letters : undefined}
-      style={{ ...style, ...resolveSx(theme, sx) }}
+      style={{ ...style, ...sxStyles }}
       {...rest}
     >
       {
@@ -105,7 +103,7 @@ export interface AvatarGroupProps extends React.HTMLAttributes<HTMLDivElement> {
  * AvatarGroup: displays a horizontal stack of Avatars with overlap and an optional surplus counter.
  */
 export function AvatarGroup({ max, total, spacing = 8, className = "", children, sx, style, ...rest }: AvatarGroupProps) {
-  const theme = useTheme();
+  const { styles: sxStyles, className: sxClassName } = resolveSx(sx);
   const childArray = useMemo(() => {
     const arr = Array.isArray(children) ? children : [children];
     return arr.filter(Boolean) as React.ReactNode[];
@@ -115,9 +113,7 @@ export function AvatarGroup({ max, total, spacing = 8, className = "", children,
   const count = total != null ? total : childArray.length;
   const surplus = Math.max(0, count - visible.length);
 
-  const classes = [
-    "avatar-group", className?.trim() || null,
-  ].filter(Boolean).join(" ");
+  const classes = ["avatar-group", className?.trim() || null, sxClassName].filter(Boolean).join(" ");
 
   const groupStyle = {
     // Expose spacing variable, consumers can override via inline style or CSS
@@ -125,7 +121,7 @@ export function AvatarGroup({ max, total, spacing = 8, className = "", children,
   } as React.CSSProperties;
 
   return (
-    <div className={classes} style={{ ...groupStyle, ...style, ...resolveSx(theme, sx) }} {...rest}>
+    <div className={classes} style={{ ...groupStyle, ...style, ...sxStyles }} {...rest}>
       {visible.map((node, idx) => (
         <span className="avatar-group__item" key={idx}>
           {node}

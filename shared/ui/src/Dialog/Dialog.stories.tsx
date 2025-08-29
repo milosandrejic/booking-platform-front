@@ -243,27 +243,47 @@ export const WithSx: Story = {
         <Dialog
           open={open}
           onClose={() => setOpen(false)}
-          sx={theme => ({
-            border: `2px solid ${theme.color.primary.main}`,
+          sx={{
+            border: t => `2px solid ${t.color.primary.main}`,
             borderRadius: "16px",
-          })}
+            "&:hover": {
+              boxShadow: t => t.shadows.lg,
+              transform: "scale(1.01)",
+            }
+          }}
         >
           <DialogTitle
             sx={{
-              backgroundColor: "var(--color-primary-main)",
-              color: "var(--color-primary-contrast-text)",
+              background: t => `linear-gradient(135deg, ${t.color.primary.light}, ${t.color.secondary.main})`,
+              color: "white",
+              padding: t => `${t.spacing[3]} ${t.spacing[4]}`,
+              "&:hover": {
+                backgroundColor: t => t.color.primary.dark,
+              }
             }}
           >
-            Custom Styled Dialog
+            Mixed sx Properties Dialog
           </DialogTitle>
 
-          <DialogContent>
+          <DialogContent
+            sx={{
+              padding: "24px",
+              borderLeft: t => `8px solid ${t.color.secondary.main}`,
+            }}
+          >
             <p>
-              This dialog demonstrates custom styling using the sx prop.
+              This dialog demonstrates the new sx system where each property can be either a function 
+              (receives theme) or a direct value, with pseudo-selectors support.
             </p>
           </DialogContent>
 
-          <DialogActions>
+          <DialogActions
+            sx={{
+              padding: t => t.spacing[3],
+              gap: "8px",
+              justifyContent: "flex-end",
+            }}
+          >
             <Button variant="text" onClick={() => setOpen(false)}>
               Close
             </Button>
@@ -275,7 +295,7 @@ export const WithSx: Story = {
   parameters: {
     docs: {
       description: {
-        story: "Dialog with custom styling using the sx prop.",
+        story: "New sx system: each property can be a function (receives theme) or direct value, with pseudo-selectors."
       },
     },
   },

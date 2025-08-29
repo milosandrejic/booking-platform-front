@@ -1,10 +1,22 @@
 "use client";
 
-import { createContext, useContext, useEffect, useMemo, useRef, useState, useCallback, Children, isValidElement } from "react";
-import type { CSSProperties, HTMLAttributes, ReactNode, MouseEvent } from "react";
-import "./Select.scss";
-import { useTheme } from "@booking-platform-shared/theme";
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+  useCallback,
+  useMemo,
+  Children,
+  isValidElement,
+  type ReactNode,
+  type MouseEvent,
+  type HTMLAttributes,
+  type CSSProperties,
+} from "react";
 import { resolveSx, type SxProps } from "../utils/sx";
+import "./Select.scss";
 
 export type SelectSize = "small" | "medium" | "large";
 export type SelectValue = string | number | object;
@@ -60,6 +72,7 @@ export const SelectOption = ({
     throw new Error("SelectOption must be used within a Select component");
   }
 
+  const { styles, className: sxClassName } = resolveSx(sx);
   const { isSelected, toggleValue } = context;
   const selected = isSelected(value);
 
@@ -77,6 +90,7 @@ export const SelectOption = ({
     "select__option",
     disabled && "select__option--disabled",
     selected && "select__option--selected",
+    sxClassName,
     className?.trim() || null
   ].filter(Boolean).join(" ");
 
@@ -85,7 +99,7 @@ export const SelectOption = ({
       role="option"
       aria-selected={selected}
       className={optionClasses}
-      style={{ ...style, ...resolveSx(useTheme(), sx) }}
+      style={{ ...style, ...styles }}
       onMouseDown={(e) => { e.preventDefault(); }}
       onClick={handleClick}
       {...props}
@@ -112,7 +126,7 @@ export const Select = ({
   sx,
   ...props
 }: SelectProps) => {
-  const theme = useTheme();
+  const { styles, className: sxClassName } = resolveSx(sx);
   const isControlled = value !== undefined;
   const [internalValue, setInternalValue] = useState<SelectValue | SelectValue[] | undefined>(
     defaultValue ?? (multiple ? [] : undefined)
@@ -220,10 +234,10 @@ export const Select = ({
       
       Children.forEach(children, (child) => {
         if (isValidElement(child) && child.type === SelectOption) {
-          const optValue = child.props.value;
+          const optValue = (child.props as any).value;
           
           if (isSelected(optValue)) {
-            const label = typeof child.props.children === "string" ? child.props.children : String(optValue);
+            const label = typeof (child.props as any).children === "string" ? (child.props as any).children : String(optValue);
             values.push(label);
           }
         }
@@ -248,6 +262,7 @@ export const Select = ({
     disabled && "select--disabled",
     multiple && "select--multiple",
     fullWidth && "select--full-width",
+    sxClassName,
     className?.trim() || null
   ].filter(Boolean).join(" ");
 
@@ -270,7 +285,7 @@ export const Select = ({
       <div
         ref={rootRef}
         className={classes}
-        style={{ ...style, ...resolveSx(theme, sx) }}
+        style={{ ...style, ...styles }}
         {...props}
       >
         <button

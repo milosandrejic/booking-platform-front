@@ -90,22 +90,44 @@ export const Shadows: Story = {
 export const WithSx: Story = {
   render: function WithSxCard() {
     return (
-      <Card
-        shadow="md"
-        sx={theme => ({
-          borderRadius: "16px",
-          border: `1px solid ${theme.color.border.light}`,
-        })}
-      >
-        <CardContent>
-          You can style the card via the sx prop.
-        </CardContent>
-      </Card>
+      <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+        <Card
+          shadow="md"
+          sx={{
+            borderRadius: "16px",
+            border: t => `1px solid ${t.color.border.light}`,
+            maxWidth: "300px",
+            "&:hover": {
+              transform: "translateY(-2px)",
+              boxShadow: t => t.shadows.lg,
+            }
+          }}
+        >
+          <CardContent>
+            Mixed functions & values with hover effect.
+          </CardContent>
+        </Card>
+        
+        <Card
+          shadow="sm"
+          sx={{
+            background: t => `linear-gradient(135deg, ${t.color.primary.light}, ${t.color.primary.main})`,
+            color: "white",
+            maxWidth: "300px",
+          }}
+        >
+          <CardContent>
+            Theme gradient background.
+          </CardContent>
+        </Card>
+      </div>
     );
   },
   parameters: {
     docs: {
-      description: { story: "Demonstrates using the theme-aware sx prop to customize rounded corners and borders." },
+      description: { 
+        story: "New sx system: each property can be a function (receives theme) or direct value, with pseudo-selectors." 
+      },
     },
   },
 };

@@ -2,7 +2,6 @@
 
 import { forwardRef, useId } from "react";
 import "./TextField.scss";
-import { useTheme } from "@booking-platform-shared/theme";
 import { resolveSx, type SxProps } from "../utils/sx";
 
 export type TextFieldType = "text" | "password";
@@ -68,7 +67,7 @@ export const TextField = forwardRef<
   className = "",
   ...props
 }, ref) {
-  const theme = useTheme();
+  const { styles, className: sxClassName } = resolveSx((props as any).sx);
   const classes = [
     "textfield",
     `textfield--${variant}`,
@@ -76,6 +75,7 @@ export const TextField = forwardRef<
     error && "textfield--error",
     disabled && "textfield--disabled",
     fullWidth && "textfield--full-width",
+    sxClassName,
     className?.trim() || null
   ].filter(Boolean).join(" ");
 
@@ -87,7 +87,7 @@ export const TextField = forwardRef<
   const helperId = helperText ? `${inputId}-helper-text` : undefined;
 
   return (
-    <div className={classes} style={resolveSx(theme, (props as any).sx)}>
+    <div className={classes} style={styles}>
       {
         label &&
         <label className="textfield__label" htmlFor={inputId}>

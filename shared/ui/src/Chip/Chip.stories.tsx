@@ -164,27 +164,41 @@ export const WithSx: Story = {
     return (
       <div style={{ display: "flex", gap: 12, alignItems: "center", flexWrap: "wrap" }}>
         <Chip
-          label="Object sx"
+          label="Mixed sx properties"
           color="primary"
           sx={{
-            backgroundColor: "#eef6ff",
+            backgroundColor: t => t.color.primary.light,
             color: "#1e3a8a",
-            borderRadius: 12,
-            paddingInline: 10,
+            borderRadius: "12px",
+            padding: t => `${t.spacing[1]} ${t.spacing[3]}`,
+            "&:hover": {
+              transform: "scale(1.05)",
+              boxShadow: t => t.shadows.md,
+            }
           }}
         />
         <Chip
-          label="Function sx"
+          label="Pseudo-selectors"
           variant="outlined"
-          sx={() => ({
-            backgroundColor: "#f5f3ff",
-            color: "#3730a3",
-            border: "1px dashed #6366f1",
-            transform: "scale(1.02)",
-          })}
+          sx={{
+            backgroundColor: "transparent",
+            color: t => t.color.secondary.main,
+            border: t => `1px dashed ${t.color.secondary.light}`,
+            "&:hover": {
+              backgroundColor: t => t.color.secondary.light,
+              color: "white",
+              borderStyle: "solid",
+            }
+          }}
         />
       </div>
     );
   },
-  parameters: { docs: { description: { story: "Chip styled via the sx prop using both object and function forms." } } },
+  parameters: { 
+    docs: { 
+      description: { 
+        story: "New sx system: each property can be a function (receives theme) or direct value, with pseudo-selectors." 
+      } 
+    } 
+  },
 };

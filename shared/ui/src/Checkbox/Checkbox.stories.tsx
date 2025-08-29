@@ -177,8 +177,42 @@ export const WithSx: Story = {
   render: function WithSxCheckbox(args) {
     const [checked, setChecked] = useState(false);
     return (
-      <Checkbox {...args} checked={checked} onChange={setChecked} sx={{ padding: 8, borderRadius: 8, background: "var(--color-background-subtle)" }} />
+      <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+        <Checkbox 
+          {...args} 
+          checked={checked} 
+          onChange={setChecked} 
+          label="With mixed sx props"
+          sx={{ 
+            padding: t => t.spacing[3], 
+            borderRadius: "8px", 
+            background: "var(--color-background-subtle)",
+            "&:hover": {
+              backgroundColor: t => t.color.grey[100],
+              transform: "scale(1.02)",
+            }
+          }} 
+        />
+        <Checkbox 
+          {...args} 
+          checked={!checked} 
+          onChange={c => setChecked(!c)}
+          label="Theme function colors"
+          sx={{
+            padding: "12px",
+            border: t => `2px solid ${t.color.primary.light}`,
+            borderRadius: t => t.borderRadius.md,
+          }}
+        />
+      </div>
     );
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "New sx system: each property can be a function (receives theme) or direct value, with pseudo-selectors."
+      }
+    }
   },
 };
 

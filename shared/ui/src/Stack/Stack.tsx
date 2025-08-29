@@ -1,6 +1,5 @@
-import type { ReactNode, CSSProperties } from "react";
+import React, { type ReactNode, type CSSProperties } from "react";
 import "./Stack.scss";
-import { useTheme } from "@booking-platform-shared/theme";
 import { resolveSx, type SxProps } from "../utils/sx";
 
 export type StackDirection = "row" | "column" | "row-reverse" | "column-reverse";
@@ -18,7 +17,7 @@ export interface StackProps {
   gap?: StackGap;
   className?: string;
   style?: CSSProperties;
-  as?: keyof JSX.IntrinsicElements;
+  as?: React.ElementType;
   sx?: SxProps;
 }
 
@@ -39,13 +38,14 @@ export function Stack({
   sx,
   ...rest
 }: StackProps) {
-  const theme = useTheme();
+  const { styles, className: sxClassName } = resolveSx(sx);
   const classes = [
     "stack",
     `stack--${direction}`,
     `stack--justify-${justify}`,
     `stack--align-${align}`,
     `stack--wrap-${wrap}`,
+    sxClassName,
     className?.trim() || null
   ].filter(Boolean).join(" ");
 
@@ -54,7 +54,7 @@ export function Stack({
   };
 
   return (
-    <Component className={classes} style={{ ...inlineStyles, ...style, ...resolveSx(theme, sx) }} {...rest}>
+    <Component className={classes} style={{ ...inlineStyles, ...style, ...styles }} {...rest}>
       {children}
     </Component>
   );

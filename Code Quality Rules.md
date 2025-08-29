@@ -77,21 +77,12 @@ return (
 );
 ```
 
-❌ **Not allowed (multiple props in ternary):**
-```jsx
-// No ternary with multiple props
-{isActive ? <Badge color="success" label="Active" variant="filled" /> : null}
-
-// No inline conditional rendering
-{property.isActive && <Badge color="success" label="Active" />}
-```
-
 #### Multiline JSX
 * **2+ props:** Always use multiline formatting
 * **Props alignment:** Each prop on its own line, properly indented
 * **Closing tag:** Self-closing components end with `/>` on the last prop line
 
-✅ **Correct:**
+**Correct formatting:**
 ```jsx
 <Button
   variant="filled"
@@ -111,14 +102,6 @@ return (
 />
 ```
 
-❌ **Not allowed:**
-```jsx
-// Multiple props on same line
-<Component propA={a} propB={b} />
-
-// Mixed inline and multiline
-<Component propA={a}
-  propB={b} />
 ```
 
 #### Loop Rendering
@@ -249,64 +232,95 @@ const validateData = (data) => {
 };
 ```
 
-❌ **Not allowed:**
-```jsx
-const processData = (data) => {
-  const result = transformData(data);
-  if (result.isEmpty) {  // Missing empty line before if
-    return null;
-  }
-  return result.value;   // Missing empty line before return
-};
-```
-
 ---
 
 ## 3) Styling Guidelines
 
 ### Primary Styling Method (sx Props)
-* **Always prefer sx props** over inline styles or SCSS for:
+* **Always prefer sx props** for:
   - Layout (flexbox, grid)
   - Spacing (margin, padding)
   - Theme-based values (colors, typography)
   - Responsive design
+  - Pseudo-selectors (:hover, :focus, :active)
+  - Theme functions for dynamic styling
 
-✅ **Correct sx usage:**
+**Component implementation pattern:**
 ```jsx
-<Box
+import { resolveSx, type SxProps } from "../utils/sx";
+
+const Component = ({ sx, className, style, ...props }) => {
+  const { styles, className: sxClassName } = resolveSx(sx);
+  
+  const classes = [
+    "component",
+    "component--variant",
+    sxClassName,
+    className?.trim() || null
+  ].filter(Boolean).join(" ");
+  
+  return (
+    <div
+      className={classes}
+      style={{ ...style, ...styles }}
+      {...props}
+    >
+      {children}
+    </div>
+  );
+};
+```
+
+**sx Props usage examples:**
+```jsx
+<Component
   sx={{
-    display: 'flex',
+    // Direct values
+    padding: 2,
+    margin: 1,
+    backgroundColor: '#f5f5f5',
+    
+    // Theme functions
+    bgcolor: (theme) => theme.palette.primary.main,
+    color: (theme) => theme.palette.text.primary,
+    
+    // Responsive breakpoints
+    display: { xs: 'block', md: 'flex' },
     flexDirection: { xs: 'column', md: 'row' },
-    gap: 3,
-    p: 2,
-    bgcolor: 'surface.variant',
-    borderRadius: 2,
-    boxShadow: 1
+    gap: { xs: 2, md: 3 },
+    
+    // Pseudo-selectors
+    ':hover': {
+      bgcolor: 'primary.light',
+      transform: 'translateY(-2px)',
+      boxShadow: 2
+    },
+    ':focus': {
+      outline: '2px solid',
+      outlineColor: 'primary.main'
+    },
+    ':active': {
+      transform: 'translateY(0)'
+    },
+    
+    // Complex nested selectors
+    '& .child-element': {
+      color: 'text.secondary'
+    }
   }}
->
-  <Typography
-    variant="headlineMedium"
-    sx={{
-      color: 'primary.main',
-      mb: { xs: 2, md: 0 },
-      textAlign: { xs: 'center', md: 'left' }
-    }}
-  >
-    Content Title
-  </Typography>
-</Box>
+/>
 ```
 
 ### SCSS Usage (Limited Scope)
-* **Only use SCSS** for:
+* **Use SCSS only for**:
   - Complex animations and transitions
   - Pseudo-elements (::before, ::after)
   - Complex selectors that can't be achieved with sx
-  - Component-specific styles that require CSS features not available in sx
+  - Component-specific styles requiring advanced CSS features
 
-✅ **When to use SCSS:**
+**SCSS for complex features:**
 ```scss
-// Component.scss - for complex features only
+// Component.scss
 .component {
   &__overlay {
     position: absolute;
@@ -334,19 +348,33 @@ const processData = (data) => {
 }
 ```
 
-❌ **Don't use SCSS for:**
-```scss
-// These should use sx props instead
-.component {
-  padding: 16px;           // Use sx={{ p: 2 }}
-  margin: 8px;             // Use sx={{ m: 1 }}
-  background-color: blue;   // Use sx={{ bgcolor: 'primary.main' }}
-  display: flex;           // Use sx={{ display: 'flex' }}
-}
-```
-
 ### BEM Methodology for SCSS
 * **Block__Element--Modifier** naming convention
+* **Component-scoped** SCSS files
+* **No global styles** except in designated global files
+
+```scss
+// PropertyCard.scss
+.property-card {
+  // Block styles here if needed
+
+  &__image {
+    // Element styles
+  }
+
+  &__title {
+    // Element styles
+  }
+
+  &--featured {
+    // Modifier styles
+  }
+
+  &--disabled {
+    // Modifier styles
+  }
+}
+```
 * **Component-scoped** SCSS files
 * **No global styles** except in designated global files
 
@@ -422,6 +450,51 @@ export const Button = ({
   ...props
 }) => {
   // Component implementation
+};
+```
+
+### SSR Compatibility Guidelines
+* **Use `"use client"` directive only when necessary:**
+  - Components with event handlers (`onClick`, `onChange`, `onSubmit`, etc.)
+  - Components with client-side state (`useState`, `useEffect`, `useRef` for DOM manipulation)
+  - Components that use browser-only APIs
+* **Server components (no `"use client"` needed):**
+  - Layout components (containers, grids, stacks)
+  - Display components (typography, cards, dividers, badges)
+  - Non-interactive UI elements
+* **Always use the sx props system** for styling components
+
+```jsx
+// ✅ Server component (SSR-compatible)
+export const Card = ({ children, sx, className, ...props }) => {
+  const { styles, className: sxClassName } = resolveSx(sx);
+  
+  return (
+    <div 
+      className={`card ${sxClassName} ${className}`}
+      style={styles}
+      {...props}
+    >
+      {children}
+    </div>
+  );
+};
+
+// ✅ Client component (interactive, needs "use client")
+"use client";
+export const Button = ({ onClick, sx, className, children, ...props }) => {
+  const { styles, className: sxClassName } = resolveSx(sx);
+  
+  return (
+    <button 
+      className={`button ${sxClassName} ${className}`}
+      style={styles}
+      onClick={onClick}
+      {...props}
+    >
+      {children}
+    </button>
+  );
 };
 ```
 
@@ -700,15 +773,18 @@ test('calls setError when email is empty', () => {
 Before submitting any code for review, ensure:
 
 - [ ] **Formatting:** Code follows spacing and conditional rendering rules
-- [ ] **Styling:** sx props used appropriately, SCSS only when necessary
+- [ ] **Styling:** sx props used appropriately with SSR-compatible pattern, SCSS only when necessary
+- [ ] **SSR Compatibility:** Appropriate use of `"use client"` directive (only for interactive components)
+- [ ] **sx Props Implementation:** Uses new pattern with `resolveSx(sx)` destructuring
 - [ ] **Components:** Proper multiline JSX formatting for 2+ props
 - [ ] **Performance:** No unnecessary re-renders or expensive operations in render
 - [ ] **Accessibility:** ARIA labels and semantic HTML where needed
 - [ ] **Error Handling:** Proper error states and loading states
-- [ ] **Responsiveness:** Works on mobile and desktop devices
+- [ ] **Responsiveness:** Works on mobile and desktop devices using sx props
 - [ ] **Consistency:** Follows established patterns in the codebase
 - [ ] **Testing:** Component behavior is testable and tested
 - [ ] **Security:** No sensitive data exposed, proper input validation
+- [ ] **Theme Integration:** No direct `useTheme()` calls, use sx props system instead
 
 ### Project-Specific Additions
 Each project may add additional checklist items specific to their domain:

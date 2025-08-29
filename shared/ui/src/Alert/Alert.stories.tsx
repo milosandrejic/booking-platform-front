@@ -1,5 +1,3 @@
-"use client";
-
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import React, { useState } from "react";
 import { Alert, type AlertProps } from "./Alert";
@@ -292,11 +290,11 @@ export const WithSx: Story = {
         <Alert
           severity="info"
           variant="outlined"
-          sx={theme => ({
-            border: `2px solid ${theme.color.primary.main}`,
+          sx={{
+            border: theme => `2px solid ${theme.color.primary.main}`,
             borderRadius: "12px",
-            backgroundColor: theme.color.primary.light,
-          })}
+            backgroundColor: theme => theme.color.primary.light,
+          }}
         >
           Alert with custom styling using sx prop.
         </Alert>

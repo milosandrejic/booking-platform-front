@@ -1,7 +1,4 @@
-"use client";
-
 import "./Divider.scss";
-import { useTheme } from "@booking-platform-shared/theme";
 import { resolveSx, type SxProps } from "../utils/sx";
 
 export type DividerOrientation = "horizontal" | "vertical";
@@ -29,7 +26,7 @@ export function Divider({
   sx,
   ...rest
 }: DividerProps) {
-  const theme = useTheme();
+  const { styles, className: sxClassName } = resolveSx(sx);
   const hasLabel = Boolean(children) && orientation === "horizontal";
 
   const classes = [
@@ -38,6 +35,7 @@ export function Divider({
     hasLabel ? "divider--with-children" : null,
     orientation === "horizontal" ? `divider--text-align-${textAlign}` : null,
     flexItem ? "divider--flex-item" : null,
+    sxClassName,
     className?.trim() || null,
   ]
     .filter(Boolean)
@@ -48,10 +46,15 @@ export function Divider({
       className={classes}
       role={role}
       aria-orientation={orientation}
-      style={{ ...style, ...resolveSx(theme, sx) }}
+      style={{ ...style, ...styles }}
       {...rest}
     >
-      {hasLabel && <span className="divider__label">{children}</span>}
+      {
+        hasLabel &&
+        <span className="divider__label">
+          {children}
+        </span>
+      }
     </div>
   );
 }
