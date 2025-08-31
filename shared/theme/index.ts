@@ -9,6 +9,7 @@ export type { ThemeProviderProps } from "./ThemeProvider";
 export { CssBaseline } from "./CssBaseline";
 export { useThemeVariables } from "./useThemeVariables";
 export { useDefaultFont } from "./useDefaultFont";
+export { default as InjectThemeVars } from "./InjectThemeVars";
 
 // CSS Variables utilities
 export {
@@ -27,6 +28,15 @@ export type {
   Shadow,
   Breakpoint
 } from "./types";
+
+// Style Registry for SSR
+export {
+  StyleRegistry,
+  createStyleRegistry,
+  setGlobalRegistry,
+  getGlobalRegistry
+} from './styleRegistry';
+export type { StyleRegistryOptions } from './styleRegistry';
 
 // Helper functions for common usage patterns
 export const getSpacing = (multiplier: number): string => {

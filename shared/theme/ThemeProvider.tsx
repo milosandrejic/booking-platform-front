@@ -26,6 +26,7 @@ export interface ThemeProviderProps {
   theme?: Partial<Theme>;
   applyCssReset?: boolean;
   loadDefaultFont?: boolean | { url?: string; id?: string };
+  injectCssVars?: boolean;
 }
 
 // React Context theme provider
@@ -33,12 +34,17 @@ export const ThemeProvider = ({
   children,
   theme,
   applyCssReset = true,
-  loadDefaultFont = false
+  loadDefaultFont = false,
+  injectCssVars = false
 }: ThemeProviderProps) => {
   const themeValue = theme ? merge({}, defaultTheme, theme) : defaultTheme;
   
-  // Inject CSS variables in the document head based on the theme
-  useThemeVariables(themeValue);
+  // Inject CSS variables client-side if requested (for CSR apps)
+  // For SSR apps, use InjectThemeVars component in layout instead
+  if (injectCssVars) {
+    useThemeVariables(themeValue);
+  }
+  
   // Optionally load default font (Roboto via Google Fonts or custom URL)
   if (loadDefaultFont) {
     const { url, id } = typeof loadDefaultFont === "object" ? loadDefaultFont : {};
