@@ -1,33 +1,21 @@
-import { getGlobalRegistry } from "@booking-platform-shared/theme";
+import { getGlobalRegistry, generateCSSVariables, theme } from "@booking-platform-shared/theme";
 
 export default function StylesInjector() {
   const registry = getGlobalRegistry();
+  
+  // Get theme variables
+  const themeVars = generateCSSVariables(theme);
+  
+  // Get sx styles
+  const sxStyles = registry ? registry.getStyles() : '';
+  if (registry) registry.flush();
 
-  if (!registry) {
-    return null;
-  }
-
-  const styles = registry.getStyles();
-  registry.flush();
-
-  if (styles.length === 0) {
-    return null;
-  }
-
-  // Combine all CSS into a single string
-  const combinedCSS = styles
-    .map((style: any) => style.props?.dangerouslySetInnerHTML?.__html || "")
-    .filter(Boolean)
-    .join("\n");
-
-  if (!combinedCSS.trim()) {
-    return null;
-  }
+  const combinedCSS = `${themeVars}\n${sxStyles}`;
 
   return (
-      <style
-        dangerouslySetInnerHTML={{ __html: combinedCSS }}
-        data-sx-injected="true"
-      />
+    <style
+      dangerouslySetInnerHTML={{ __html: combinedCSS }}
+      data-styles-injected="true"
+    />
   );
 }

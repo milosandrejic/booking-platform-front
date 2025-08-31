@@ -45,8 +45,9 @@ export default function Home() {
       <Container maxWidth="md" sx={{ margin: "0 auto", height: "100vh" }}>
         <Card
           sx={{
-            width: 400,
-            height: 600
+            width: 600,
+            height: 400,
+            margin: "100px auto 0"
           }}
         >
           <CardContent>

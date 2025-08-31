@@ -1,8 +1,5 @@
-import React from 'react'
-
 export interface StyleRegistryOptions {
   key?: string
-  nonce?: string
 }
 
 export class StyleRegistry {
@@ -21,23 +18,11 @@ export class StyleRegistry {
     }
   }
 
-  // Get all collected styles as React elements for injection
-  getStyles(): React.ReactElement[] {
-    const styleElements: React.ReactElement[] = []
-
-    this.styles.forEach((css, className) => {
-      styleElements.push(
-        React.createElement('style', {
-          key: `${this.key}-${className}`,
-          'data-registry': this.key,
-          dangerouslySetInnerHTML: {
-            __html: `.${className}{${css}}`
-          },
-        })
-      )
-    })
-
-    return styleElements
+  // Get all collected styles as CSS string
+  getStyles(): string {
+    return Array.from(this.styles.entries())
+      .map(([className, css]) => `.${className}{${css}}`)
+      .join('\n')
   }
 
   // Flush styles after they've been sent to the client
@@ -62,6 +47,6 @@ export function getGlobalRegistry(): StyleRegistry | null {
   return globalRegistry
 }
 
-export function createStyleRegistry(options?: StyleRegistryOptions): StyleRegistry {
+export function createStyleRegistry(options: { key?: string } = {}): StyleRegistry {
   return new StyleRegistry(options)
 }

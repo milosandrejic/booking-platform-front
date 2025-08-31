@@ -9,7 +9,6 @@ export type { ThemeProviderProps } from "./ThemeProvider";
 export { CssBaseline } from "./CssBaseline";
 export { useThemeVariables } from "./useThemeVariables";
 export { useDefaultFont } from "./useDefaultFont";
-export { default as InjectThemeVars } from "./InjectThemeVars";
 
 // CSS Variables utilities
 export {
