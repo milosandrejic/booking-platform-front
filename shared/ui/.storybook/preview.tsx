@@ -19,10 +19,7 @@ const preview: Preview = {
   decorators: [
     (Story) => {
       return (
-        <ThemeProvider
-          applyCssReset
-          injectCssVars
-        >
+        <ThemeProvider applyCssReset>
           <div style={{ padding: "20px" }}>
             <Story />
           </div>

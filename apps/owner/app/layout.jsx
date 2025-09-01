@@ -11,7 +11,7 @@ export default function RootLayout({ children }) {
         <StylesInjector />
       </head>
       <body>
-        <ThemeProvider>
+        <ThemeProvider isSSR={true}>
           {children}
         </ThemeProvider>
       </body>

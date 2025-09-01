@@ -85,40 +85,20 @@ function cssObjectToString(cssObj: any, selector?: string): string {
 }
 
 /**
- * Generate className and handle SSR/CSR
+ * Generate className and always use registry (both SSR and CSR)
  */
 function generateClassName(cssObj: any): string {
   const cssString = cssObjectToString(cssObj);
   const hash = generateHash(cssString);
   const className = `sx-${hash}`;
 
-  // SSR: Register with global registry
-  if (typeof window === "undefined") {
-    const registry = getGlobalRegistry();
-    if (registry) {
-      registry.register(className, cssString);
-    }
-  } else {
-    // CSR: Inject styles directly
-    injectStyles(className, cssString);
+  // Always use registry for collection (both SSR and CSR)
+  const registry = getGlobalRegistry();
+  if (registry) {
+    registry.register(className, cssString);
   }
 
   return className;
-}
-
-/**
- * Inject styles into document head (CSR only)
- */
-function injectStyles(className: string, css: string): void {
-  const styleId = `sx-${className}`;
-  if (document.getElementById(styleId)) {
-    return;
-  }
-
-  const style = document.createElement("style");
-  style.id = styleId;
-  style.textContent = `.${className}{${css}}`;
-  document.head.appendChild(style);
 }
 
 export function resolveSx(sx?: SxProps): { styles: CSSProperties; className: string } {

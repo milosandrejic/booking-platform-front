@@ -25,14 +25,14 @@ export class StyleRegistry {
       .join('\n')
   }
 
+  // Get count of collected styles
+  getCount(): number {
+    return this.styles.size
+  }
+
   // Flush styles after they've been sent to the client
   flush() {
     this.styles.clear()
-  }
-
-  // Get number of registered styles
-  getCount(): number {
-    return this.styles.size
   }
 }
 
