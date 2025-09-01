@@ -26,7 +26,7 @@ export function Divider({
   sx,
   ...rest
 }: DividerProps) {
-  const { styles, className: sxClassName } = resolveSx(sx);
+  const sxClassName = resolveSx(sx);
   const hasLabel = Boolean(children) && orientation === "horizontal";
 
   const classes = [
@@ -46,7 +46,7 @@ export function Divider({
       className={classes}
       role={role}
       aria-orientation={orientation}
-      style={{ ...style, ...styles }}
+      style={style}
       {...rest}
     >
       {

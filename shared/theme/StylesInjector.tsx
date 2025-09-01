@@ -1,4 +1,4 @@
-import { getGlobalRegistry, generateCSSVariables, theme } from "@booking-platform-shared/theme";
+import { getGlobalRegistry, generateCSSVariables, theme } from "./";
 
 export default function StylesInjector() {
   const registry = getGlobalRegistry();

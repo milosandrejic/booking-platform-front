@@ -38,7 +38,7 @@ export function Badge({
   sx,
   ...rest
 }: BadgeProps) {
-  const { styles: sxStyles, className: sxClassName } = resolveSx(sx);
+  const sxClassName = resolveSx(sx);
   const isZeroLike = badgeContent === 0 || badgeContent === "0";
   const hideForZero = !showZero && isZeroLike;
   const isDot = variant === "dot";
@@ -66,7 +66,7 @@ export function Badge({
   ].filter(Boolean).join(" ");
 
   return (
-    <span className={classes} style={{ ...style, ...sxStyles }} {...rest}>
+    <span className={classes} style={style} {...rest}>
       <span className="badge__child">
         {children}
       </span>

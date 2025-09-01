@@ -30,7 +30,7 @@ export const Button = ({
   sx,
   ...props 
 }: ButtonProps) => {
-  const { styles, className: sxClassName } = resolveSx(sx);
+  const sxClassName = resolveSx(sx);
   const classes = [
     "button",
     `button--variant-${variant}`,
@@ -43,7 +43,7 @@ export const Button = ({
   return (
     <button
       className={classes}
-      style={{ ...style, ...styles }}
+      style={style}
       disabled={disabled}
       onClick={onClick}
       type={type}

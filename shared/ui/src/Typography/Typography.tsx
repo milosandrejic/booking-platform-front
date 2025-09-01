@@ -65,7 +65,7 @@ export const Typography = ({
   sx,
   ...props 
 }: TypographyProps) => {
-  const { styles: sxStyles, className: sxClassName } = resolveSx(sx);
+  const sxClassName = resolveSx(sx);
   const Component = (component || getDefaultComponent(variant)) as React.ElementType;
  
   // Resolve color to inline style for semantic tokens or direct CSS values
@@ -89,8 +89,7 @@ export const Typography = ({
     className?.trim() || null,
     sxClassName,
   ].filter(Boolean).join(" ");
-  const mergedStyleBase = resolvedInlineColor ? { ...style, color: resolvedInlineColor } : style;
-  const mergedStyle = { ...mergedStyleBase, ...sxStyles };
+  const mergedStyle = resolvedInlineColor ? { ...style, color: resolvedInlineColor } : style;
 
   return (
     <Component

@@ -1,5 +1,4 @@
-import { ThemeProvider, createStyleRegistry, setGlobalRegistry } from "@booking-platform-shared/theme";
-import StylesInjector from "../components/StylesInjector";
+import { ThemeProvider, createStyleRegistry, setGlobalRegistry, StylesInjector } from "@booking-platform-shared/theme";
 
 const registry = createStyleRegistry({ key: "owner-sx" });
 setGlobalRegistry(registry);

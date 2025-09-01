@@ -38,7 +38,7 @@ export function Stack({
   sx,
   ...rest
 }: StackProps) {
-  const { styles, className: sxClassName } = resolveSx(sx);
+  const sxClassName = resolveSx(sx);
   const classes = [
     "stack",
     `stack--${direction}`,
@@ -54,7 +54,7 @@ export function Stack({
   };
 
   return (
-    <Component className={classes} style={{ ...inlineStyles, ...style, ...styles }} {...rest}>
+    <Component className={classes} style={{ ...inlineStyles, ...style }} {...rest}>
       {children}
     </Component>
   );

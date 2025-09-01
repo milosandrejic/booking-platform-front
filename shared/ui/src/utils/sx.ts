@@ -3,19 +3,18 @@ import { getGlobalRegistry } from "@booking-platform-shared/theme";
 import _ from "lodash";
 
 /**
- * mergeStyles - Simple object merge
+ * Merge multiple style objects into one, filtering out undefined values
  */
 export const mergeStyles = (
   ...styles: Array<CSSProperties | undefined>
 ): CSSProperties => Object.assign({}, ...styles.filter(Boolean));
 
 /**
- * SxProps - Simple CSS properties (strings only)
+ * Supported CSS properties with pseudo-selector support
  */
 export type SxProps = {
   [K in keyof CSSProperties]?: string | number;
 } & {
-  // Pseudo-selectors
   ":hover"?: SxProps;
   ":focus"?: SxProps;
   ":active"?: SxProps;
@@ -25,88 +24,117 @@ export type SxProps = {
 };
 
 /**
- * Add px to numeric values for common CSS properties
+ * CSS properties that should remain unitless (no 'px' added)
  */
-function addPxIfNeeded(property: string, value: string | number): string {
+const UNITLESS_PROPERTIES = new Set([
+  "zIndex",
+  "opacity",
+  "flexGrow",
+  "flexShrink",
+  "order",
+  "fontWeight"
+]);
+
+/**
+ * Converts numeric values to CSS values, adding 'px' when needed
+ * Examples: 16 → "16px", 0.5 → "0.5" (for opacity), "100%" → "100%"
+ */
+function convertToCSSValue(cssProperty: string, value: string | number): string {
   if (typeof value === "number") {
-    // Properties that should remain unitless
-    if (property === "zIndex" || property === "opacity" || property === "flexGrow" ||
-      property === "flexShrink" || property === "order" || property === "fontWeight") {
-      return value.toString();
-    }
-    // Add px to numeric values
-    return `${value}px`;
+    const shouldRemainUnitless = UNITLESS_PROPERTIES.has(cssProperty);
+    return shouldRemainUnitless ? value.toString() : `${value}px`;
   }
   return String(value);
 }
 
 /**
- * Generate hash for CSS string
+ * Creates a unique hash from a string for CSS class generation
  */
-function generateHash(str: string): string {
+function createHashFromString(text: string): string {
   let hash = 0;
-  for (let i = 0; i < str.length; i++) {
-    const char = str.charCodeAt(i);
-    hash = ((hash << 5) - hash) + char;
-    hash = hash & hash;
+
+  for (let i = 0; i < text.length; i++) {
+    const character = text.charCodeAt(i);
+    hash = ((hash << 5) - hash) + character;
+    hash = hash & hash; // Convert to 32-bit integer
   }
+
   return Math.abs(hash).toString(36);
 }
 
 /**
- * Convert CSS object to CSS string
+ * Converts a CSS object to a CSS string, handling nested pseudo-selectors
+ * Examples:
+ * - { color: "red" } → "color:red"
+ * - { ":hover": { color: "blue" } } → ".className:hover{color:blue}"
  */
-function cssObjectToString(cssObj: any, selector?: string): string {
-  const rules: string[] = [];
-  const nestedRules: string[] = [];
+function convertCSSObjectToString(cssObject: any, baseSelector?: string): string {
+  const regularCSSRules: string[] = [];
+  const nestedSelectorRules: string[] = [];
 
-  for (const [key, value] of Object.entries(cssObj)) {
-    if (key.startsWith(":") || key.startsWith("&")) {
-      // Handle pseudo-selectors
-      const nestedSelector = key.startsWith("&") ? selector + key.substring(1) : selector + key;
-      nestedRules.push(cssObjectToString(value, nestedSelector));
+  for (const [cssProperty, cssValue] of Object.entries(cssObject)) {
+    const isPseudoSelector = cssProperty.startsWith(":") || cssProperty.startsWith("&");
+
+    if (isPseudoSelector) {
+      // &:hover → .className:hover, :hover → .className:hover
+      const fullSelector = cssProperty.startsWith("&") ? baseSelector + cssProperty.substring(1) : baseSelector + cssProperty;
+
+      const nestedCSS = convertCSSObjectToString(cssValue, fullSelector);
+      nestedSelectorRules.push(nestedCSS);
     } else {
-      // Regular CSS properties
-      const kebabKey = _.kebabCase(key);
-      const cssValue = addPxIfNeeded(key, value as string | number);
-      rules.push(`${kebabKey}:${cssValue}`);
+      const kebabCaseProperty = _.kebabCase(cssProperty);
+      const formattedValue = convertToCSSValue(cssProperty, cssValue as string | number);
+      regularCSSRules.push(`${kebabCaseProperty}:${formattedValue}`);
     }
   }
 
-  let cssString = "";
-  if (rules.length > 0) {
-    cssString += selector ? `${selector}{${rules.join(";")}}` : rules.join(";");
-  }
-  if (nestedRules.length > 0) {
-    cssString += nestedRules.join("");
+  let finalCSSString = "";
+
+  // Add regular CSS rules
+  if (regularCSSRules.length > 0) {
+    const rulesString = regularCSSRules.join(";");
+    finalCSSString += baseSelector ? `${baseSelector}{${rulesString}}` : rulesString;
   }
 
-  return cssString;
+  // Add nested selector rules (pseudo-selectors)
+  if (nestedSelectorRules.length > 0) {
+    finalCSSString += nestedSelectorRules.join("");
+  }
+
+  return finalCSSString;
 }
 
 /**
- * Generate className and always use registry (both SSR and CSR)
+ * Generates a unique CSS class name and registers the styles
+ * Returns the class name for use in React components
  */
-function generateClassName(cssObj: any): string {
-  const cssString = cssObjectToString(cssObj);
-  const hash = generateHash(cssString);
-  const className = `sx-${hash}`;
+function generateCSSClassAndRegisterStyles(cssObject: any): string {
+  const cssString = convertCSSObjectToString(cssObject);
+  const uniqueHash = createHashFromString(cssString);
+  const className = `sx-${uniqueHash}`;
 
-  // Always use registry for collection (both SSR and CSR)
-  const registry = getGlobalRegistry();
-  if (registry) {
-    registry.register(className, cssString);
+  // Register styles with the global registry for SSR/CSR collection
+  const styleRegistry = getGlobalRegistry();
+  if (styleRegistry) {
+    styleRegistry.register(className, cssString);
   }
 
   return className;
 }
 
-export function resolveSx(sx?: SxProps): { styles: CSSProperties; className: string } {
-  if (!sx) {
-    return { styles: {}, className: "" };
+/**
+ * Main function: Converts sx props to CSS class name
+ * 
+ * Usage:
+ * const sxClassName = resolveSx({ color: "red", ":hover": { color: "blue" } });
+ * 
+ * Returns:
+ * - Generated CSS class name (e.g., "sx-abc123") or empty string if no sx props
+ */
+export function resolveSx(sxProps?: SxProps): string {
+  if (!sxProps) {
+    return "";
   }
 
-  const className = generateClassName(sx);
-
-  return { styles: {}, className };
+  return generateCSSClassAndRegisterStyles(sxProps);
 }

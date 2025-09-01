@@ -30,7 +30,7 @@ export const Grid = ({
   sx,
   ...props
 }: GridProps) => {
-  const { styles, className: sxClassName } = resolveSx(sx);
+  const sxClassName = resolveSx(sx);
   const classes = [
     "grid",
     container && "grid--container",
@@ -48,7 +48,7 @@ export const Grid = ({
   return (
     <div
       className={classes}
-      style={{ ...style, ...styles }}
+      style={style}
       {...props}
     >
       {children}

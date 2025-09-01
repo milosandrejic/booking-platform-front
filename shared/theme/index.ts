@@ -6,6 +6,7 @@ export type { Theme } from "./types";
 // React Context providers and hooks
 export { default as ThemeProvider, useTheme } from "./ThemeProvider";
 export type { ThemeProviderProps } from "./ThemeProvider";
+export { default as StylesInjector } from "./StylesInjector";
 export { CssBaseline } from "./CssBaseline";
 export { useThemeVariables } from "./useThemeVariables";
 export { useDefaultFont } from "./useDefaultFont";

@@ -72,7 +72,7 @@ export const SelectOption = ({
     throw new Error("SelectOption must be used within a Select component");
   }
 
-  const { styles, className: sxClassName } = resolveSx(sx);
+  const sxClassName = resolveSx(sx);
   const { isSelected, toggleValue } = context;
   const selected = isSelected(value);
 
@@ -99,7 +99,7 @@ export const SelectOption = ({
       role="option"
       aria-selected={selected}
       className={optionClasses}
-      style={{ ...style, ...styles }}
+      style={style}
       onMouseDown={(e) => { e.preventDefault(); }}
       onClick={handleClick}
       {...props}
@@ -126,7 +126,7 @@ export const Select = ({
   sx,
   ...props
 }: SelectProps) => {
-  const { styles, className: sxClassName } = resolveSx(sx);
+  const sxClassName = resolveSx(sx);
   const isControlled = value !== undefined;
   const [internalValue, setInternalValue] = useState<SelectValue | SelectValue[] | undefined>(
     defaultValue ?? (multiple ? [] : undefined)
@@ -285,7 +285,7 @@ export const Select = ({
       <div
         ref={rootRef}
         className={classes}
-        style={{ ...style, ...styles }}
+        style={style}
         {...props}
       >
         <button

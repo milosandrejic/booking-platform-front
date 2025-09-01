@@ -32,7 +32,7 @@ export function Avatar({
   sx,
   ...rest
 }: AvatarProps) {
-  const { styles: sxStyles, className: sxClassName } = resolveSx(sx);
+  const sxClassName = resolveSx(sx);
   const letters = useMemo(() => {
     if (fallback && fallback.trim()) {
       return fallback.trim().slice(0, 2).toUpperCase();
@@ -67,7 +67,7 @@ export function Avatar({
       className={classes}
       role={src ? undefined : "img"}
       aria-label={!src && letters ? letters : undefined}
-      style={{ ...style, ...sxStyles }}
+      style={style}
       {...rest}
     >
       {
@@ -103,7 +103,7 @@ export interface AvatarGroupProps extends React.HTMLAttributes<HTMLDivElement> {
  * AvatarGroup: displays a horizontal stack of Avatars with overlap and an optional surplus counter.
  */
 export function AvatarGroup({ max, total, spacing = 8, className = "", children, sx, style, ...rest }: AvatarGroupProps) {
-  const { styles: sxStyles, className: sxClassName } = resolveSx(sx);
+  const sxClassName = resolveSx(sx);
   const childArray = useMemo(() => {
     const arr = Array.isArray(children) ? children : [children];
     return arr.filter(Boolean) as React.ReactNode[];
@@ -121,7 +121,7 @@ export function AvatarGroup({ max, total, spacing = 8, className = "", children,
   } as React.CSSProperties;
 
   return (
-    <div className={classes} style={{ ...groupStyle, ...style, ...sxStyles }} {...rest}>
+    <div className={classes} style={{ ...groupStyle, ...style }} {...rest}>
       {visible.map((node, idx) => (
         <span className="avatar-group__item" key={idx}>
           {node}

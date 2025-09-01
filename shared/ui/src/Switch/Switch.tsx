@@ -56,7 +56,7 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(
     },
     ref
   ) {
-    const { styles, className: sxClassName } = resolveSx(sx);
+    const sxClassName = resolveSx(sx);
     const [internalChecked, setInternalChecked] = useState(defaultChecked);
     const reactId = useId();
     const switchId = id || `switch-${reactId}`;
@@ -91,7 +91,7 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(
     return (
       <label 
         className={classes} 
-        style={{ ...style, ...styles }}
+        style={style}
       >
         <input
           ref={ref}
