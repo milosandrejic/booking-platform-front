@@ -6,7 +6,6 @@
       "DOM",
       "DOM.Iterable"
     ],
-    "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
@@ -21,20 +20,15 @@
     "jsx": "react-jsx",
     "declaration": true,
     "outDir": "./dist",
-    "rootDir": ".",
     "declarationMap": true,
     "sourceMap": true
   },
   "include": [
-    "*.ts",
-    "*.tsx",
-    "types.ts"
+    "./*.ts",
+    "./*.tsx"
   ],
   "exclude": [
     "node_modules",
-    "dist",
-    "**/*.js",
-    "**/*.jsx",
-    "build-css.ts"
+    "dist/**/*"
   ]
 }

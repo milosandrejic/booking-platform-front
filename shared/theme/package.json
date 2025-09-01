@@ -18,7 +18,7 @@
   ],
   "scripts": {
     "build": "tsc --build",
-    "dev": "tsc --watch",
+    "dev": "tsc --build --watch",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "clean": "rm -rf dist node_modules package-lock.json yarn.lock pnpm-lock.yaml",

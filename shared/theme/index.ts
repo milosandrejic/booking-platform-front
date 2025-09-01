@@ -37,8 +37,3 @@ export {
   getGlobalRegistry
 } from './styleRegistry';
 export type { StyleRegistryOptions } from './styleRegistry';
-
-// Helper functions for common usage patterns
-export const getSpacing = (multiplier: number): string => {
-  return `${multiplier * 0.5}rem`; // 8px base unit (MUI standard)
-};

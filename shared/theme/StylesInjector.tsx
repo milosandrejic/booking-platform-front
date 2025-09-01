@@ -1,4 +1,6 @@
-import { getGlobalRegistry, generateCSSVariables, theme } from "./";
+import { getGlobalRegistry } from "./styleRegistry";
+import { generateCSSVariables } from "./cssVariables";
+import { theme } from "./theme";
 
 export default function StylesInjector() {
   const registry = getGlobalRegistry();
