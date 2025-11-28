@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 
+import { ThemeProvider } from "@/theme";
+
 export const metadata: Metadata = {
   title: "Storefront - Booking Platform",
   description: "Booking Platform Storefront",
@@ -12,7 +14,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <ThemeProvider>
+          {children}
+        </ThemeProvider>
+      </body>
     </html>
   );
 };
