@@ -3,8 +3,56 @@
 ## File & Component Naming
 
 - **File naming**: Use kebab-case for all files (`sign-in-view.jsx`, `account-drawer.jsx`)
-- **Component exports**: Use named exports only (`export function ComponentName() {}`)
+- **Component exports**: Use named exports only (`export function ComponentName() {}`) 
 - **Component organization**: One component per file unless tightly coupled
+
+## "use client" Directive (Next.js)
+
+**Only add "use client" when explicitly required** - Next.js components are Server Components by default.
+
+### When "use client" IS required:
+- Using React hooks (`useState`, `useEffect`, `useCallback`, `useMemo`, etc.)
+- Using browser-only APIs (`window`, `document`, `localStorage`, etc.)
+- Using event handlers that require interactivity (`onClick`, `onChange`, etc.)
+- Using Context providers that manage state
+- Using third-party libraries that depend on client-side features
+
+### When "use client" is NOT needed:
+- Pure presentational components with no interactivity
+- Components that only render static content
+- Components using only Server Component features
+
+✅ **Correct:**
+```javascript
+// No "use client" - purely presentational
+export function StaticCard({ title, description }) {
+  return (
+    <Card>
+      <Typography>{title}</Typography>
+      <Typography>{description}</Typography>
+    </Card>
+  );
+}
+
+// "use client" required - uses useState hook
+"use client";
+
+export function InteractiveButton() {
+  const [count, setCount] = useState(0);
+  
+  return <Button onClick={() => setCount(count + 1)}>{count}</Button>;
+}
+```
+
+❌ **Avoid:**
+```javascript
+// Unnecessary "use client" for static component
+"use client";
+
+export function StaticCard({ title }) {
+  return <Card><Typography>{title}</Typography></Card>;
+}
+```
 
 ## Import Conventions
 
@@ -45,7 +93,7 @@ import { Component } from "../../components/component";
 
 ### Import Formatting
 - **Single import**: `import { Component } from "library"`
-- **Multiple imports (2+)**: Use multiline format:
+- **Multiple imports (2+)**: Use multiline format with each import on its own line:
 ```javascript
 import {
   Component1,
@@ -53,6 +101,8 @@ import {
   Component3
 } from "library";
 ```
+- **Closing brace** `}` should be on its own line
+- Each named import should be on a separate line for better readability and git diffs
 
 ## JSX Formatting Rules
 
@@ -105,6 +155,7 @@ return (
 - **2+ props**: Always use multiline formatting
 - **Props alignment**: Each prop on its own line, properly indented
 - **Closing tag**: Self-closing components end with `/>` on the last prop line
+- **Empty line spacing**: Add empty line between sibling components at the same level for better readability
 
 ```jsx
 <LoadingButton
@@ -124,10 +175,56 @@ return (
 />
 ```
 
+✅ **Correct spacing between sibling components:**
+```jsx
+<Box sx={{ textAlign: "center" }}>
+  <Typography
+    variant="h2"
+    component="h2"
+    sx={{
+      fontSize: { xs: "2rem", md: "2.5rem", lg: "3rem" },
+      fontWeight: 700,
+      mb: 3,
+    }}
+  >
+    Ready to get started?
+  </Typography>
+
+  <Typography
+    variant="h6"
+    sx={{
+      fontSize: { xs: "1.1rem", md: "1.2rem" },
+      mb: 4,
+      opacity: 0.95,
+    }}
+  >
+    Join thousands of property owners
+  </Typography>
+
+  <Button
+    variant="contained"
+    size="large"
+    endIcon={<ArrowForward />}
+    sx={{
+      color: "white",
+      px: 5,
+      py: 2,
+    }}
+  >
+    Get Started
+  </Button>
+</Box>
+```
+
 ### Loop Rendering
+- **Opening brace** `{` on its own line
+- **Map function** starts on next line with proper indentation  
+- **Arrow function** with parentheses when returning JSX
+- **Component** properly indented inside the map
+
 ```jsx
 {
-  items.map(item =>
+  items.map((item) => (
     <MenuItem
       key={item.id}
       value={item.value}
@@ -135,7 +232,25 @@ return (
     >
       {item.label}
     </MenuItem>
-  )
+  ))
+}
+```
+
+✅ **Correct - with multiple statements:**
+```jsx
+{
+  features.map((feature, index) => {
+    const Icon = feature.icon;
+    
+    return (
+      <Grid size={{ xs: 12, md: 4 }} key={index}>
+        <Card>
+          <Icon />
+          <Typography>{feature.title}</Typography>
+        </Card>
+      </Grid>
+    );
+  })
 }
 ```
 
